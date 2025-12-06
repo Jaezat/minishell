@@ -1,0 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/03 15:35:52 by mariacos          #+#    #+#             */
+/*   Updated: 2025/12/05 13:41:18 by mariacos         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* Overall steps:
+
+1. [ ] Show prompt
+2. [ ] Read the line (readline)
+3. [ ] Process the line:
+    3.a. [ ] Tokenize (Lexical analysis)
+    3.b. [ ] Parsing (Build AST?)
+    3.c. [ ] Expansion
+    3.d. [ ] Execution
+4. [ ] Back to step 1  
+
+-----------------
+
+**1. Show prompt / initialization**
+[ ] Argument verification
+    -Check parameters: give warning if (argc != 1)
+    -Should we also already here deal with seeing if
+    im able to run the program from a script
+[ ] Environment setup
+    -Get envp variables
+    -Set up exit status
+    -Creation of variables of the shell itself 
+    -Configure signals  
+*/
