@@ -6,7 +6,7 @@
 #    By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 16:31:27 by mariacos          #+#    #+#              #
-#    Updated: 2025/12/06 17:22:56 by mariacos         ###   ########.fr        #
+#    Updated: 2025/12/08 18:44:40 by mariacos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT_PATH      = libft/src
 LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 
 # Source files (you currently have only main.c)
-CFILES          = main.c
+CFILES          = main.c init_lexer.c
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
