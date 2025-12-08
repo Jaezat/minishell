@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:05:57 by mariacos          #+#    #+#             */
-/*   Updated: 2025/12/08 10:30:09 by mariacos         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:45:23 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,16 @@ typedef struct t_data
 	char **envp;
 	char **tokens;
 }	s_data;
+
+typedef enum token_type
+{
+	T_WORD; 			// ls, echo, file.txt
+	T_PIPE; 			// |
+	T_REDIR_IN;			// <
+	T_REDIR_OUT;		// >
+	T_REDIR_APPEND; 	// >>
+	T_REDIR_HDOC;		// <<
+	T_EOF;				// nomo input to read
+}
 
 #endif

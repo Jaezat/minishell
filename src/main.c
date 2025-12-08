@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:25:21 by mariacos          #+#    #+#             */
-/*   Updated: 2025/12/08 10:25:12 by mariacos         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:53:53 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ void free_all(s_data *data)
 		
 }
 
+void readline_calling(char **line)
+{
+    *line = readline(
+    "\001\033[1;31m\002m"
+    "\001\033[1;33m\002i"
+    "\001\033[1;32m\002n"
+    "\001\033[1;36m\002i"
+    "\001\033[1;34m\002s"
+    "\001\033[1;35m\002h"
+    "\001\033[1;31m\002e"
+    "\001\033[1;33m\002l"
+    "\001\033[1;32m\002l"
+    "\001\033[1;36m\002$"
+    "\001\033[1;35m\002>"
+    "\001\033[0m\002 "
+    );
+}
+
 int is_interactive(s_data *data)
 {
 	if (data->interactive == 1)
@@ -50,7 +68,8 @@ int is_interactive(s_data *data)
         acceder a lo que el terminal escribio.
         Readline() will read a line from tty and return it(must free when done with it)
         if line is empty = return NULL */
-        data->line = readline("minishell$> ");
+        // data->line = readline("\001\033[1;35m\002minishell$> \001\033[0m\002");
+        readline_calling(&(data->line));
         if(data->line == NULL)
         {
             ft_printf("Exit");
@@ -124,20 +143,8 @@ s_data  *init_data(char **envp)
     return (data);
 }
 
-
-int main(int argc, char **argv, char **envp)
+int operational_loop(s_data *data)
 {
-    s_data  *data;
-    
-    (void)argv;
-    if (argc != 1)
-    {
-        ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-        return (1);
-    }
-    data = init_data(envp);
-    if (!data)
-        return (1);
     while (1)
     {
         if (is_interactive(data) == 1)
@@ -152,6 +159,29 @@ int main(int argc, char **argv, char **envp)
 			printf("Token %d: %s\n", i, tokens[i]);
 			i++;
 		}
+    }
+    return 0;
+}
+
+
+
+int main(int argc, char **argv, char **envp)
+{
+    s_data  *data;
+    
+    (void)argv;
+    if (argc != 1)
+    {
+        ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
+        return (1);
+    }
+    data = init_data(envp);
+    if (!data)
+        return (1);
+    if (operational_loop(data) == 1)
+    {
+        free_all(data);
+        return 1;
     }
     free_all(data);
     return (0);
