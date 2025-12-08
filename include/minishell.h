@@ -3,10 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/27 17:05:57 by mariacos          #+#    #+#             */
+/*   Updated: 2025/12/07 18:07:09 by mariacos         ###   ########.fr       */
+=======
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:05:57 by mariacos          #+#    #+#             */
 /*   Updated: 2025/12/05 16:03:02 by mariacos         ###   ########.fr       */
+>>>>>>> origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +34,14 @@
 
 
 /*  STRUCTURES  */
-typedef struct t_init_var
+
+typedef struct t_data
 {
-    int interactive;
-    char *prompt;
+	int interactive;
     char *line;
-}   s_init_var;
-
-
+	int size_envp;
+	char **envp;
+	char **tokens;
+}	s_data;
 
 #endif
