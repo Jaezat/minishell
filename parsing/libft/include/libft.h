@@ -3,12 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 10:21:01 by mariacos          #+#    #+#             */
-/*   Updated: 2025/12/07 15:16:31 by mariacos         ###   ########.fr       */
-=======
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 10:21:01 by mariacos          #+#    #+#             */
@@ -63,8 +57,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-// int     main();
-
+int     main();
 
 //extra
 char	*get_next_line(int fd);
