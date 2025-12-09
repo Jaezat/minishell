@@ -34,6 +34,9 @@ int is_interactive(t_data *data)
         for ex, for that we would need to access to whatever is written in the
         file so we can use GNL to get what is written there */
         data->line = get_next_line(STDIN_FILENO);
+        //recheck this since is giving seg fault. 
+
+
         /*lo que pasa aca es que el shell directamente redirecciona
         el stdin del terminal al stdin del file que estamos usando*/    
     }
@@ -79,7 +82,7 @@ t_data  *init_data(char **envp)
     if (!data)
         return (NULL);
     ft_memset(data, 0, sizeof(t_data)); 
-	data->interactive = isatty(STDIN_FILENO);
+	data->interactive = isatty(STDIN_FILENO); 
 	data->size_envp = count_envp(envp);
 	data->envp = copy_envp(envp, data->size_envp);
 	if (!data->envp)
