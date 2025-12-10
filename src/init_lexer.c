@@ -120,3 +120,5 @@ int operational_loop(t_data *data)
     return 0;
 }
 
+
+
