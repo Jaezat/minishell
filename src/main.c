@@ -26,7 +26,6 @@ void free_all(t_data *data)
 		
 }
 
-
 int main(int argc, char **argv, char **envp)
 {
     t_data  *data;
@@ -42,9 +41,12 @@ int main(int argc, char **argv, char **envp)
         return (1);
     if (operational_loop(data) == 1)
     {
+        printf("is passing here");
         free_all(data);
         return 1;
     }
+    printf("here");
+    printf("%s\n", data->line); 
     free_all(data);
     return (0);
 }

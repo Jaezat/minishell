@@ -6,7 +6,7 @@
 #    By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 16:31:27 by mariacos          #+#    #+#              #
-#    Updated: 2025/12/08 18:44:40 by mariacos         ###   ########.fr        #
+#    Updated: 2025/12/12 16:09:21 by mariacos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,10 @@ INC_DIR         = include
 LIBFT_PATH      = libft/src
 LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 
-# Source files (you currently have only main.c)
+# Valgrind suppression file
+SUPP_FILE       = readline.supp
+
+# Source files
 CFILES          = main.c init_lexer.c
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
@@ -31,7 +34,6 @@ OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 RM              = rm -rf
 
 #   RULES
-
 all: $(NAME)
 
 $(NAME): $(LIBFT_LIB) $(OBJECTS)
@@ -65,4 +67,19 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# Valgrind targets
+valgrind: $(NAME)
+	valgrind --leak-check=full \
+	         --show-leak-kinds=all \
+	         --suppressions=$(SUPP_FILE) \
+	         ./$(NAME)
+
+valgrind_full: $(NAME)
+	valgrind --leak-check=full \
+	         --show-leak-kinds=all \
+	         --track-origins=yes \
+	         --verbose \
+	         --suppressions=$(SUPP_FILE) \
+	         ./$(NAME)
+
+.PHONY: all clean fclean re valgrind valgrind_full
