@@ -14,8 +14,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 /*  LIBRARIES */
 # include "../libft/include/libft.h"
@@ -39,35 +39,38 @@ typedef struct s_data
     char *line;
 	int size_envp;
 	char **envp;
-	char **tokens;
+	t_token *token_list;
 }	t_data;
 
 typedef enum s_token_type
 {
-	T_WORD, 		 	// ls, echo, file.txt
-	T_PIPE, 			// |
-	T_REDIR_IN,			// <
-	T_REDIR_OUT,		// >
-	T_REDIR_APPEND, 	// >>
-	T_REDIR_HDOC,		// <<
-	T_EOF,				// nomo input to read
+	WORD, 		 	// ls, echo, file.txt
+	PIPE, 			// |
+	REDIR_IN,			// <
+	REDIR_OUT,		// >
+	REDIR_APPEND, 	// >>
+	REDIR_HDOC,		// <<
+	EOF,				// nomo input to read
 }	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type type;
 	char *value;
+	struct t_token *next;
 }	t_token;
 
 void readline_calling(char **line);
 int is_interactive(t_data *data);
 int count_envp(char **envp);
 char **copy_envp(char **envp, int size_envp);
-t_data  *init_data(char **envp);
-int operational_loop(t_data *data);
-void free_all(t_data *data);
+t_data  *initAllData(char **envp);
+int startOperationalLoop(t_data *data)
+void freeAllData(t_data *data);
 
-
+/* tokenize */
+t_token *createToken(void);
+int tokenizeInput(t_data *data);
 
 
 #endif
