@@ -1,116 +1,59 @@
 #include "minishell.h"
-
-void readline_calling(char **line)
+ 
+t_token *createToken(t_token_type type, char *value)
 {
-    *line = readline(
-        "\001\033[1;35m\002minishell$>\001\033[0m\002 "
-    );
+	t_token *token;
+
+	token = malloc(sizeof(t_token));
+	if(!token)
+		return (NULL);
+	token->type = type;
+	token->value = value;
+	token->next = 
+	
+    
 }
 
-/* int is_interactive(t_data *data)
+void skipSpace(char c, int *i)
 {
-	if (data->interactive == 1)
-    {
-        readline_calling(&(data->line));
-        if(data->line == NULL)
-        {
-            ft_printf("Exit");
-            return 1;
-        }
-        if(data->line)
-            add_history(data->line);
-    }
-    else
-    {
-        data->line = get_next_line(STDIN_FILENO);
-        if(data->line == NULL)
-            return (0);
-    }
-    if(*data->line == '\0')
-    {
-        return (1);
-    }
-	return (0);
-} */
-
-int is_interactive(t_data *data)
-{
-    readline_calling(&(data->line));
-    if (data->line == NULL)
-    {
-        ft_printf("Exit");
-        return 1;
-    }
-    if (data->line)
-    {
-        add_history(data->line);
-    }
-    return (0);
+	while(c == ' ' || c == '\t')
+		*i++;
 }
 
-int count_envp(char **envp)
+void assignValueToken(t_token *token, char *value)
+{
+
+}
+
+int tokenizeInput(t_data *data)
 {
 	int i;
-	i = 0;
-	while(envp[i])
-		i++;
-	return (i);
-}
-
-char **copy_envp(char **envp, int size_envp)
-{
-	int i;
-	char **copy_env;
+	char *str;
+	t_token *token;
 
 	i = 0;
-	copy_env = malloc(sizeof(char *) * (size_envp + 1));
-	if(!copy_env)
-		return NULL;
-	while(envp[i])
+	str = ft_strdup(data->line);
+	while(str[i])
 	{
-		copy_env[i] = ft_strdup(envp[i]);
-		i++;
+		token = create_token();
+		if(!token)
+			return (1);
+		skipSpace(str[i], i);
+		if(str[i] == '>' && str[i+1] == '>')
+		{
+
+		}
 	}
-	copy_env[i] = NULL; 
-	return copy_env;
+	free(str);
 }
 
-t_data  *init_data(char **envp)
-{
-    t_data  *data;
 
-    data = malloc(sizeof(t_data));
-    if (!data)
-        return (NULL);
-    ft_memset(data, 0, sizeof(t_data)); 
-	data->interactive = isatty(STDIN_FILENO); 
-	data->size_envp = count_envp(envp);
-	data->envp = copy_envp(envp, data->size_envp);
-	if (!data->envp)
-    {
-        free(data);
-        return (NULL);
-    }  
-    return (data);
-}
 
-/* int create_token(t_data)
-{
-    
-    
-} */
 
-int operational_loop(t_data *data)
-{
-    while (1)
-    {
-        if (is_interactive(data) == 1)
-            return 1;
-    }
-    printf("here");
-    printf("%s\n", data->line); 
-    return 0;
-}
+
+
+
+
 
 
 

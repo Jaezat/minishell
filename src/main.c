@@ -14,7 +14,7 @@
 
 /* 1. Check parameters: give warning if (argc != 1) */
 
-void free_all(t_data *data)
+void freeAllData(t_data *data)
 {
 	if(!data)
 		return ;
