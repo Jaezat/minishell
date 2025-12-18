@@ -1,5 +1,5 @@
 #include "minishell.h"
-
+ 
 t_token *createToken(t_token_type type, char *value)
 {
 	t_token *token;
@@ -46,6 +46,10 @@ int tokenizeInput(t_data *data)
 	}
 	free(str);
 }
+
+
+
+
 
 
 
