@@ -42,11 +42,17 @@ int main(int argc, char **argv, char **envp)
     if (operational_loop(data) == 1)
     {
         printf("is passing here");
-        free_all(data);
+        freeAllData(data);
         return 1;
     }
+	if (tokenizeInput(data))
+	{
+		printf("is passing here");
+        freeAllData(data);
+        return 1;
+	}
     printf("here");
     printf("%s\n", data->line); 
-    free_all(data);
+    freeAllData(data);
     return (0);
 }
