@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+         #
+#    By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 16:31:27 by mariacos          #+#    #+#              #
-#    Updated: 2025/12/12 16:09:21 by mariacos         ###   ########.fr        #
+#    Updated: 2025/12/22 21:23:23 by mariacos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 SUPP_FILE       = readline.supp
 
 # Source files
-CFILES          = main.c lexer_init.c data_init.c operationalLoop_init.c
+CFILES          = main.c lexerInit.c dataInit.c operationalLoopInit.c
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 

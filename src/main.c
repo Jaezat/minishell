@@ -36,23 +36,15 @@ int main(int argc, char **argv, char **envp)
         ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
         return (1);
     }
-    data = init_data(envp);
+    data = initAllData(envp);
     if (!data)
         return (1);
-    if (operational_loop(data) == 1)
+    if (startOperationalLoop(data) == 1)
     {
         printf("is passing here");
         freeAllData(data);
         return 1;
     }
-	if (tokenizeInput(data))
-	{
-		printf("is passing here");
-        freeAllData(data);
-        return 1;
-	}
-    printf("here");
-    printf("%s\n", data->line); 
     freeAllData(data);
     return (0);
 }
