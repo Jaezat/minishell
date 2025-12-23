@@ -17,19 +17,23 @@ int is_interactive(t_data *data)
         return 1;
     }
     if (data->line)
-    {
         add_history(data->line);
-    }
     return (0);
 }
-int startOperationaLoop(t_data *data)
+int startOperationalLoop(t_data *data)
 {
     while (1)
     {
         if (is_interactive(data) == 1)
             return 1;
+		if (tokenizeInput(data))
+		{
+			printf("is passing here");
+    	    freeAllData(data);
+    	    return 1;
+		}
+    	// printf("%s\n", data->line); 
     }
-    printf("here");
-    printf("%s\n", data->line); 
+    // printf("here");
     return 0;
 }
