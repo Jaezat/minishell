@@ -161,7 +161,7 @@ char *extractWord(char *str, int *i)
 			printf("WORD: %s\n", token->value);
 		}
 		if(!head)
-		{
+		{ 
 			head = token;
 			tail = token;
 		}
@@ -187,7 +187,7 @@ void addToken(t_token **head, t_token **tail, t_token *token)
 		(*tail)->next = token;
 		*tail = token;
 	}
-}
+}    
 
 // detect operators
 t_token	*checkOperator(char *str, int *i)
@@ -215,7 +215,7 @@ t_token	*checkOperator(char *str, int *i)
 	if (str[*i] == '|')
 	{
 		(*i)++;
-		return (createToken(T_PIPE, "|"));
+		return (createToken(T_PIPE,  "|"));
 	}
 	return (NULL);
 }
@@ -223,15 +223,15 @@ t_token	*checkOperator(char *str, int *i)
 int	tokenizeInput(t_data *data)
 {
 	int		i;
-	char	*word;
+	char	*word;  
 	t_token	*token;
-	t_token	*head;
-	t_token	*tail;
-
-	i = 0;
-	head = NULL;
-	tail = NULL;
-	while (data->line[i])
+	t_token	*head;  
+	t_token	*tail; 
+    
+	i = 0;   
+	head = NULL;  
+	tail = NULL;   
+	while (data->line[i])  
 	{
 		skipSpace(data->line[i], &i);
 		if (!data->line[i])
@@ -250,5 +250,5 @@ int	tokenizeInput(t_data *data)
 		addToken(&head, &tail, token);
 	}
 	data->list_tokens = head;
-	return (0);
+	return (0); 
 }
