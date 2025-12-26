@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:05:57 by mariacos          #+#    #+#             */
-/*   Updated: 2025/12/23 22:44:55 by mariacos         ###   ########.fr       */
+/*   Updated: 2025/12/26 09:49:09 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int isIndexSpaceOrOperator(char c);
 char *extractWord(char *str, int *i);
 t_token	*checkOperator(char *str, int *i);
 void addToken(t_token **head, t_token **tail, t_token *token);
+void printTokens(t_token *head);
 
 
 

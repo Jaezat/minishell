@@ -20,6 +20,32 @@ int is_interactive(t_data *data)
         add_history(data->line);
     return (0);
 }
+
+void printTokens(t_token *head)
+{
+	t_token *current;
+
+	current = head;
+	while(current)
+	{
+		if(current->type == T_WORD)
+			printf("WORD: %s\n", current->value);
+		else if(current->type == T_PIPE)
+			printf("PIPE: %s\n", current->value);
+		else if(current->type == T_REDIR_IN)
+			printf("REDIR_IN: %s\n", current->value);
+		else if(current->type == T_REDIR_OUT)
+			printf("REDIR_OUT: %s\n", current->value);
+		else if(current->type == T_REDIR_HDOC)
+			printf("REDIR_HDOC: %s\n", current->value);
+		else if(current->type == T_REDIR_APPEND)
+			printf("REDIR_APPEND: %s\n", current->value);
+		else
+			printf("EOF: %s\n", current->value);
+		current = current->next;
+	}
+}
+
 int startOperationalLoop(t_data *data)
 {
     while (1)
@@ -28,12 +54,10 @@ int startOperationalLoop(t_data *data)
             return 1;
 		if (tokenizeInput(data))
 		{
-			printf("is passing here");
     	    freeAllData(data);
     	    return 1;
 		}
-    	// printf("%s\n", data->line); 
-    }
-    // printf("here");
+		printTokens(data->list_tokens);
+	}
     return 0;
 }
