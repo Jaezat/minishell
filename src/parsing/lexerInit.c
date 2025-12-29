@@ -1,6 +1,6 @@
 #include "minishell.h"
  
-t_token *createToken(t_token_type type, char *value)
+t_token *create_token(t_token_type type, char *value)
 {
 	t_token *token;
 
@@ -23,13 +23,13 @@ t_token *createToken(t_token_type type, char *value)
 	return (token);
 }
 
-void skipSpace(char c, int *i)
+void skip_space(char c, int *i)
 {
 	if(c == ' ' || c == '\t')
 		(*i)++;
 }
 
-void freeTokenList(t_token *head)
+void free_token_list(t_token *head)
 {
 	t_token *temp;
 
@@ -42,18 +42,18 @@ void freeTokenList(t_token *head)
 	}
 }
 
-int checkValidationToken(char **str, t_token *head, t_token *token)
+int check_validation_token(char **str, t_token *head, t_token *token)
 {
 	if(!token)
 	{
 		free(*str);
-		freeTokenList(head);
+		free_token_list(head);
 		return (1);
 	}
 	return (0);
 }
 
-int isIndexSpaceOrOperator(char c)
+int is_index_space_or_operator(char c)
 {
 	if(c == ' ' || c == '\t')
 		return (1);
@@ -62,7 +62,7 @@ int isIndexSpaceOrOperator(char c)
 	return 0;
 }
 
-char *extractWord(char *str, int *i)
+char *extract_word(char *str, int *i)
 {
 	char *word;
 	int start;
@@ -78,7 +78,7 @@ char *extractWord(char *str, int *i)
 			inside_double = !inside_double;
 		else if(str[*i] == '\'' && !inside_double)
 			inside_single = !inside_single;
-		else if(!inside_double && !inside_single && isIndexSpaceOrOperator(str[*i]))
+		else if(!inside_double && !inside_single && is_index_space_or_operator(str[*i]))
 			break;
 		(*i)++;
 	}
@@ -95,7 +95,7 @@ char *extractWord(char *str, int *i)
 	return (word);
 }
 
-void addToken(t_token **head, t_token **tail, t_token *token)
+void add_token(t_token **head, t_token **tail, t_token *token)
 {
 	if (!*head)
 	{
@@ -110,37 +110,37 @@ void addToken(t_token **head, t_token **tail, t_token *token)
 }    
 
 // detect operators
-t_token	*checkOperator(char *str, int *i)
+t_token	*check_operator(char *str, int *i)
 {
 	if (str[*i] == '>' && str[*i + 1] == '>')
 	{
 		*i += 2;
-		return (createToken(T_REDIR_APPEND, ">>"));
+		return (create_token(T_REDIR_APPEND, ">>"));
 	}
 	if (str[*i] == '<' && str[*i + 1] == '<')
 	{
 		*i += 2;
-		return (createToken(T_REDIR_HDOC, "<<"));
+		return (create_token(T_REDIR_HDOC, "<<"));
 	}
 	if (str[*i] == '>')
 	{
 		(*i)++;
-		return (createToken(T_REDIR_OUT, ">"));
+		return (create_token(T_REDIR_OUT, ">"));
 	}
 	if (str[*i] == '<')
 	{
 		(*i)++;
-		return (createToken(T_REDIR_IN, "<"));
+		return (create_token(T_REDIR_IN, "<"));
 	}
 	if (str[*i] == '|')
 	{
 		(*i)++;
-		return (createToken(T_PIPE,  "|"));
+		return (create_token(T_PIPE,  "|"));
 	}
 	return (NULL);
 }
 
-int	tokenizeInput(t_data *data)
+int	tokenize_input(t_data *data)
 {
 	int		i;
 	char	*word;  
@@ -153,21 +153,21 @@ int	tokenizeInput(t_data *data)
 	tail = NULL;   
 	while (data->line[i])  
 	{
-		skipSpace(data->line[i], &i);
+		skip_space(data->line[i], &i);
 		if (!data->line[i])
 			break;
-		token = checkOperator(data->line, &i);
+		token = check_operator(data->line, &i);
 		if (!token)
 		{
-			word = extractWord(data->line, &i);
+			word = extract_word(data->line, &i);
 			if (!word)
 				return (1);
-			token = createToken(T_WORD, word);
+			token = create_token(T_WORD, word);
 			free(word);
 		}
-		if (checkValidationToken(&data->line, head, token))
+		if (check_validation_token(&data->line, head, token))
 			return (1);
-		addToken(&head, &tail, token);
+		add_token(&head, &tail, token);
 	}
 	data->list_tokens = head;
 	return (0); 

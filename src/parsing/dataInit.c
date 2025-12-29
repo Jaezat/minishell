@@ -25,9 +25,9 @@ char **copy_envp(char **envp, int size_envp)
 	}
 	copy_env[i] = NULL; 
 	return copy_env;
-}
+} // copy_2d_array on libft?
 
-t_data  *initAllData(char **envp)
+t_data  *init_all_data(char **envp)
 {
     t_data  *data;
 
@@ -37,7 +37,7 @@ t_data  *initAllData(char **envp)
     ft_memset(data, 0, sizeof(t_data)); 
 	data->interactive = isatty(STDIN_FILENO); 
 	data->size_envp = count_envp(envp);
-	data->envp = copy_envp(envp, data->size_envp);
+	data->envp = copy_envp(envp, data->size_envp); // data->copyenvp
 	if (!data->envp)
     {
         free(data);

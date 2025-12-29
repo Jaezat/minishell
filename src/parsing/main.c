@@ -14,7 +14,7 @@
 
 /* 1. Check parameters: give warning if (argc != 1) */
 
-void freeAllData(t_data *data)
+void free_all_data(t_data *data)
 {
 	if(!data)
 		return ;
@@ -23,7 +23,6 @@ void freeAllData(t_data *data)
 	if(data->envp)
 		free_2d_array(data->envp);
 	free(data);
-		
 }
 
 int main(int argc, char **argv, char **envp)
@@ -36,15 +35,15 @@ int main(int argc, char **argv, char **envp)
         ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
         return (1);
     }
-    data = initAllData(envp);
+    data = init_all_data(envp);
     if (!data)
         return (1);
-    if (startOperationalLoop(data) == 1)
+    if (start_operational_loop(data) == 1)
     {
         printf("is passing here");
-        freeAllData(data);
+        free_all_data(data);
         return 1;
     }
-    freeAllData(data);
+    free_all_data(data);
     return (0);
 }
