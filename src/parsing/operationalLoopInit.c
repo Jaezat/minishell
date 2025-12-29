@@ -21,7 +21,7 @@ int is_interactive(t_data *data)
     return (0);
 }
 
-void printTokens(t_token *head)
+void print_tokens(t_token *head)
 {
 	t_token *current;
 
@@ -46,18 +46,18 @@ void printTokens(t_token *head)
 	}
 }
 
-int startOperationalLoop(t_data *data)
+int start_operational_loop(t_data *data)
 {
     while (1)
     {
         if (is_interactive(data) == 1)
             return 1;
-		if (tokenizeInput(data))
+		if (tokenize_input(data))
 		{
-    	    freeAllData(data);
+    	    free_all_data(data);
     	    return 1;
 		}
-		printTokens(data->list_tokens);
+		print_tokens(data->list_tokens);
 	}
     return 0;
 }

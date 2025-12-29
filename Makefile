@@ -6,7 +6,7 @@
 #    By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 16:31:27 by mariacos          #+#    #+#              #
-#    Updated: 2025/12/22 21:23:23 by mariacos         ###   ########.fr        #
+#    Updated: 2025/12/29 09:20:54 by mariacos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC              = cc
 CFLAGS          = -Wall -Wextra -Werror -g
 
 # Directories
-SRC_DIR         = src
+SRC_DIR         = src/parsing
 OBJ_DIR         = obj
 INC_DIR         = include
 
