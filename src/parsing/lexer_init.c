@@ -62,7 +62,7 @@ int is_index_space_or_operator(char c)
 	return 0;
 }
 
-char *extract_word(char *str, int *i)
+char *extract_word(char *str, int *i, t_data *data)
 {
 	char *word;
 	int start;
@@ -72,6 +72,7 @@ char *extract_word(char *str, int *i)
 	start = *i;
 	inside_double = 0;
 	inside_single = 0;
+	data->unclosed_quotes = 0;
 	while(str[*i])
 	{
 		if(str[*i] == '"' && !inside_single)
@@ -82,11 +83,11 @@ char *extract_word(char *str, int *i)
 			break;
 		(*i)++;
 	}
-	if (inside_double || inside_single)
+/* 	if (inside_double || inside_single)
 	{
-		printf("Syntax error: unclosed quotes\n"); // question here: should we imitate bash or end program
+		data->unclosed_quotes = 1; 
 		return (NULL);
-	}
+	} */
 	word = malloc(sizeof(char) * (*i - start + 1));
 	if (!word)
 		return (NULL);
@@ -159,9 +160,12 @@ int	tokenize_input(t_data *data)
 		token = check_operator(data->line, &i);
 		if (!token)
 		{
-			word = extract_word(data->line, &i);
+			word = extract_word(data->line, &i, data);
 			if (!word)
+			{
+				free_token_list(head);
 				return (1);
+			}
 			token = create_token(T_WORD, word);
 			free(word);
 		}

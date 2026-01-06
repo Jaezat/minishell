@@ -1,27 +1,11 @@
 #include "minishell.h"
 
-/* [ ] Argument verification
-    -Check parameters: give warning if (argc != 1)
-    -Should we also already here deal with seeing if
-    im able to run the program from a script or in a non interactive
-    way
-    Ej:
-    echo "ls" > test.txt
-    bash < test.txt // i should have the same behaviour
-*/
-
-/************************/
-
-/* 1. Check parameters: give warning if (argc != 1) */
-
 void free_all_data(t_data *data)
 {
 	if(!data)
 		return ;
 	if(data->line)
 		free(data->line);
-	if(data->envp)
-		free_2d_array(data->envp);
 	free(data);
 }
 
@@ -38,12 +22,8 @@ int main(int argc, char **argv, char **envp)
     data = init_all_data(envp);
     if (!data)
         return (1);
-    if (start_operational_loop(data) == 1)
-    {
-        printf("is passing here");
-        free_all_data(data);
-        return 1;
-    }
+	print_env_list(data->env_list);
+    start_operational_loop(data);
     free_all_data(data);
     return (0);
 }
