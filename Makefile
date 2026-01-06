@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/27 16:31:27 by mariacos          #+#    #+#              #
-#    Updated: 2025/12/29 09:20:54 by mariacos         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME            = minishell
 CC              = cc
 CFLAGS          = -Wall -Wextra -Werror -g
@@ -27,7 +15,7 @@ LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 SUPP_FILE       = readline.supp
 
 # Source files
-CFILES          = main.c lexerInit.c dataInit.c operationalLoopInit.c
+CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 

@@ -1,18 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 17:05:57 by mariacos          #+#    #+#             */
-/*   Updated: 2025/12/31 08:20:46 by mariacos         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/*   Updated: 2025/12/05 16:03:02 by mariacos         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -56,7 +41,7 @@ typedef enum s_redir_type
 	REDIR_IN,       // 
 	REDIR_OUT,      // >
 	REDIR_APPEND,   // >>
-	REDIR_HEREDOC   // 
+	REDIR_HEREDOC   // <<
 }	t_redir_type;
 
 typedef struct s_token
@@ -74,12 +59,20 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
+typedef struct s_env
+{
+    char            *key;      // "PATH", "HOME", etc.
+    char            *value;    // "/usr/bin:/bin", "/home/user", etc.
+    struct s_env    *next;
+}   t_env;
+
 typedef struct s_data
 {
 	int interactive;
     char *line;
 	int size_envp;
-	char **envp; // change to copy of envp
+	t_env   *env_list; 
+	int	unclosed_quotes;
 	t_token *list_tokens;
 }	t_data;
 
@@ -87,10 +80,14 @@ typedef struct s_data
 void readline_calling(char **line);
 int is_interactive(t_data *data);
 int count_envp(char **envp);
-char **copy_envp(char **envp, int size_envp);
+t_env *create_env_from_string(char *env_str);
+void add_env_node(t_env **head, t_env *new_node);
+t_env *envp_to_list(char **envp);
+void free_env_list(t_env *head);
 t_data  *init_all_data(char **envp);
 int start_operational_loop(t_data *data);
 void free_all_data(t_data *data);
+void print_env_list(t_env *head);
 
 /* tokenize */
 t_token *create_token(t_token_type type, char *value);
@@ -99,10 +96,13 @@ void free_token_list(t_token *head);
 int check_validation_token(char **str, t_token *head, t_token *token);
 int tokenize_input(t_data *data);
 int is_index_space_or_operator(char c);
-char *extract_word(char *str, int *i);
+char *extract_word(char *str, int *i, t_data *data);
 t_token	*check_operator(char *str, int *i);
 void add_token(t_token **head, t_token **tail, t_token *token);
 void print_tokens(t_token *head);
+char *ft_strjoin_with_newline(char *s1, char *s2);
+char *read_complete_line();
+int has_unclosed_quotes(char *str);
 
 
 
