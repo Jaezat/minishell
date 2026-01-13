@@ -15,7 +15,7 @@ LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 SUPP_FILE       = readline.supp
 
 # Source files
-CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c
+CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c parser_syntax.c
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 

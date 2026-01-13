@@ -89,7 +89,7 @@ int start_operational_loop(t_data *data);
 void free_all_data(t_data *data);
 void print_env_list(t_env *head);
 
-/* tokenize */
+/* lexer: tokenize process */
 t_token *create_token(t_token_type type, char *value);
 void skip_space(char c, int *i);
 void free_token_list(t_token *head);
@@ -104,7 +104,8 @@ char *ft_strjoin_with_newline(char *s1, char *s2);
 char *read_complete_line();
 int has_unclosed_quotes(char *str);
 
-
+/* parser: syntax checker */
+int has_invalid_pipes(t_token *list_tokens); 
 
 
 #endif
