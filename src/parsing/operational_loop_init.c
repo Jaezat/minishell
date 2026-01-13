@@ -137,9 +137,10 @@ int start_operational_loop(t_data *data)
 		result = tokenize_input(data);		
 		if (result == 0)
 		{
+			/* aca comenzamos a trabajar con el tree */
 			print_tokens(data->list_tokens);
-			free_token_list(data->list_tokens);
-			data->list_tokens = NULL;
+			if (!has_invalid_pipes(data->list_tokens))
+				return (1);
 		}
 	}
 	return (0);
