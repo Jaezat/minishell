@@ -127,6 +127,8 @@ void print_tokens(t_token *head)
 }
 
 
+
+
 int start_operational_loop(t_data *data)
 {
 	int result;
@@ -135,32 +137,20 @@ int start_operational_loop(t_data *data)
 		if (is_interactive(data) == 1)
 			return (1);
 		result = tokenize_input(data);		
-		if (result == 0)
+		if (result == 0) // all this looks kinda ugly ngl
 		{
-			/* aca comenzamos a trabajar con el tree */
 			print_tokens(data->list_tokens);
-			if (has_invalid_pipes(data->list_tokens) != 0)
-				return (1);
-			else if(has_invalid_redirect(data->list_tokens) != 0)
-				return (1);
+			if (check_syntax(data->list_tokens) != 0)
+			{
+				free_token_list(data->list_tokens);
+				continue;
+			}
+			else
+			{
+				/* aca comenzamos a trabajar con el tree */
+			}
 		}
 	}
 	return (0);
 }
 
-/* int start_operational_loop(t_data *data)
-{
-    while (1)
-    {
-        if (is_interactive(data) == 1)
-            return 1;
-		if (tokenize_input(data))
-		{
-    	    free_all_data(data);
-    	    return 1;
-
-		}
-		print_tokens(data->list_tokens);
-	}
-    return 0;
-} */

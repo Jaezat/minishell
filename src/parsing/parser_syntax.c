@@ -1,21 +1,5 @@
 #include "minishell.h"
 
-/* 
-while (1)
-	{
-		if (is_interactive(data) == 1)
-			return (1);
-		result = tokenize_input(data);		
-		if (result == 0)
-		{
-			print_tokens(data->list_tokens);
-			
-		}
-	}
-*/
-
-/* Handling pipe errors */
-
 int print_error_syntax(char *str)
 {
     char *err_msg;
@@ -24,7 +8,6 @@ int print_error_syntax(char *str)
     ft_printf("%s '%s'\n", err_msg, str);
     return (1);
 }
-
 
 int has_invalid_pipes(t_token *list_tokens)
 {
@@ -81,4 +64,13 @@ int has_invalid_redirect(t_token *list_tokens)
         current = current->next;
     }
     return 0;
+}
+
+int check_syntax(t_token *list_tokens)
+{
+	if(has_invalid_pipes(list_tokens) != 0)
+        return (1);
+    if(has_invalid_redirect(list_tokens) != 0)
+        return (1);
+    return (0);
 }

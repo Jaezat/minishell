@@ -109,6 +109,6 @@ int has_invalid_pipes(t_token *list_tokens);
 int has_invalid_redirect(t_token *list_tokens);
 int check_redirec(t_token *token);
 int print_error_syntax(char *str);
-
+int check_syntax(t_token *list_tokens);
 
 #endif
