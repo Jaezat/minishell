@@ -139,7 +139,9 @@ int start_operational_loop(t_data *data)
 		{
 			/* aca comenzamos a trabajar con el tree */
 			print_tokens(data->list_tokens);
-			if (!has_invalid_pipes(data->list_tokens))
+			if (has_invalid_pipes(data->list_tokens) != 0)
+				return (1);
+			else if(has_invalid_redirect(data->list_tokens) != 0)
 				return (1);
 		}
 	}

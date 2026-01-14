@@ -16,9 +16,12 @@ while (1)
 
 /* Handling pipe errors */
 
-int print_error_pipe()
+int print_error_syntax(char *str)
 {
-    printf("Syntax error near unexpected token `|'\n");
+    char *err_msg;
+
+    err_msg = "Syntax error near unexpected token";
+    ft_printf("%s '%s'\n", err_msg, str);
     return (1);
 }
 
@@ -26,17 +29,55 @@ int print_error_pipe()
 int has_invalid_pipes(t_token *list_tokens)
 {
     t_token *current;
+    char *err_pipe;
 
     current = list_tokens;
-    while(current)
+    err_pipe = "|";
+    while(current != NULL)
     {
         if (current == list_tokens)
         {
             if (current->type == T_PIPE)
-                return (print_error_pipe());
+                return (print_error_syntax(err_pipe));
         }
-        else if (current->type == T_PIPE && current->next->type == T_PIPE)
-            return (print_error_pipe());
+        else if (current->next != NULL)
+        {
+            if (current->type == T_PIPE && current->next->type == T_PIPE)
+                return (print_error_syntax(err_pipe));
+        }
+        else if (current->next == NULL && current->type == T_PIPE)
+            return (print_error_syntax(err_pipe));
+        
+        current = current->next;
+    }
+    return 0;
+}
+
+int check_redirec(t_token *token)
+{
+    if (token->type != T_REDIR_IN && token->type != T_REDIR_OUT &&
+        token->type != T_REDIR_APPEND && token->type != T_REDIR_HDOC)
+        return (0);
+
+    if (token->next == NULL)
+        return (print_error_syntax("newline"));
+
+    if (token->next->type != T_WORD)
+        return (print_error_syntax(token->next->value));
+    return (0); // Todo está bien
+}
+
+int has_invalid_redirect(t_token *list_tokens)
+{
+    t_token *current;
+    int status;
+    
+    current = list_tokens;
+    while(current != NULL)
+    { 
+        status = check_redirec(current);
+        if(status != 0)
+            return (status); 
         current = current->next;
     }
     return 0;
