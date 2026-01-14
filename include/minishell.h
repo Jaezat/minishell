@@ -106,6 +106,9 @@ int has_unclosed_quotes(char *str);
 
 /* parser: syntax checker */
 int has_invalid_pipes(t_token *list_tokens); 
+int has_invalid_redirect(t_token *list_tokens);
+int check_redirec(t_token *token);
+int print_error_syntax(char *str);
 
 
 #endif
