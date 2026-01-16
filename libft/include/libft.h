@@ -63,6 +63,7 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 // int     main();
 
+long long	ft_atoll(const char *str);
 
 //extra
 char	*get_next_line(int fd);
