@@ -53,3 +53,30 @@ int	ft_atoi(const char *nptr)
 		res = -res;
 	return (res);
 }
+
+long long	ft_atoll(const char *str)
+{
+	long long	res;
+	int			sign;
+	int			i;
+
+	res = 0;
+	sign = 1;
+	i = 0;
+
+	while (is_space(str[i]) == 1)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (number(str[i]))
+	{
+		res = (res * 10) + (str[i] - '0');
+		i++;
+	}
+
+	return (res * sign);
+}

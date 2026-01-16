@@ -101,15 +101,41 @@ int is_interactive(t_data *data)
 	return (0);
 }
 
-void print_tokens(t_token *head)
+void print_tokens(t_data *data)
 {
 	t_token *current;
 
-	current = head;
+	current = data->list_tokens;
 	while(current)
 	{
 		if(current->type == T_WORD)
-			printf("WORD: %s\n", current->value);
+			{
+				printf("WORD: %s\n", current->value);
+				if ((ft_strcmp(current->value, "cd") == 0))
+				{
+					char *arg;
+					if (!(current->next))
+						arg = NULL;
+					else
+						arg = current->next->value;
+					ft_cd(data, arg);
+				}
+				if ((ft_strcmp(current->value, "env") == 0))
+					print_env_list(data->env_list);
+				if ((ft_strcmp(current->value, "pwd") == 0))
+					ft_pwd();
+				if ((ft_strcmp(current->value, "exit") == 0))
+				{
+					char *args[2];
+					if (!(current->next))
+						args[0] = NULL;
+					else
+						args[0] = current->next->value;
+					if (current->next && current->next->next)
+						args[1] = current->next->next->value;
+					ft_exit(data, args);
+				}
+			}
 		else if(current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
 		else if(current->type == T_REDIR_IN)
@@ -139,7 +165,7 @@ int start_operational_loop(t_data *data)
 		result = tokenize_input(data);		
 		if (result == 0) // all this looks kinda ugly ngl
 		{
-			print_tokens(data->list_tokens);
+			print_tokens(data);
 			if (check_syntax(data->list_tokens) != 0)
 			{
 				free_token_list(data->list_tokens);

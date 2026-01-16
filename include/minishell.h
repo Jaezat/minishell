@@ -99,7 +99,7 @@ int is_index_space_or_operator(char c);
 char *extract_word(char *str, int *i, t_data *data);
 t_token	*check_operator(char *str, int *i);
 void add_token(t_token **head, t_token **tail, t_token *token);
-void print_tokens(t_token *head);
+void print_tokens(t_data *data);
 char *ft_strjoin_with_newline(char *s1, char *s2);
 char *read_complete_line();
 int has_unclosed_quotes(char *str);
@@ -110,5 +110,12 @@ int has_invalid_redirect(t_token *list_tokens);
 int check_redirec(t_token *token);
 int print_error_syntax(char *str);
 int check_syntax(t_token *list_tokens);
+
+/* execution */
+int	ft_cd(t_data *shell, char *args);
+char	*get_env_value(t_env *head, char *env_var);
+int	ft_pwd(void);
+int ft_exit(t_data *data, char **args);
+
 
 #endif

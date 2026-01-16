@@ -3,7 +3,7 @@ CC              = cc
 CFLAGS          = -Wall -Wextra -Werror -g
 
 # Directories
-SRC_DIR         = src/parsing
+SRC_DIR         = src
 OBJ_DIR         = obj
 INC_DIR         = include
 
@@ -15,7 +15,7 @@ LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 SUPP_FILE       = readline.supp
 
 # Source files
-CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c parser_syntax.c
+CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c parser_syntax.c ft_cd.c ft_pwd.c ft_exit.c
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
