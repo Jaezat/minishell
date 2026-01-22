@@ -110,7 +110,7 @@ void print_tokens(t_data *data)
 	{
 		if(current->type == T_WORD)
 			{
-				printf("WORD: %s\n", current->value);
+				//printf("WORD: %s\n", current->value);
 				if ((ft_strcmp(current->value, "cd") == 0))
 				{
 					char *arg;
@@ -130,10 +130,20 @@ void print_tokens(t_data *data)
 					if (!(current->next))
 						args[0] = NULL;
 					else
+					{
 						args[0] = current->next->value;
+						args[1] = NULL;
+					}
 					if (current->next && current->next->next)
 						args[1] = current->next->next->value;
 					ft_exit(data, args);
+				}
+				if ((ft_strcmp(current->value, "echo") == 0))
+				{
+					if (current->next)
+						current = current->next;
+					
+					ft_echo(data, current);
 				}
 			}
 		else if(current->type == T_PIPE)
