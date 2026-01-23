@@ -122,6 +122,7 @@ int	ft_cd(t_minishell *shell, char *args);
 char	*get_env_value(t_env *head, char *env_var);
 int	ft_pwd(void);
 int ft_exit(t_minishell *data, char **args);
+int	ft_echo(t_data *data, t_token *current);
 
 
 #endif
