@@ -87,7 +87,7 @@ static char	*append_next(char *line, char *buffer, int *offset, size_t bytes_rea
 static int	check(int fd, char *buffer, size_t *bytes_read, char **line)
 {
 	*bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (*bytes_read < 0)
+	if (*bytes_read == 0)
 	{
 		if (*line)
 		{
