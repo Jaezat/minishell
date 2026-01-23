@@ -88,8 +88,7 @@ int is_interactive(t_minishell *data)
 	return (0);
 }
 
-
-int start_operational_loop(t_minishell *data)
+/* int start_operational_loop(t_minishell *data)
 	current = data->list_tokens;
 	while(current)
 	{
@@ -146,9 +145,7 @@ int start_operational_loop(t_minishell *data)
 		current = current->next;
 	}
 }
-
-
-
+ */
 
 int start_operational_loop(t_minishell *data)
 {
@@ -160,9 +157,9 @@ int start_operational_loop(t_minishell *data)
 		if (is_interactive(data) == 1)
 			return (1);
 		result = tokenize_input(data);		
-		if (result == 0) // all this looks kinda ugly ngl
+		if (result == 0)
 		{
-			// print_tokens(data);
+			print_tokens(data);
 			if (check_syntax(data->list_tokens) != 0)
 			{
 				free_token_list(data->list_tokens);
