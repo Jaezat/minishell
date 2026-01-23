@@ -32,7 +32,7 @@ void	update_env_var(t_env *head, char *env_var, char *new_value)
 	}
 }
 
-int	ft_cd(t_data *shell, char *args)
+int	ft_cd(t_minishell *shell, char *args)
 {
 	char	*target_path;
 	// PATH_MAX is defined in limits.h as a macro
