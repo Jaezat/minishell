@@ -34,6 +34,13 @@ void print_tokens(t_minishell *data)
 						args[1] = current->next->next->value;
 					ft_exit(data, args);
 				}
+				if ((ft_strcmp(current->value, "echo") == 0))
+				{
+					if (current->next)
+						current = current->next;
+					
+					ft_echo(data, current);
+				}
 			}
 		else if(current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
