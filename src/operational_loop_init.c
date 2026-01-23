@@ -150,7 +150,7 @@ int start_operational_loop(t_minishell *data)
 
 
 
-int start_operational_loop(t_data *data)
+int start_operational_loop(t_minishell *data)
 {
 	int result;
 	t_ast *ast_root;
