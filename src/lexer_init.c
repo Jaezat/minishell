@@ -62,7 +62,7 @@ int is_index_space_or_operator(char c)
 	return 0;
 }
 
-char *extract_word(char *str, int *i, t_data *data)
+char *extract_word(char *str, int *i, t_minishell *data)
 {
 	char *word;
 	int start;
@@ -141,7 +141,7 @@ t_token	*check_operator(char *str, int *i)
 	return (NULL);
 }
 
-int	tokenize_input(t_data *data)
+int	tokenize_input(t_minishell *data)
 {
 	int		i;
 	char	*word;  

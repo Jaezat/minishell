@@ -111,14 +111,14 @@ void print_env_list(t_env *head)
     printf("Total: %d variables\n", i);
 }
 
-t_data *init_all_data(char **envp)
+t_minishell *init_all_data(char **envp)
 {
-    t_data *data;
+    t_minishell *data;
 
-    data = malloc(sizeof(t_data));
+    data = malloc(sizeof(t_minishell));
     if (!data)
         return (NULL);
-    ft_memset(data, 0, sizeof(t_data)); 
+    ft_memset(data, 0, sizeof(t_minishell)); 
     data->interactive = isatty(STDIN_FILENO);
     data->env_list = envp_to_list(envp);
     if (!data->env_list)

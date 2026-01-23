@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void free_all_data(t_data *data)
+void free_all_data(t_minishell *data)
 {
 	if(!data)
 		return ;
@@ -11,7 +11,7 @@ void free_all_data(t_data *data)
 
 int main(int argc, char **argv, char **envp)
 {
-    t_data  *data;
+    t_minishell  *data;
     
     (void)argv;
     if (argc != 1)
