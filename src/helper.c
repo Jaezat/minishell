@@ -58,6 +58,31 @@ void print_tokens(t_minishell *data)
 	}
 }
 
+/* void print_tokens(t_minishell *data)
+{
+	t_token *current;
+
+	current = data->list_tokens;
+	while(current)
+	{
+		if(current->type == T_WORD)
+			printf("WORD: %s\n", current->value);
+		else if(current->type == T_PIPE)
+			printf("PIPE: %s\n", current->value);
+		else if(current->type == T_REDIR_IN)
+			printf("REDIR_IN: %s\n", current->value);
+		else if(current->type == T_REDIR_OUT)
+			printf("REDIR_OUT: %s\n", current->value);
+		else if(current->type == T_REDIR_HDOC)
+			printf("REDIR_HDOC: %s\n", current->value);
+		else if(current->type == T_REDIR_APPEND)
+			printf("REDIR_APPEND: %s\n", current->value);
+		else
+			printf("EOF: %s\n", current->value);
+		current = current->next;
+	}
+} */
+
 void print_ast_horizontal(t_ast *node, int is_left, int depth)
 {
     int i;
@@ -79,6 +104,8 @@ void print_ast_horizontal(t_ast *node, int is_left, int depth)
     else if (node->type == NODE_COMMAND)
 	{
 	    printf("CMD(%s)", node->args ? node->args[0] : "NULL");
+		// if(node->args)
+		// 	ft_print_2d_array(node->args);
 	    if (node->infile)
 	        printf(" [IN: %s]", node->infile);
 	    if (node->outfile)

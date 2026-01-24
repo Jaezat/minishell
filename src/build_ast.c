@@ -77,7 +77,7 @@ t_ast *create_simple_cmd(t_token *token_list)
 				node->append = 1;
 			}
 		}
-		else if (current->type == T_REDIR_HDOC)
+		else if (current->type == T_REDIR_HDOC) // > 
 		{
 			current = current->next;
 			if (current && current->type == T_WORD)

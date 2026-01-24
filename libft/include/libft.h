@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 10:21:01 by mariacos          #+#    #+#             */
-/*   Updated: 2025/12/08 10:29:50 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/01/24 10:03:44 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ long long	ft_atoll(const char *str);
 //extra
 char	*get_next_line(int fd);
 void    free_2d_array(char **array);
+void ft_print_2d_array(char **array);
+
 //extra : ft_printf
 int	ft_putnbr(int nb);
 int	ftprint_string(va_list *args);
@@ -76,5 +78,6 @@ int	ftprint_unsigned(va_list *args, char format);
 int	ft_putchar(char c);
 int	check_format(const char format, va_list *args);
 int	ft_printf(const char *str, ...);
+
 
 #endif

@@ -23,9 +23,9 @@ t_token *create_token(t_token_type type, char *value)
 	return (token);
 }
 
-void skip_space(char c, int *i)
+void skip_space(char *str, int *i)
 {
-	if(c == ' ' || c == '\t')
+	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
 }
 
@@ -146,15 +146,15 @@ int	tokenize_input(t_minishell *data)
 	int		i;
 	char	*word;  
 	t_token	*token;
-	t_token	*head;  
+ 	t_token	*head;  
 	t_token	*tail; 
     
 	i = 0;   
 	head = NULL;  
 	tail = NULL;   
-	while (data->line[i])  
+	while (data->line[i])
 	{
-		skip_space(data->line[i], &i);
+		skip_space(data->line, &i);
 		if (!data->line[i])
 			break;
 		token = check_operator(data->line, &i);
@@ -166,6 +166,7 @@ int	tokenize_input(t_minishell *data)
 				free_token_list(head);
 				return (1);
 			}
+			printf("Word: %s\n", word);
 			token = create_token(T_WORD, word);
 			free(word);
 		}
@@ -174,5 +175,5 @@ int	tokenize_input(t_minishell *data)
 		add_token(&head, &tail, token);
 	}
 	data->list_tokens = head;
-	return (0); 
+	return (0);
 }

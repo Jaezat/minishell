@@ -156,10 +156,11 @@ int start_operational_loop(t_minishell *data)
 	{
 		if (is_interactive(data) == 1)
 			return (1);
-		result = tokenize_input(data);		
+		result = tokenize_input(data);
 		if (result == 0)
 		{
-			print_tokens(data);
+			// printf("Line: %s\n", data->line);
+			// print_tokens(data);
 			if (check_syntax(data->list_tokens) != 0)
 			{
 				free_token_list(data->list_tokens);
@@ -172,13 +173,6 @@ int start_operational_loop(t_minishell *data)
 				continue;
 			}
 			print_ast(ast_root, 0);
-			/* 
-			- Expansion
-
-			- Execution
-			
-			- Free everything
-			 */
 		}
 	}
 	return (0);
