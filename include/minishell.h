@@ -63,13 +63,13 @@ typedef enum s_node_type
 typedef struct s_ast
 {
 	t_node_type type;
-	char **args;
-	char *infile;
-	char *outfile;
-	char *heredoc;
+	char **args; 
+	char *infile;  // same struct, each will be a linked list. 
+	char *outfile; //
+	char *heredoc; // temp file, or fd 
 	int append;
-	struct s_ast *left;
-	struct s_ast *right;
+	struct s_ast *left; //left_child
+	struct s_ast *right; //right 
 }	t_ast;
 
 
@@ -87,7 +87,7 @@ void print_env_list(t_env *head);
 
 /* lexer: tokenize process */
 t_token *create_token(t_token_type type, char *value);
-void skip_space(char c, int *i);
+void skip_space(char *str, int *i);
 void free_token_list(t_token *head);
 int check_validation_token(char **str, t_token *head, t_token *token);
 int tokenize_input(t_minishell *data);
