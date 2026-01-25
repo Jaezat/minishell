@@ -8,19 +8,6 @@ void readline_calling(char **line)
     );
 }
 
-/* int is_interactive(t_data *data)
-{
-    readline_calling(&(data->line));
-    if (data->line == NULL)
-    {
-        ft_printf("Exit");
-        return 1;
-    }
-    if (data->line)
-        add_history(data->line);
-    return (0);
-} */
-
 int has_unclosed_quotes(char *str)
 {
 	int in_single;
@@ -36,7 +23,7 @@ int has_unclosed_quotes(char *str)
 			in_single = !in_single;
 		str++;
 	}
-	return (in_single || in_double); // check if norminette allows this 
+	return (in_single || in_double);
 }
 
 char *ft_strjoin_with_newline(char *s1, char *s2)
@@ -49,7 +36,7 @@ char *ft_strjoin_with_newline(char *s1, char *s2)
 		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	result = malloc(len1 + len2 + 2);  // +1 para '\n' y +1 para '\0'
+	result = malloc(len1 + len2 + 2);
 	if (!result)
 		return (NULL);
 	ft_memcpy(result, s1, len1);
@@ -88,7 +75,7 @@ char *read_complete_line()
 	return (line);
 }
 
-int is_interactive(t_data *data)
+int is_interactive(t_minishell *data)
 {
 	if (data->line)
 		free(data->line);
@@ -101,10 +88,7 @@ int is_interactive(t_data *data)
 	return (0);
 }
 
-void print_tokens(t_data *data)
-{
-	t_token *current;
-
+/* int start_operational_loop(t_minishell *data)
 	current = data->list_tokens;
 	while(current)
 	{
@@ -161,30 +145,34 @@ void print_tokens(t_data *data)
 		current = current->next;
 	}
 }
+ */
 
-
-
-
-int start_operational_loop(t_data *data)
+int start_operational_loop(t_minishell *data)
 {
 	int result;
+	t_ast *ast_root;
+
 	while (1)
 	{
 		if (is_interactive(data) == 1)
 			return (1);
-		result = tokenize_input(data);		
-		if (result == 0) // all this looks kinda ugly ngl
+		result = tokenize_input(data);
+		if (result == 0)
 		{
-			print_tokens(data);
+			// printf("Line: %s\n", data->line);
+			// print_tokens(data);
 			if (check_syntax(data->list_tokens) != 0)
 			{
 				free_token_list(data->list_tokens);
 				continue;
 			}
-			else
+			ast_root = build_ast(data->list_tokens);
+			if(!ast_root)
 			{
-				/* aca comenzamos a trabajar con el tree */
+				free_token_list(data->list_tokens);
+				continue;
 			}
+			print_ast(ast_root, 0);
 		}
 	}
 	return (0);

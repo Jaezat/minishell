@@ -23,9 +23,9 @@ t_token *create_token(t_token_type type, char *value)
 	return (token);
 }
 
-void skip_space(char c, int *i)
+void skip_space(char *str, int *i)
 {
-	if(c == ' ' || c == '\t')
+	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
 }
 
@@ -62,7 +62,7 @@ int is_index_space_or_operator(char c)
 	return 0;
 }
 
-char *extract_word(char *str, int *i, t_data *data)
+char *extract_word(char *str, int *i, t_minishell *data)
 {
 	char *word;
 	int start;
@@ -141,20 +141,20 @@ t_token	*check_operator(char *str, int *i)
 	return (NULL);
 }
 
-int	tokenize_input(t_data *data)
+int	tokenize_input(t_minishell *data)
 {
 	int		i;
 	char	*word;  
 	t_token	*token;
-	t_token	*head;  
+ 	t_token	*head;  
 	t_token	*tail; 
     
 	i = 0;   
 	head = NULL;  
 	tail = NULL;   
-	while (data->line[i])  
+	while (data->line[i])
 	{
-		skip_space(data->line[i], &i);
+		skip_space(data->line, &i);
 		if (!data->line[i])
 			break;
 		token = check_operator(data->line, &i);
@@ -166,6 +166,7 @@ int	tokenize_input(t_data *data)
 				free_token_list(head);
 				return (1);
 			}
+			printf("Word: %s\n", word);
 			token = create_token(T_WORD, word);
 			free(word);
 		}
@@ -174,5 +175,5 @@ int	tokenize_input(t_data *data)
 		add_token(&head, &tail, token);
 	}
 	data->list_tokens = head;
-	return (0); 
+	return (0);
 }

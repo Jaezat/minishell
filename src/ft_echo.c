@@ -20,7 +20,7 @@ static int check_flag(char *str)
 	return (1);
 }
 
-int	ft_echo(t_data *data, t_token *current)
+int	ft_echo(t_minishell *data, t_token *current)
 {
 	int	flag;
 

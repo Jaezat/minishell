@@ -18,7 +18,7 @@ int	ft_is_numeric(char *str)
 	return (1);
 }
 
-int ft_exit(t_data *data, char **args)
+int ft_exit(t_minishell *data, char **args)
 {
 	long long final_code;
 
