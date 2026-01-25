@@ -24,14 +24,14 @@ int	ft_echo(t_data *data, t_token *current)
 {
 	int	flag;
 
-	flag = 1;
+	flag = 0;
 
 	if (data && current)
 	{
 		while(current && check_flag(current->value))
 		{
 			current = current->next;
-			flag = 0;
+			flag = 1;
 		}
 		while(current)
 		{
@@ -40,7 +40,7 @@ int	ft_echo(t_data *data, t_token *current)
 				ft_putstr_fd(" ", 1);
 			current = current->next;
 		}
-		if (flag)
+		if (!flag)
 			ft_putchar_fd('\n', 1);
 	}
 	return (1);
