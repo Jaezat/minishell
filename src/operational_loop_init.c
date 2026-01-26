@@ -150,7 +150,6 @@ int is_interactive(t_minishell *data)
 int start_operational_loop(t_minishell *data)
 {
 	int result;
-	t_ast *ast_root;
 
 	while (1)
 	{
@@ -160,19 +159,15 @@ int start_operational_loop(t_minishell *data)
 		if (result == 0)
 		{
 			// printf("Line: %s\n", data->line);
-			// print_tokens(data);
 			if (check_syntax(data->list_tokens) != 0)
 			{
 				free_token_list(data->list_tokens);
 				continue;
 			}
-			ast_root = build_ast(data->list_tokens);
-			if(!ast_root)
-			{
-				free_token_list(data->list_tokens);
-				continue;
-			}
-			print_ast(ast_root, 0);
+			print_tokens(data);
+			
+
+
 		}
 	}
 	return (0);
