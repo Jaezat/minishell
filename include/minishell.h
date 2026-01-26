@@ -54,23 +54,21 @@ typedef struct s_minishell
 	t_token *list_tokens;
 }	t_minishell;
 
-typedef enum s_node_type
-{
-	NODE_COMMAND,
-	NODE_PIPE
-}	t_node_type;
+/* linked list structures */
 
-typedef struct s_ast
+typedef struct s_redir
 {
-	t_node_type type;
-	char **args; 
-	char *infile;  // same struct, each will be a linked list. 
-	char *outfile; //
-	char *heredoc; // temp file, or fd 
-	int append;
-	struct s_ast *left; //left_child
-	struct s_ast *right; //right 
-}	t_ast;
+	t_token_type type;
+	char *file;
+	struct s_redir *next;
+}	t_redir;
+
+typedef struct s_cmd
+{
+	char **args;
+	t_redir *redirs;
+	struct s_cmd *next;
+} t_cmd;
 
 
 void readline_calling(char **line);
@@ -106,16 +104,6 @@ int has_invalid_redirect(t_token *list_tokens);
 int check_redirec(t_token *token);
 int print_error_syntax(char *str);
 int check_syntax(t_token *list_tokens);
-
-/* parser: ast */
-int is_there_pipe(t_token *token_list);
-int count_word_tokens(t_token *tokens);
-t_ast *create_simple_cmd(t_token *token_list);
-t_token *find_last_pipe(t_token *token_list, t_token **prev_out);
-t_ast *build_ast(t_token *token_list);
-void print_ast_horizontal(t_ast *node, int is_left, int depth);
-void print_ast(t_ast *node, int depth);
-
 
 /* execution */
 int	ft_cd(t_minishell *shell, char *args);
