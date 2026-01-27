@@ -10,7 +10,7 @@ void print_tokens(t_minishell *data)
 		if(current->type == T_WORD)
 			{
 				printf("WORD: %s\n", current->value);
-				if ((ft_strcmp(current->value, "cd") == 0))
+				/* if ((ft_strcmp(current->value, "cd") == 0))
 				{
 					char *arg;
 					if (!(current->next))
@@ -40,7 +40,7 @@ void print_tokens(t_minishell *data)
 						current = current->next;
 					
 					ft_echo(data, current);
-				}
+				} */
 			}
 		else if(current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
