@@ -12,9 +12,9 @@ char	*get_env_value(t_env *head, char *env_var)
 		current = current->next;
 	}
 	return (NULL);
-}
+} 
 
-void	update_env_var(t_env *head, char *env_var, char *new_value)
+ void	update_env_var(t_env *head, char *env_var, char *new_value)
 {
 	t_env	*current;
 

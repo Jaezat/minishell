@@ -57,3 +57,51 @@ void print_tokens(t_minishell *data)
 		current = current->next;
 	}
 }
+
+void print_commands(t_cmd *head)
+{
+    t_cmd   *curr;
+    t_redir *r;
+    int     i;
+    int     cmd_idx;
+
+    curr = head;
+    cmd_idx = 0;
+    printf("\n=== COMMAND STRUCTURE ===\n");
+    while (curr)
+    {
+        printf("COMMAND [%d]:\n", cmd_idx++);
+        
+        // 1. Imprimir Argumentos
+        printf("  Args: ");
+        if (curr->args)
+        {
+            i = 0;
+            while (curr->args[i])
+            {
+                printf("[%s] ", curr->args[i]);
+                i++;
+            }
+        }
+        else
+            printf("(NULL)");
+        printf("\n");
+
+        // 2. Imprimir Redirecciones
+        printf("  Redirs: ");
+        r = curr->redirs;
+        if (!r)
+            printf("(none)");
+        while (r)
+        {
+            printf("{Type: %d, File: %s} ", r->type, r->file);
+            r = r->next;
+            if (r) printf("-> ");
+        }
+        
+        printf("\n  Size Args: %d\n", curr->size_args);
+        printf("--------------------------\n");
+        curr = curr->next;
+    }
+    printf("==========================\n\n");
+}
