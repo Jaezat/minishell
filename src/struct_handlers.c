@@ -26,7 +26,7 @@ int count_size_args(t_token *tkn)
 	return (count);
 }
 
-int  handle_pipe(t_struct *st, t_minishell *data)
+/* int  handle_pipe(t_struct *st, t_minishell *data)
 {
     st->current_cmd->args[st->arg_index] = NULL;
     st->current_cmd->args = args_expansion(st->current_cmd->args, data);
@@ -37,6 +37,28 @@ int  handle_pipe(t_struct *st, t_minishell *data)
     st->arg_index = 0;
     st->current_tkn = st->current_tkn->next;
     st->current_cmd->size_args = count_size_args(st->current_tkn);
+    st->current_cmd->args = malloc(sizeof(char *) 
+        * (st->current_cmd->size_args + 1));
+    if (!st->current_cmd->args)
+        return (0);
+    return (1);
+} */
+
+
+int handle_pipe(t_struct *st, t_minishell *data)
+{
+    st->current_cmd->args[st->arg_index] = NULL;
+    st->current_cmd->args = args_expansion(st->current_cmd->args, data);
+    
+    st->current_cmd->next = create_node();
+    if (!st->current_cmd->next)
+        return (0);
+        
+    st->current_cmd = st->current_cmd->next;
+    st->arg_index = 0;
+    if (st->current_tkn->next)
+        st->current_cmd->size_args = count_size_args(st->current_tkn->next);
+    
     st->current_cmd->args = malloc(sizeof(char *) 
         * (st->current_cmd->size_args + 1));
     if (!st->current_cmd->args)

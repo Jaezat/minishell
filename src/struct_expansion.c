@@ -72,21 +72,26 @@ char *check_after_dollar_sign(char *str, t_minishell *data)
 
 char **args_expansion(char **args, t_minishell *data)
 {
-	int i;
-	char *new_str;
-	char *clean_str;
+    int i;
+    int j;
+    char *new_str;
+    char *clean_str;
 
-	i = 0;
-	while(args[i])
-	{
-		new_str = check_after_dollar_sign(args[i], data);
-		clean_str = remove_quotes(new_str);
-		free(args[i]);
-		free(new_str);
-		args[i] = clean_str;
-		i++;
-	}
-	args[i] = NULL;
-	return args;
+    i = 0;
+    j = 0;
+    while (args[i])
+    {
+        new_str = check_after_dollar_sign(args[i], data);
+        clean_str = remove_quotes(new_str);
+        free(new_str);
+        free(args[i]);
+        if (clean_str && clean_str[0] == '\0')
+            free(clean_str);
+        else
+            args[j++] = clean_str;
+        i++;
+    }
+    args[j] = NULL;
+    return (args);
 }
 
