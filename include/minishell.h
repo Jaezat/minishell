@@ -8,6 +8,7 @@
 # include <stdio.h> 
 # include <unistd.h>
 # include <stdio.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -41,6 +42,7 @@ typedef struct s_env
 {
     char            *key;      // "PATH", "HOME", etc.
     char            *value;    // "/usr/bin:/bin", "/home/user", etc.
+	int				is_exported; // 0 for false 1 for true
     struct s_env    *next;
 }   t_env;
 
@@ -120,9 +122,16 @@ void print_ast(t_ast *node, int depth);
 /* execution */
 int	ft_cd(t_minishell *shell, char *args);
 char	*get_env_value(t_env *head, char *env_var);
+t_env	*get_env_node(t_env *head, char *env_var);
+int	validate_shell_variable(char *str);
+void	extract_key_and_value_from_arg(char *arg, char **key, char **value);
 int	ft_pwd(void);
 int ft_exit(t_minishell *data, char **args);
 int	ft_echo(t_minishell *data, t_token *current);
+int	ft_export(t_minishell *data, t_token *current);
+int	ft_unset(t_minishell *shell, t_token *current);
+void	handle_signals(void);
+extern volatile sig_atomic_t	g_signal_status;
 
 
 #endif
