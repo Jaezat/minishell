@@ -24,6 +24,7 @@ t_env *create_env_from_string(char *env_str)
     key_len = equal_sign - env_str;
     node->key = ft_substr(env_str, 0, key_len);
     node->value = ft_strdup(equal_sign + 1);
+	node->is_exported = 1;
     node->next = NULL;
     if (!node->key || !node->value)
     {

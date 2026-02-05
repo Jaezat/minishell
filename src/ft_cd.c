@@ -14,6 +14,20 @@ char	*get_env_value(t_env *head, char *env_var)
 	return (NULL);
 }
 
+t_env	*get_env_node(t_env *head, char *key)
+{
+	t_env	*current;
+
+	current = head;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 void	update_env_var(t_env *head, char *env_var, char *new_value)
 {
 	t_env	*current;

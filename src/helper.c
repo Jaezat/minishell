@@ -9,7 +9,7 @@ void print_tokens(t_minishell *data)
 	{
 		if(current->type == T_WORD)
 			{
-				printf("WORD: %s\n", current->value);
+				//printf("WORD: %s\n", current->value);
 				if ((ft_strcmp(current->value, "cd") == 0))
 				{
 					char *arg;
@@ -41,6 +41,10 @@ void print_tokens(t_minishell *data)
 					
 					ft_echo(data, current);
 				}
+				if ((ft_strcmp(current->value, "export") == 0))
+					ft_export(data, current);
+				if ((ft_strcmp(current->value, "unset") == 0))
+					ft_unset(data, current);
 			}
 		else if(current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
