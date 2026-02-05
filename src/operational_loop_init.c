@@ -147,31 +147,6 @@ int is_interactive(t_minishell *data)
 }
  */
 
-/* int start_operational_loop(t_minishell *data)
-{
-	int result;
-
-	while (1)
-	{
-		if (is_interactive(data) == 1)
-			return (1);
-		result = tokenize_input(data);
-		if (result == 0)
-		{
-			// printf("Line: %s\n", data->line);
-			if (check_syntax(data->list_tokens) != 0)
-			{
-				free_token_list(data->list_tokens);
-				continue;
-			}
-			print_tokens(data);
-			
-
-
-		}
-	}
-	return (0);
-} */
 
 int start_operational_loop(t_minishell *data)
 {
@@ -196,18 +171,8 @@ int start_operational_loop(t_minishell *data)
                 continue;
             }
 			print_commands(cmds);
-			// printf("here2\n");
 			
-
-            // Aquí vendría la ejecución:
-            // execute_cmds(cmds, data);
-
-            // LIMPIEZA FINAL DE LA ITERACIÓN
-            /* free_cmd_list(cmds);
-            free_token_list(data->list_tokens);
-        } */
     	}
 	}
     return (0);
 }
-
