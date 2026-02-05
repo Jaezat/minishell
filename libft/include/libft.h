@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 10:21:01 by mariacos          #+#    #+#             */
-/*   Updated: 2026/01/24 10:03:44 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/01/30 19:13:36 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ long long	ft_atoll(const char *str);
 char	*get_next_line(int fd);
 void    free_2d_array(char **array);
 void ft_print_2d_array(char **array);
+int	ft_size_2d_array(char **matrix);
 
 //extra : ft_printf
 int	ft_putnbr(int nb);

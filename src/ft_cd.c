@@ -12,7 +12,7 @@ char	*get_env_value(t_env *head, char *env_var)
 		current = current->next;
 	}
 	return (NULL);
-}
+} 
 
 t_env	*get_env_node(t_env *head, char *key)
 {

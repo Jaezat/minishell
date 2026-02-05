@@ -3,9 +3,7 @@
 int print_error_syntax(char *str)
 {
     char *err_msg;
-//do strjoin here to print it in stderr
-    err_msg = "minishell: syntax error near unexpected token";
-    // ft_printf("%s '%s'\n", err_msg, str); 
+    err_msg = "minishell: syntax error near unexpected token\n";
     ft_putstr_fd(err_msg, 2);
     ft_putstr_fd(str, 2);
     return (1);

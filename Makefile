@@ -17,6 +17,8 @@ SUPP_FILE       = readline.supp
 # Source files
 CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c parser_syntax.c ft_cd.c ft_pwd.c ft_exit.c ft_echo.c \
                   build_ast.c helper.c ft_export.c ft_unset.c signals.c
+                  helper.c ft_split_upgrated.c free_data.c bstr_brouillon.c struct_expansion.c \
+				  struct_expansion_utils.c struct_handlers.c struct_hdoc.c struct_init.c 
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 

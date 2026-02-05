@@ -1,0 +1,13 @@
+Makefile
+README.md
+documents
+echo
+files.txt
+include
+libft
+minishell
+names.txt
+obj
+readline.supp
+src
+test.txt

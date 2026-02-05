@@ -166,7 +166,6 @@ int	tokenize_input(t_minishell *data)
 				free_token_list(head);
 				return (1);
 			}
-			//printf("Word: %s\n", word);
 			token = create_token(T_WORD, word);
 			free(word);
 		}

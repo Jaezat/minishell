@@ -30,6 +30,13 @@ typedef enum s_token_type
 	T_EOF		// nomo input to read 
 }	t_token_type;
 
+typedef enum s_expand_type
+{
+	E_NONE,
+	E_STATUS,
+	E_VAR,
+	E_DIGIT
+} t_expand_type;
 
 typedef struct s_token
 {
@@ -46,35 +53,61 @@ typedef struct s_env
     struct s_env    *next;
 }   t_env;
 
+typedef struct s_quotes
+{
+	int single_quote;
+	int double_quote;
+}	t_quote;
+
 typedef struct s_minishell
 {
 	int interactive;
     char *line;
 	int size_envp;
-	t_env   *env_list; 
-	int	unclosed_quotes;
+	t_env   *env_list;
+	int exit_status;
+	int unclosed_quotes;
 	t_token *list_tokens;
+	t_quote *quotes;
 }	t_minishell;
 
-typedef enum s_node_type
+/* linked list structures */
+
+typedef struct s_redir
 {
-	NODE_COMMAND,
-	NODE_PIPE
-}	t_node_type;
+	t_token_type type;
+	char *file;
+	struct s_redir *next;
+}	t_redir;
 
-typedef struct s_ast
+typedef struct s_cmd
 {
-	t_node_type type;
-	char **args; 
-	char *infile;  // same struct, each will be a linked list. 
-	char *outfile; //
-	char *heredoc; // temp file, or fd 
-	int append;
-	struct s_ast *left; //left_child
-	struct s_ast *right; //right 
-}	t_ast;
+	char **args;
+	int size_args;
+	t_redir *redirs;
+	struct s_cmd *next;
+} t_cmd;
+
+typedef struct s_struct
+{
+    t_cmd   *head_cmd;
+    t_cmd   *current_cmd;
+    t_token *current_tkn;
+    int     arg_index;
+}   t_struct;
+
+typedef struct s_expand
+{
+    char    *res;
+    int     i;
+    int     single_quote;
+    int     double_quote;
+}   t_expand;
 
 
+/************** Lexer *****************/
+
+/* init all */
 void readline_calling(char **line);
 int is_interactive(t_minishell *data);
 int count_envp(char **envp);
@@ -87,7 +120,7 @@ int start_operational_loop(t_minishell *data);
 void free_all_data(t_minishell *data);
 void print_env_list(t_env *head);
 
-/* lexer: tokenize process */
+/* tokenize process */
 t_token *create_token(t_token_type type, char *value);
 void skip_space(char *str, int *i);
 void free_token_list(t_token *head);
@@ -102,22 +135,47 @@ char *ft_strjoin_with_newline(char *s1, char *s2);
 char *read_complete_line();
 int has_unclosed_quotes(char *str);
 
-/* parser: syntax checker */
+/* syntax checker */
 int has_invalid_pipes(t_token *list_tokens); 
 int has_invalid_redirect(t_token *list_tokens);
 int check_redirec(t_token *token);
 int print_error_syntax(char *str);
 int check_syntax(t_token *list_tokens);
 
-/* parser: ast */
-int is_there_pipe(t_token *token_list);
-int count_word_tokens(t_token *tokens);
-t_ast *create_simple_cmd(t_token *token_list);
-t_token *find_last_pipe(t_token *token_list, t_token **prev_out);
-t_ast *build_ast(t_token *token_list);
-void print_ast_horizontal(t_ast *node, int is_left, int depth);
-void print_ast(t_ast *node, int depth);
+/************** Parser *****************/
 
+/* struct_expansion_utils */
+t_expand *init_expand(void);
+void update_quotes(char c, t_expand *exp);
+char *handle_dollar(char *str, t_expand *exp, t_minishell *data);
+char *check_after_dollar_sign(char *str, t_minishell *data);
+char **args_expansion(char **args, t_minishell *data);
+
+/* struct_expansion_utils */
+char *get_var_name(char *str);
+char *get_env_value_struct(char *name, t_minishell *data);
+char *join_char(char *res, char c);
+char *expand_exit_status(char *res, t_minishell *data);
+char *expand_variable(char *res, char *str, int *i, t_minishell *data);
+
+/* struct_handlers */
+int count_size_args(t_token *tkn);
+int  handle_pipe(t_struct *st, t_minishell *data);
+int  handle_word(t_struct *st);
+int  handle_redir(t_struct *st, t_minishell *data);
+int  process_token(t_struct *st, t_minishell *data);
+
+/* struct_hdoc */
+void process_hdoc_line(char *line, int fd, int expand, t_minishell *data);
+char *manage_hdoc(char *raw_delim, t_minishell *data);
+
+/* struct_init */
+t_cmd *create_node(void);
+t_struct *init_struct(t_minishell *data);
+t_cmd *create_struct(t_minishell *data);
+
+
+/************** Execution *****************/
 
 /* execution */
 int	ft_cd(t_minishell *shell, char *args);
