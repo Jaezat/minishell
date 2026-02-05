@@ -119,6 +119,7 @@ t_minishell  *init_all_data(char **envp);
 int start_operational_loop(t_minishell *data);
 void free_all_data(t_minishell *data);
 void print_env_list(t_env *head);
+void add_redir_node(t_cmd *cmd, t_token_type type, char *expanded_file);
 
 /* tokenize process */
 t_token *create_token(t_token_type type, char *value);
@@ -150,6 +151,7 @@ void update_quotes(char c, t_expand *exp);
 char *handle_dollar(char *str, t_expand *exp, t_minishell *data);
 char *check_after_dollar_sign(char *str, t_minishell *data);
 char **args_expansion(char **args, t_minishell *data);
+char *remove_quotes(char *str);
 
 /* struct_expansion_utils */
 char *get_var_name(char *str);
@@ -173,6 +175,11 @@ char *manage_hdoc(char *raw_delim, t_minishell *data);
 t_cmd *create_node(void);
 t_struct *init_struct(t_minishell *data);
 t_cmd *create_struct(t_minishell *data);
+
+
+/* helpers */
+char	**ft_split_upgrade(char const *s, char c);
+void print_commands(t_cmd *head);
 
 
 /************** Execution *****************/
