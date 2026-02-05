@@ -215,7 +215,7 @@ int start_operational_loop(t_minishell *data)
                 free_token_list(data->list_tokens);
                 continue;
             }
-			print_commands(cmds);
+			//print_commands(cmds);
 			// printf("here2\n");
 			
 
