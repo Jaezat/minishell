@@ -62,6 +62,8 @@ void print_tokens(t_minishell *data)
 	}
 }
 
+
+
 void print_commands(t_cmd *head)
 {
     t_cmd   *curr;
@@ -69,9 +71,18 @@ void print_commands(t_cmd *head)
     int     i;
     int     cmd_idx;
 
+    if (!head)
+    {
+        printf("\n=== COMMAND STRUCTURE ===\n");
+        printf("(NULL - no commands)\n");
+        printf("==========================\n\n");
+        return;
+    }
+
     curr = head;
     cmd_idx = 0;
     printf("\n=== COMMAND STRUCTURE ===\n");
+    
     while (curr)
     {
         printf("COMMAND [%d]:\n", cmd_idx++);
@@ -86,6 +97,8 @@ void print_commands(t_cmd *head)
                 printf("[%s] ", curr->args[i]);
                 i++;
             }
+            if (i == 0)
+                printf("(empty array)");
         }
         else
             printf("(NULL)");
@@ -95,17 +108,28 @@ void print_commands(t_cmd *head)
         printf("  Redirs: ");
         r = curr->redirs;
         if (!r)
-            printf("(none)");
-        while (r)
         {
-            printf("{Type: %d, File: %s} ", r->type, r->file);
-            r = r->next;
-            if (r) printf("-> ");
+            printf("(none)");
         }
+        else
+        {
+            while (r)
+            {
+                printf("{Type: %d, File: %s}", r->type, r->file);
+                r = r->next;
+                if (r)
+                    printf(" -> ");
+            }
+        }
+        printf("\n");
         
-        printf("\n  Size Args: %d\n", curr->size_args);
+        printf("  Size Args: %d\n", curr->size_args);
+        printf("  Next: %s\n", curr->next ? "YES (has pipe)" : "NO (last command)");
         printf("--------------------------\n");
+        
         curr = curr->next;
     }
+    
+    printf("Total commands: %d\n", cmd_idx);
     printf("==========================\n\n");
 }
