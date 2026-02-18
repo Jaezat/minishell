@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 10:12:20 by mariacos          #+#    #+#             */
-/*   Updated: 2025/11/02 12:31:08 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/02/17 19:29:14 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ size_t	ft_strlen(const char *s)
 	}
 	return (i);
 }
-

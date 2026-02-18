@@ -1,14 +1,5 @@
 #include "minishell.h"
 
-void free_all_data(t_minishell *data)
-{
-	if(!data)
-		return ;
-	if(data->line)
-		free(data->line);
-	free(data);
-}
-
 int main(int argc, char **argv, char **envp)
 {
     t_minishell  *data;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:13:49 by mariacos          #+#    #+#             */
-/*   Updated: 2025/11/01 19:54:13 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/02/17 19:54:55 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ long long	ft_atoll(const char *str)
 	res = 0;
 	sign = 1;
 	i = 0;
-
 	while (is_space(str[i]) == 1)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -77,6 +76,5 @@ long long	ft_atoll(const char *str)
 		res = (res * 10) + (str[i] - '0');
 		i++;
 	}
-
 	return (res * sign);
 }

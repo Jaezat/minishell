@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:40:05 by mariacos          #+#    #+#             */
-/*   Updated: 2025/11/09 16:13:01 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/02/17 19:45:27 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_putnbr(int nb)
 		return (write(1, "-2147483648", 11));
 	if (nb < 0)
 	{
-		count += ft_putchar('-'); 
+		count += ft_putchar('-');
 		nb = -nb;
 	}
 	if (nb >= 10)
@@ -80,24 +80,23 @@ int	ftprint_unsigned(va_list *args, char format)
 	char				*base;
 
 	count = 0;
+	base = "0123456789abcdef";
 	if (format == 'p')
 	{
 		n = (unsigned long)va_arg(*args, void *);
 		if (n == 0)
 			return (write(1, "(nil)", 5));
 		count += write(1, "0x", 2);
-		base = "0123456789abcdef";
 	}
 	else
 	{
 		n = (unsigned int)va_arg(*args, unsigned int);
 		if (format == 'u')
 			base = "0123456789";
-		else if (format == 'x')
-			base = "0123456789abcdef";
-		else
+		else if (format == 'X')
 			base = "0123456789ABCDEF";
 	}
-	count += ftprint_unsigned_base(n, base, (unsigned int)ft_strlen((const char *)base));
+	count += ftprint_unsigned_base(n, base,
+			(unsigned int)ft_strlen((const char *)base));
 	return (count);
 }
