@@ -33,7 +33,16 @@ all: $(NAME)
 $(NAME): $(LIBFT_LIB) $(OBJECTS)
 	@echo "Linking $(NAME)..."
 	@$(CC) $(CFLAGS) $(OBJECTS) -lreadline $(LIBFT_LIB) -o $(NAME)
-	@echo "✓ minishell built!"
+	@for i in 1 2 3 4 5 6 7; do \
+		clear; \
+		printf "\033[32m\n%*s    .----.   @   @\n" $$(($$i*2)) ""; \
+		printf "%*s   / .-\"-.'.  \\v/\n" $$(($$i*2)) ""; \
+		printf "%*s   | | '\\ \\ \\_/ )\n" $$(($$i*2)) ""; \
+		printf "%*s ,-\\ \`-.' /.'  /\n" $$(($$i*2)) ""; \
+		printf "%*s'---'----'----'\n\033[0m" $$(($$i*2)) ""; \
+		sleep 0.1; \
+	done
+	@echo "\033[33m\n\t\t  \"Welcome to my \$$HOME!\" \n\033[0m"
 
 $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
@@ -49,10 +58,19 @@ clean:
 	@echo "✓ clean done"
 
 fclean: clean
-	@echo "Removing executable and libraries..."
+	@for i in 10 9 8 7 6 5 4 3; do \
+		clear; \
+		printf "\033[32m\n%*s  @   @   .----.\n" $$(($$i*2)) ""; \
+		printf "%*s   \\v/  .\`.- \" -. \n" $$(($$i*2)) ""; \
+		printf "%*s    ( \\_/ / / / | |\n" $$(($$i*2)) ""; \
+		printf "%*s     \\  .\`\\ /.\` /-,\n" $$(($$i*2)) ""; \
+		printf "%*s      '----'----'---'\n\033[0m" $$(($$i*2)) ""; \
+		sleep 0.1; \
+	done
+	@echo "\033[33m\n\t\t  \"Cleaning everything... bye bye!\" \n\033[0m"
 	@$(RM) $(NAME)
+	@$(RM) $(OBJ_DIR)
 	@make -C $(LIBFT_PATH) fclean
-	@echo "✓ fclean done"
 
 re: fclean all
 
