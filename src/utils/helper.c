@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+void print_env_list(t_env *head)
+{
+    t_env *current;
+    int i;
+    
+    current = head;
+    i = 0;
+    while (current)
+    {
+        printf("[%d] %s=%s\n", i, current->key, current->value);
+        current = current->next;
+        i++;
+    }
+    printf("Total: %d variables\n", i);
+}
+
 void print_tokens(t_minishell *data)
 {
 	t_token *current;
