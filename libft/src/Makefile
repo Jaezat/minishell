@@ -6,7 +6,7 @@
 #    By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/18 09:47:33 by mariacos          #+#    #+#              #
-#    Updated: 2026/02/17 19:20:29 by mariacos         ###   ########.fr        #
+#    Updated: 2026/02/18 17:46:18 by mariacos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,11 +45,9 @@ $(OBJ_DIR)%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "Cleaning object files..."
 	@$(RM) $(OBJ_DIR)
 
 fclean: clean
-	@echo "Cleaning library..."
 	@$(RM) $(NAME)
 
 re: fclean all
