@@ -15,9 +15,36 @@ LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 SUPP_FILE       = readline.supp
 
 # Source files
-CFILES          = main.c lexer_init.c data_init.c operational_loop_init.c parser_syntax.c ft_cd.c ft_pwd.c ft_exit.c ft_echo.c \
-                  helper.c ft_split_upgrated.c free_data.c struct_expansion.c \
-				  struct_expansion_utils.c struct_handlers.c struct_hdoc.c struct_init.c 
+CFILES = main.c \
+         lexer_init.c \
+         data_init.c \
+         operational_loop_init.c \
+         parser_syntax.c \
+         ft_cd.c \
+         ft_pwd.c \
+         ft_exit.c \
+         ft_echo.c \
+         ft_env.c \
+         ft_export.c \
+         ft_unset.c \
+         helper.c \
+         ft_split_upgrated.c \
+         free_data.c \
+         struct_expansion.c \
+         struct_expansion_utils.c \
+         struct_handlers.c \
+         struct_hdoc.c \
+         struct_init.c \
+         execution.c \
+         execution_pipeline.c \
+         execution_path_utils.c \
+         execution_error_utils.c \
+         execution_heredoc_utils.c \
+         execution_pipeline_utils.c \
+         execution_builtins_utils.c \
+         execution_env_utils.c \
+         signals.c
+
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))
 
