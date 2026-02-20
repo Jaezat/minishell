@@ -6,7 +6,7 @@
 #    By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/18 09:47:33 by mariacos          #+#    #+#              #
-#    Updated: 2026/01/30 18:53:20 by mariacos         ###   ########.fr        #
+#    Updated: 2026/02/17 19:20:29 by mariacos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ all: $(NAME)
 # Build libft.a including both SRC and EXTRA_SRC
 $(NAME): $(OBJ) $(EXTRA_OBJ)
 	@$(LIB) $(NAME) $(OBJ) $(EXTRA_OBJ)
-	@echo "libft built including extras."
 
 # Compile object files
 $(OBJ_DIR)%.o: %.c

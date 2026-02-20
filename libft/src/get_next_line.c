@@ -3,49 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:47:25 by mariacos          #+#    #+#             */
-/*   Updated: 2025/11/02 12:19:01 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/02/17 19:54:09 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *gnl_strjoin(char *s1, char *s2, size_t len)
+static char	*gnl_strjoin(char *s1, char *s2, size_t len)
 {
-    char    *new;
-    size_t  i;
-    size_t  j;
-    size_t  s1_len;
+	char	*new;
+	size_t	i;
+	size_t	j;
+	size_t	s1_len;
 
-    if (s1)
-        s1_len = ft_strlen(s1);
-    else
-        s1_len = 0;
-    new = (char *)malloc(s1_len + len + 1);
-    if (!new)
-        return (NULL);
-    i = 0;
-    while (s1 && s1[i])
-    {
-        new[i] = s1[i];
-        i++;
-    }
-    j = -1;
-    while (++j < len)
-        new[i + j] = s2[j];
-    new[i + j] = '\0';
-    if (s1)
-        free(s1);
-    return (new);
+	if (s1)
+		s1_len = ft_strlen(s1);
+	else
+		s1_len = 0;
+	new = (char *)malloc(s1_len + len + 1);
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (s1 && s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	j = -1;
+	while (++j < len)
+		new[i + j] = s2[j];
+	new[i + j] = '\0';
+	if (s1)
+		free(s1);
+	return (new);
 }
 
 static char	*ext(char *buffer, int *offset, size_t bytes_read)
 {
 	size_t		i;
 	size_t		length_part;
-	char	*part;
+	char		*part;
 
 	i = *offset;
 	while (i < bytes_read && buffer[i] != '\0')
@@ -63,7 +63,8 @@ static char	*ext(char *buffer, int *offset, size_t bytes_read)
 	return (part);
 }
 
-static char	*append_next(char *line, char *buffer, int *offset, size_t bytes_read)
+static char	*append_next(char *line, char *buffer,
+		int *offset, size_t bytes_read)
 {
 	char	*part;
 	char	*new_line;
@@ -103,11 +104,11 @@ static int	check(int fd, char *buffer, size_t *bytes_read, char **line)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
-	static int	offset;
 	static size_t	bytes_read;
-	char		*line;
-	int			line_complete;
+	static char		buffer[BUFFER_SIZE];
+	static int		offset;
+	char			*line;
+	int				line_complete;
 
 	line = NULL;
 	line_complete = 0;
@@ -127,5 +128,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-
