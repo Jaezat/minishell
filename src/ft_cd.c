@@ -1,95 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/20 02:24:09 by andcardo          #+#    #+#             */
+/*   Updated: 2026/02/20 02:37:34 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*get_env_value(t_env *head, char *env_var)
+static void	print_cd_error(char *path)
 {
-	t_env	*current;
-
-	current = head;
-	while (current)
-	{
-		if (ft_strcmp(current->key, env_var) == 0)
-			return (current->value);
-		current = current->next;
-	}
-	return (NULL);
-} 
-
-t_env	*get_env_node(t_env *head, char *key)
-{
-	t_env	*current;
-
-	current = head;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
+	ft_putstr_fd("minishell: cd: ", 2);
+	if (path)
+		ft_putstr_fd(path, 2);
+	ft_putstr_fd(": ", 2);
+	perror(NULL);
 }
 
-void	update_env_var(t_env *head, char *env_var, char *new_value)
+static void	update_working_dirs(t_minishell *shell, char *old_cwd)
 {
-	t_env	*current;
+	char	new_cwd[PATH_MAX];
 
-	current = head;
-	while (current)
-	{
-		if (ft_strcmp(current->key, env_var) == 0)
-		{
-			if (current->value)
-				free(current->value);
-			current->value = ft_strdup(new_value);
-			return;
-		}
-		current = current->next;
-	}
+	update_env_var(shell->env_list, "OLDPWD", old_cwd);
+	if (getcwd(new_cwd, PATH_MAX) != NULL)
+		update_env_var(shell->env_list, "PWD", new_cwd);
 }
 
-int	ft_cd(t_minishell *shell, char *args)
+int	ft_cd(t_minishell *shell, char **args)
 {
 	char	*target_path;
-	// PATH_MAX is defined in limits.h as a macro
-	// for the max nb of bytes in a path.
-	char	new_cwd[PATH_MAX];
 	char	old_cwd[PATH_MAX];
 
-	// Redirecting ~HOME if the given path is NULL
-	if (!args)
+	if (!args[1])
 	{
 		target_path = get_env_value(shell->env_list, "HOME");
 		if (!target_path)
 			return (perror("minishell: cd: HOME not set"), 1);
 	}
-	else if (ft_strcmp(args, "-") == 0) {
+	else if (ft_strcmp(args[1], "-") == 0)
+	{
 		target_path = get_env_value(shell->env_list, "OLDPWD");
 		if (!target_path)
 			return (perror("minishell: cd: OLDPWD not set"), 1);
-		//On this particular case, cd prints the path
-		//it is going to. So that the user remembers it.
 		ft_printf("%s\n", target_path);
 	}
 	else
-		target_path = args;
-
-	//Save the current directory before moving in a buffer
+		target_path = args[1];
 	getcwd(old_cwd, PATH_MAX);
-
-	// Do the actual move with chdir.
 	if (chdir(target_path) == -1)
-	{
-		// Need to find a way to print the name of the file here...
-		// maybe perror(minishell: cd: ) printf(args[1]) perror(: No such file)?
-		perror("minishell: cd: name-of-file: No such file or directory");
-		return (1);
-	}
-
-	// If the actual change succed, uptdate the oldpwd env var
-	update_env_var(shell->env_list, "OLDPWD", old_cwd);
-
-	// Update the PWD env var to where we actually landed
-	if (getcwd(new_cwd, PATH_MAX) != NULL)
-		update_env_var(shell->env_list, "PWD", new_cwd);
-
+		return (print_cd_error(target_path), 1);
+	update_working_dirs(shell, old_cwd);
 	return (0);
 }

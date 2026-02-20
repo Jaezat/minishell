@@ -1,17 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/20 02:48:16 by andcardo          #+#    #+#             */
+/*   Updated: 2026/02/20 02:49:27 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	remove_node_from_list(t_minishell *shell, t_env *target_node)
 {
-	t_env **head;
+	t_env	**head;
+
 	head = &shell->env_list;
 	while (*head && *head != target_node)
 		head = &(*head)->next;
-	*head = target_node->next;
+	if (*head)
+	{
+		*head = target_node->next;
+		free(target_node->key);
+		if (target_node->value)
+			free(target_node->value);
+		free(target_node);
+	}
 }
 
 static void	remove_env_var(t_minishell *shell, char *arg)
 {
-	t_env   *node;
+	t_env	*node;
 	char	*key;
 	char	*value;
 
@@ -21,23 +41,25 @@ static void	remove_env_var(t_minishell *shell, char *arg)
 		remove_node_from_list(shell, node);
 }
 
-int	ft_unset(t_minishell *shell, t_token *token)
+int	ft_unset(t_minishell *shell, char **args)
 {
-	t_token	*current;
-	(void)shell;
+	int	i;
+	int	status;
 
-	current = token->next;
-
-	while (current)
+	status = 0;
+	i = 1;
+	while (args[i])
 	{
-		if (!validate_shell_variable(current->value))
+		if (!validate_shell_variable(args[i]))
 		{
-			//should unset handle errors tho?
-			ft_putstr_fd("bash: export: WORD: not a valid identifier", 2);
-		} else {
-			remove_env_var(shell, current->value);
+			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			status = 1;
 		}
-		current = current->next;
+		else
+			remove_env_var(shell, args[i]);
+		i++;
 	}
-	return (0);
+	return (status);
 }

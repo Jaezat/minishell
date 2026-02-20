@@ -189,8 +189,8 @@ int start_operational_loop(t_minishell *data)
                 free_token_list(data->list_tokens);
                 continue;
             }
-			print_commands(cmds);
-			
+			//print_commands(cmds);
+			execute_commands(data, cmds);
     	}
 	}
     return (0);

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/20 02:38:30 by andcardo          #+#    #+#             */
+/*   Updated: 2026/02/20 02:58:27 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static size_t	list_len(t_env *list)
+size_t	list_len(t_env *list)
 {
 	size_t i;
 
@@ -118,18 +130,18 @@ void	extract_key_and_value_from_arg(char *arg, char **key, char **value)
 		*value = NULL;
 }
 
-t_env *create_env_from_key_and_value(char *key, char *value)
+t_env	*create_env_from_key_and_value(char *key, char *value)
 {
-    t_env   *node;
-    
-    node = malloc(sizeof(t_env));
-    if (!node)
-        return (NULL);
-    node->key = key;
-    node->value = value;
+	t_env   *node;
+
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	node->key = key;
+	node->value = value;
 	node->is_exported = 1;
-    node->next = NULL;
-    return (node);
+	node->next = NULL;
+	return (node);
 }
 
 static void	upsert_env_var(t_minishell *shell, char *arg)
@@ -160,39 +172,34 @@ static void	upsert_env_var(t_minishell *shell, char *arg)
 	}
 }
 
-int	ft_export(t_minishell *shell, t_token *token)
+int	ft_export(t_minishell *shell, char **args)
 {
-	t_env **env_duplicate;
-	t_token	*current;
+	t_env	**env_duplicate;
+	int		i;
+	int		status;
 
-	current = token->next;
-	// if there are no arguments passed to
-	// export, it should print the exported
-	// variables list, alphabetically
-	// ordered with a "declare -x" before
-	if (!current)
+	status = 0;
+	if (!args[1])
 	{
 		env_duplicate = duplicate_env_list(shell->env_list);
 		order_env_duplicate(env_duplicate);
 		print_env_duplicate(env_duplicate);
 		free(env_duplicate);
 		return (0);
-	} 
-	// if there are arguments, we should validate the variable
-	// being passed
-	while (current)
-	{
-		if (!validate_shell_variable(current->value))
-		{
-			ft_putstr_fd("bash: export: WORD: not a valid identifier", 2);
-			// here we should also update the exit code of the shell to 1;
-			// shell->last_exit_code = 1;
-		} else {
-			// upsert means update or insert, which
-			// is what we should do with the new value
-			upsert_env_var(shell, current->value);
-		}
-		current = current->next;
 	}
-	return (0);
+	i = 1;
+	while (args[i])
+	{
+		if (!validate_shell_variable(args[i]))
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			status = 1;
+		}
+		else
+			upsert_env_var(shell, args[i]);
+		i++;
+	}
+	return (status);
 }
