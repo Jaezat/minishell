@@ -65,4 +65,8 @@ int ft_unset(t_minishell *shell, char **args);
 int ft_env(t_env *env);
 int ft_exit(t_minishell *shell, char **args);
 
+/* signals */
+void	handle_sigint(int sig);
+
+
 #endif
