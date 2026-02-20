@@ -81,20 +81,32 @@ int is_interactive(t_minishell *data)
 		free(data->line);
 	data->line = read_complete_line();
 	if (!data->line)
-		return (1);
+	{
+		if (g_signal_status == SIGINT)
+		{
+			g_signal_status = 0; // Reset it
+			return (0); // Return "Success" so the loop continues
+		}
+		return (1); // Real NULL (Ctrl-D) -> Return 1 to exit
+	}
+
 	if (*data->line)
 		add_history(data->line);
 	
 	return (0);
 }
 
-/* int start_operational_loop(t_minishell *data)
-	current = data->list_tokens;
+
+/*
+int start_operational_loop(t_minishell *shell)
+{
+	t_token *current;
+
+	current = shell->list_tokens;
 	while(current)
 	{
 		if(current->type == T_WORD)
 			{
-				//printf("WORD: %s\n", current->value);
 				if ((ft_strcmp(current->value, "cd") == 0))
 				{
 					char *arg;
@@ -129,6 +141,13 @@ int is_interactive(t_minishell *data)
 					
 					ft_echo(data, current);
 				}
+				if ((ft_strcmp(current->value, "export") == 0))
+				{
+					if (current->next)
+						current = current->next;
+					
+					ft_export(data, current);
+				}
 			}
 		else if(current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
@@ -145,7 +164,7 @@ int is_interactive(t_minishell *data)
 		current = current->next;
 	}
 }
- */
+*/
 
 
 int start_operational_loop(t_minishell *data)
@@ -171,7 +190,7 @@ int start_operational_loop(t_minishell *data)
 				data->list_tokens = NULL;
                 continue;
             }
-			print_commands(cmds);
+			execute_commands(data, cmds);
 			free_cmd_list(cmds);
 			free_token_list(data->list_tokens);
 			data->list_tokens = NULL;

@@ -15,12 +15,37 @@ LIBFT_LIB       = $(LIBFT_PATH)/libft.a
 SUPP_FILE       = readline.supp
 
 # Source files
-CFILES          = main.c operational_loop_init.c \
-                  lexer/tokenize.c lexer/tokenize_utils.c lexer/parser_syntax.c \
-                  parser/struct_init.c parser/struct_init_two.c parser/struct_handlers.c \
-                  expansion/struct_expansion.c expansion/struct_expansion_utils.c expansion/struct_hdoc.c \
-                  utils/data_init.c utils/free_data.c utils/helper.c utils/ft_split_upgrated.c \
-                  ft_cd.c ft_pwd.c ft_exit.c ft_echo.c 
+CFILES = main.c \
+         operational_loop_init.c \
+         signals.c \
+         execution.c \
+         execution_pipeline.c \
+         execution_pipeline_utils.c \
+         execution_builtins_utils.c \
+         execution_env_utils.c \
+         execution_path_utils.c \
+         execution_error_utils.c \
+         execution_heredoc_utils.c \
+         ft_cd.c \
+         ft_echo.c \
+         ft_env.c \
+         ft_exit.c \
+         ft_export.c \
+         ft_unset.c \
+         ft_pwd.c \
+         lexer/tokenize.c \
+         lexer/tokenize_utils.c \
+         lexer/parser_syntax.c \
+         parser/struct_init.c \
+         parser/struct_init_two.c \
+         parser/struct_handlers.c \
+         expansion/struct_expansion.c \
+         expansion/struct_expansion_utils.c \
+         expansion/struct_hdoc.c \
+         utils/data_init.c \
+         utils/free_data.c \
+         utils/helper.c \
+         utils/ft_split_upgrated.c
 
 SRC             = $(addprefix $(SRC_DIR)/, $(CFILES))
 OBJECTS         = $(addprefix $(OBJ_DIR)/, $(CFILES:.c=.o))

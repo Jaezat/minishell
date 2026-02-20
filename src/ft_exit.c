@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/20 02:55:30 by andcardo          #+#    #+#             */
+/*   Updated: 2026/02/20 02:55:36 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_is_numeric(char *str)
@@ -9,7 +21,7 @@ int	ft_is_numeric(char *str)
 		i++;
 	if (!str[i])
 		return (0);
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
@@ -18,43 +30,31 @@ int	ft_is_numeric(char *str)
 	return (1);
 }
 
-int ft_exit(t_minishell *data, char **args)
+int	ft_exit(t_minishell *data, char **args)
 {
-	long long final_code;
+	long long	final_code;
 
-	// Always print exit
 	ft_putstr_fd("exit\n", 2);
-
-	// PATH 1: No Args
-	if (!args[0])
+	if (!args[1])
 	{
-		//final_code = data->last_exit_code;
-		//we need to pass the last_exit_code when no args
-		//are given to exit
-		final_code = 0;
+		final_code = data->exit_status;
 		free_all_data(data);
 		exit(final_code);
 	}
-
-	// PATH 2: Non-Numeric
-	if (!ft_is_numeric(args[0]))
+	if (!ft_is_numeric(args[1]))
 	{
-		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		free_all_data(data);
 		exit(255);
 	}
-
-	// PATH 3: Too Many Args
-	if (args[1]) // Check if a 2nd arg exists
+	if (args[2])
 	{
-		// it actually doesn't exit if there is more than 1 arg
-		printf("arg[1] = %s\n", args[1]);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return (1);
 	}
-
-	// PATH 4: Success
-	final_code = ft_atoll(args[0]);
+	final_code = ft_atoll(args[1]);
 	free_all_data(data);
 	exit(final_code % 256);
 }

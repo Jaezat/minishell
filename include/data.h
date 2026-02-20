@@ -5,6 +5,7 @@ typedef struct s_env
 {
     char            *key;      // "PATH", "HOME", etc.
     char            *value;    // "/usr/bin:/bin", "/home/user", etc.
+	int	is_exported;
     struct s_env    *next;
 }   t_env;
 
