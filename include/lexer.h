@@ -10,7 +10,8 @@ typedef enum s_token_type
 	T_REDIR_OUT,		// >
 	T_REDIR_APPEND, 	// >>
 	T_REDIR_HDOC,		// <<
-	T_EOF		// nomo input to read 
+	T_EOF,		// nomo input to read
+	T_ERROR
 }	t_token_type;
 
 typedef struct s_token

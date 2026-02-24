@@ -42,3 +42,4 @@ char	*manage_hdoc(char *raw_delim, t_minishell *data)
 	close(fd);
 	return (ft_strdup(".heredoc_temp"));
 }
+

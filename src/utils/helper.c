@@ -25,7 +25,7 @@ void print_tokens(t_minishell *data)
 	{
 		if(current->type == T_WORD)
 			{
-				// //printf("WORD: %s\n", current->value);
+				printf("WORD: %s\n", current->value);
 				// if ((ft_strcmp(current->value, "cd") == 0))
 				// {
 				// 	char *arg;

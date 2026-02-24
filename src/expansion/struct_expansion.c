@@ -117,7 +117,6 @@ char	**args_expansion(char **args, t_minishell *data)
 		free(args[i]);
 		if (clean_str)
 			args[j++] = clean_str;
-		
 		i++;
 	}
 	while (j <= i)
