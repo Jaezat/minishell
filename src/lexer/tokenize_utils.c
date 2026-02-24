@@ -23,6 +23,8 @@ int	is_index_space_or_operator(char c)
 		return (1);
 	else if (c == '>' || c == '<' || c == '|')
 		return (1);
+	else if (ft_strchr("><;)}", c))
+		return (1);
 	return (0);
 }
 
@@ -93,5 +95,11 @@ t_token	*check_operator(char *str, int *i)
 		return ((*i)++, create_token(T_REDIR_IN, "<"));
 	if (str[*i] == '|')
 		return ((*i)++, create_token(T_PIPE, "|"));
+	if (ft_strchr(";&()}{", str[*i]))
+	{
+		char s[2] = {str[*i], '\0'};
+		(*i)++;
+		return (create_token(T_ERROR, s));
+	}
 	return (NULL);
 }

@@ -67,7 +67,7 @@ $(NAME): $(LIBFT_LIB) $(OBJECTS)
 		printf "%*s'---'----'----'\n\033[0m" $$(($$i*2)) ""; \
 		sleep 0.1; \
 	done
-	@echo "\033[33m\n\t\t  \"Welcome to my \$$HOME!\" \n\033[0m"
+	@echo "\033[33m\n\t  \"Welcome to my \$$HOME!\" \n\033[0m"
 
 $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
@@ -92,7 +92,7 @@ fclean: clean
 		printf "%*s      '----'----'---'\n\033[0m" $$(($$i*2)) ""; \
 		sleep 0.1; \
 	done
-	@echo "\033[33m\n\t\t  \"Cleaning everything... bye bye!\" \n\033[0m"
+	@echo "\033[33m\n\t  \"Cleaning everything... bye bye!\" \n\033[0m"
 	@$(RM) $(NAME)
 	@$(RM) $(OBJ_DIR)
 	@make -C $(LIBFT_PATH) fclean

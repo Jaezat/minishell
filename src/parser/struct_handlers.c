@@ -93,6 +93,35 @@ int	handle_redir(t_struct *st, t_minishell *data)
 	return (1);
 }
 
+/* 
+int	handle_redir(t_struct *st, t_minishell *data)
+{
+	char	*file;
+
+	if (!st->current_tkn->next)
+		return (print_error_syntax("newline"));
+
+	if (st->current_tkn->type == T_REDIR_HDOC)
+	{
+		// PASO CRÍTICO: Usamos el valor del token directamente sin check_after_dollar_sign
+		file = manage_hdoc(st->current_tkn->next->value, data);
+		if (!file)
+			return (0);
+		add_redir_node(st->current_cmd, T_REDIR_HDOC, file);
+		free(file);
+	}
+	else
+	{
+		// Las otras redirecciones SÍ se expanden
+		file = check_after_dollar_sign(st->current_tkn->next->value, data);
+		// ... resto del código ...
+	}
+	st->current_tkn = st->current_tkn->next;
+	return (1);
+} */
+
+
+
 int	process_token(t_struct *st, t_minishell *data)
 {
 	if (st->current_tkn->type == T_PIPE)
