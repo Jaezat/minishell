@@ -17,22 +17,23 @@ SUPP_FILE       = readline.supp
 # Source files
 CFILES = main.c \
          operational_loop_init.c \
-         signals.c \
-         execution.c \
-         execution_pipeline.c \
-         execution_pipeline_utils.c \
-         execution_builtins_utils.c \
-         execution_env_utils.c \
-         execution_path_utils.c \
-         execution_error_utils.c \
-         execution_heredoc_utils.c \
-         ft_cd.c \
-         ft_echo.c \
-         ft_env.c \
-         ft_exit.c \
-         ft_export.c \
-         ft_unset.c \
-         ft_pwd.c \
+         signals/signals.c \
+         execution/execution.c \
+         execution/execution_pipeline.c \
+         execution/execution_pipeline_utils.c \
+         execution/execution_builtins_utils.c \
+         execution/execution_env_utils.c \
+         execution/execution_path_utils.c \
+         execution/execution_error_utils.c \
+         execution/execution_heredoc_utils.c \
+         builtins/ft_cd.c \
+         builtins/ft_echo.c \
+         builtins/ft_env.c \
+         builtins/ft_exit.c \
+         builtins/ft_export.c \
+         builtins/ft_export_utils.c \
+         builtins/ft_unset.c \
+         builtins/ft_pwd.c \
          lexer/tokenize.c \
          lexer/tokenize_utils.c \
          lexer/parser_syntax.c \
