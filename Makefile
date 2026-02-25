@@ -18,14 +18,14 @@ SUPP_FILE       = readline.supp
 CFILES = main.c \
          operational_loop_init.c \
          signals/signals.c \
+		 execution/builtins_execution.c \
+		 execution/env_utils.c \
+		 execution/error_utils.c \
          execution/execution.c \
-         execution/execution_pipeline.c \
-         execution/execution_pipeline_utils.c \
-         execution/execution_builtins_utils.c \
-         execution/execution_env_utils.c \
-         execution/execution_path_utils.c \
-         execution/execution_error_utils.c \
-         execution/execution_heredoc_utils.c \
+		 execution/heredoc_handling.c \
+		 execution/path_utils.c \
+         execution/pipeline_execution.c \
+         execution/pipeline_utils.c \
          builtins/ft_cd.c \
          builtins/ft_echo.c \
          builtins/ft_env.c \

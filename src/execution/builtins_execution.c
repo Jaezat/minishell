@@ -44,3 +44,30 @@ int execute_builtin(t_minishell *shell, t_cmd *cmd)
 	return (1);
 }
 
+int	is_lone_builtin(t_cmd *cmd)
+{
+	if (cmd->next)
+		return (0);
+
+	if (ft_strcmp(cmd->args[0], "cd") == 0) return (1);
+	if (ft_strcmp(cmd->args[0], "exit") == 0) return (1);
+	if (ft_strcmp(cmd->args[0], "export") == 0) return (1);
+	if (ft_strcmp(cmd->args[0], "unset") == 0) return (1);
+	return (0);
+}
+
+void	execute_lone_builtin(t_minishell *shell, t_cmd *cmd)
+{
+	int original_stdin;
+	int original_stdout;
+
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
+	handle_redirections(cmd->redirs);
+	shell->exit_status = execute_builtin(shell, cmd);
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(original_stdin);
+	close(original_stdout);
+}
+
