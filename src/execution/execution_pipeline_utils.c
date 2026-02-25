@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+size_t	list_len(t_env *list)
+{
+	size_t i;
+
+	i = 0;
+	while (list)
+	{
+		list = list->next;
+		i++;
+	}
+	return (i);
+}
+
 static char	**get_env_array(t_env *env_list)
 {
 	char	**env_array;
@@ -56,7 +69,7 @@ void	handle_redirections(t_redir *redir)
 	}
 }
 
-void handle_child_pipes(t_cmd *cmd, int *fd, int fd_in)
+void	handle_child_pipes(t_cmd *cmd, int *fd, int fd_in)
 {
 	if (fd_in != -1)
 	{
@@ -71,7 +84,7 @@ void handle_child_pipes(t_cmd *cmd, int *fd, int fd_in)
 	}
 }
 
-void run_execution(t_minishell *shell, t_cmd *cmd)
+void	run_execution(t_minishell *shell, t_cmd *cmd)
 {
 	char *path;
 	char **env;
