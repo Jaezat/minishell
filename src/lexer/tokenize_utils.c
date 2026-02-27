@@ -23,10 +23,12 @@ int	is_index_space_or_operator(char c)
 		return (1);
 	else if (c == '>' || c == '<' || c == '|')
 		return (1);
+	else if (ft_strchr("><;)}", c))
+		return (1);
 	return (0);
 }
 
-char	*extract_word(char *str, int *i, t_minishell *data)
+/* char	*extract_word(char *str, int *i, t_minishell *data)
 {
 	int		start;
 	int		in_d;
@@ -52,6 +54,33 @@ char	*extract_word(char *str, int *i, t_minishell *data)
 		return (NULL);
 	ft_memcpy(word, &str[start], *i - start);
 	return (word[*i - start] = '\0', word);
+} */
+
+char	*extract_word(char *str, int *i, t_minishell *data)
+{
+	int		start;
+	char	*word;
+	char	quote;
+
+	start = *i;
+	quote = 0;
+	(void)data;
+	while (str[*i])
+	{
+		if ((str[*i] == '"' || str[*i] == '\'') && !quote)
+			quote = str[(*i)++];
+		else if (quote && str[*i] == quote)
+		{
+			quote = 0;
+			(*i)++;
+		}
+		else if (!quote && is_index_space_or_operator(str[*i]))
+			break ;
+		else
+			(*i)++;
+	}
+	word = ft_substr(str, start, *i - start);
+	return (word);
 }
 
 t_token	*check_operator(char *str, int *i)
@@ -66,5 +95,11 @@ t_token	*check_operator(char *str, int *i)
 		return ((*i)++, create_token(T_REDIR_IN, "<"));
 	if (str[*i] == '|')
 		return ((*i)++, create_token(T_PIPE, "|"));
+	if (ft_strchr(";&()}{", str[*i]))
+	{
+		char s[2] = {str[*i], '\0'};
+		(*i)++;
+		return (create_token(T_ERROR, s));
+	}
 	return (NULL);
 }

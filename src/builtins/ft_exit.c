@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_is_numeric(char *str)
+static int	ft_is_numeric(char *str)
 {
 	int	i;
 

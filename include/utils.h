@@ -8,6 +8,8 @@ void free_cmd_list(t_cmd *head);
 void free_struct_assistant(t_struct *st, int fail);
 void print_env_list(t_env *head);
 void print_commands(t_cmd *head);
+void print_tokens(t_minishell *data);
+
 
 
 

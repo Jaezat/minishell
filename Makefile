@@ -17,22 +17,23 @@ SUPP_FILE       = readline.supp
 # Source files
 CFILES = main.c \
          operational_loop_init.c \
-         signals.c \
-         execution.c \
-         execution_pipeline.c \
-         execution_pipeline_utils.c \
-         execution_builtins_utils.c \
-         execution_env_utils.c \
-         execution_path_utils.c \
-         execution_error_utils.c \
-         execution_heredoc_utils.c \
-         ft_cd.c \
-         ft_echo.c \
-         ft_env.c \
-         ft_exit.c \
-         ft_export.c \
-         ft_unset.c \
-         ft_pwd.c \
+         signals/signals.c \
+		 execution/builtins_execution.c \
+		 execution/env_utils.c \
+		 execution/error_utils.c \
+         execution/execution.c \
+		 execution/heredoc_handling.c \
+		 execution/path_utils.c \
+         execution/pipeline_execution.c \
+         execution/pipeline_utils.c \
+         builtins/ft_cd.c \
+         builtins/ft_echo.c \
+         builtins/ft_env.c \
+         builtins/ft_exit.c \
+         builtins/ft_export.c \
+         builtins/ft_export_utils.c \
+         builtins/ft_unset.c \
+         builtins/ft_pwd.c \
          lexer/tokenize.c \
          lexer/tokenize_utils.c \
          lexer/parser_syntax.c \
@@ -58,7 +59,16 @@ all: $(NAME)
 $(NAME): $(LIBFT_LIB) $(OBJECTS)
 	@echo "Linking $(NAME)..."
 	@$(CC) $(CFLAGS) $(OBJECTS) -lreadline $(LIBFT_LIB) -o $(NAME)
-	@echo "✓ minishell built!"
+	@for i in 1 2 3 4 5 6 7; do \
+		clear; \
+		printf "\033[32m\n%*s    .----.   @   @\n" $$(($$i*2)) ""; \
+		printf "%*s   / .-\"-.'.  \\v/\n" $$(($$i*2)) ""; \
+		printf "%*s   | | '\\ \\ \\_/ )\n" $$(($$i*2)) ""; \
+		printf "%*s ,-\\ \`-.' /.'  /\n" $$(($$i*2)) ""; \
+		printf "%*s'---'----'----'\n\033[0m" $$(($$i*2)) ""; \
+		sleep 0.1; \
+	done
+	@echo "\033[33m\n\t  \"Welcome to my \$$HOME!\" \n\033[0m"
 
 $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
@@ -74,10 +84,19 @@ clean:
 	@echo "✓ clean done"
 
 fclean: clean
-	@echo "Removing executable and libraries..."
+	@for i in 10 9 8 7 6 5 4 3; do \
+		clear; \
+		printf "\033[32m\n%*s  @   @   .----.\n" $$(($$i*2)) ""; \
+		printf "%*s   \\v/  .\`.- \" -. \n" $$(($$i*2)) ""; \
+		printf "%*s    ( \\_/ / / / | |\n" $$(($$i*2)) ""; \
+		printf "%*s     \\  .\`\\ /.\` /-,\n" $$(($$i*2)) ""; \
+		printf "%*s      '----'----'---'\n\033[0m" $$(($$i*2)) ""; \
+		sleep 0.1; \
+	done
+	@echo "\033[33m\n\t  \"Cleaning everything... bye bye!\" \n\033[0m"
 	@$(RM) $(NAME)
+	@$(RM) $(OBJ_DIR)
 	@make -C $(LIBFT_PATH) fclean
-	@echo "✓ fclean done"
 
 re: fclean all
 

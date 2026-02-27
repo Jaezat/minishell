@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+#include <stdio.h>
+#include <unistd.h>
+
 int main(int argc, char **argv, char **envp)
 {
     t_minishell  *data;
@@ -17,8 +20,6 @@ int main(int argc, char **argv, char **envp)
     }
 	// print_env_list(data->env_list);
     start_operational_loop(data);
-    //tengo que decidir que hacer aca en caso que retorne 1
-    // retornar en Stderr 
     free_all_data(data);
     return (0);
 }

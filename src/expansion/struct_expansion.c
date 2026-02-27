@@ -70,7 +70,7 @@ char	*check_after_dollar_sign(char *str, t_minishell *data)
 	return (result);
 }
 
-char	**args_expansion(char **args, t_minishell *data)
+/* char	**args_expansion(char **args, t_minishell *data)
 {
 	int		i;
 	int		j;
@@ -95,5 +95,36 @@ char	**args_expansion(char **args, t_minishell *data)
 	}
 	while (j <= i)
 		args[j++] = NULL;
+	return (args);
+} */
+
+char	**args_expansion(char **args, t_minishell *data)
+{
+	int		i;
+	int		j;
+	char	*new_str;
+	char	*clean_str;
+
+	if (!args)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (args[i])
+	{
+		new_str = check_after_dollar_sign(args[i], data);
+		clean_str = remove_quotes(new_str);
+		free(new_str);
+		free(args[i]);
+		if (clean_str)
+			args[j++] = clean_str;
+		i++;
+	}
+	while (j <= i)
+		args[j++] = NULL;
+	if (args[0] && args[0][0] == '\0' && j == 1)
+	{
+		free(args[0]);
+		args[0] = NULL;
+	}
 	return (args);
 }
