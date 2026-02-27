@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_heredoc_utils.c                          :+:      :+:    :+:   */
+/*   heredoc_handling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 03:28:26 by andcardo          #+#    #+#             */
-/*   Updated: 2026/02/20 03:33:45 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:46:30 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	write_heredoc_to_file(int fd, char *limiter)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line) // Ctrl-D
+		if (!line)
 		{
 			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n", 2);
 			break;
