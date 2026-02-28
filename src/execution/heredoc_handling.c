@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 03:28:26 by andcardo          #+#    #+#             */
-/*   Updated: 2026/02/25 16:46:30 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/02/28 20:56:38 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,34 @@ static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell
 	char	*line;
 	int		expand;
 	char	*delimiter;
+	char	*nl_delimiter;
+	char	*tmp_delimiter;
+	char	**lines_in_fd;
+	int		i;
 
 	expand = (ft_strchr(raw_delimiter, '\'') == NULL
 			&& ft_strchr(raw_delimiter, '\"') == NULL);
-	//does this remove_quotes function free(raw_delimiter)?
 	delimiter = remove_quotes(raw_delimiter);
+	//if delimiter has new_line
+	// delimiter becames what is before the new line
+	// call process_hdoc_line() take everything after new
+	nl_delimiter = ft_strchr(delimiter, '\n');
+	if (nl_delimiter)
+	{	
+		tmp_delimiter = ft_substr(delimiter, 0, (nl_delimiter - delimiter));
+		delimiter = tmp_delimiter;
+		write(fd, nl_delimiter + 1, (ft_strlen(nl_delimiter + 1) - ft_strlen(delimiter)));
+		/* write(fd, "\n", 1); */
+		lines_in_fd = ft_split(nl_delimiter, '\n');
+		i = 0;
+		while (lines_in_fd[i])
+		{
+			if (ft_strcmp(lines_in_fd[i], delimiter) == 0)
+				return (0);
+			i++;
+		}
+	
+	}
 	while (1)
 	{
 		line = readline("> ");
@@ -52,10 +75,10 @@ static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell
 			free(line);
 			break;
 		}
-		//ft_putendl_fd(line, fd);
 		process_hdoc_line(line, fd, expand, shell);
 		free(line);
 	}
+	free(delimiter);
 	return (0);
 }
 

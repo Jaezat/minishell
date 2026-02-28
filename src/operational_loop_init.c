@@ -76,7 +76,7 @@ char *read_complete_line(void)
     // Handle Multiline Quotes (Only for Interactive Mode)
     while (has_unclosed_quotes(line))
     {
-        continuation = readline("> ");
+        continuation = readline(">");
         if (!continuation)
         {
             ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
