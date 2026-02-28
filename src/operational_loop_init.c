@@ -3,9 +3,10 @@
 
 void readline_calling(char **line)
 {
-    *line = readline(
-        "\001\033[1;35m\002minishell$>\001\033[0m\002 "
-    );
+	if (isatty(STDIN_FILENO))
+		*line = readline("\001\033[1;35m\002minishell$>\001\033[0m\002 ");
+	else
+		*line = readline(NULL);
 }
 
 int has_unclosed_quotes(char *str)
@@ -47,32 +48,49 @@ char *ft_strjoin_with_newline(char *s1, char *s2)
 	return (result);
 }
 
-char *read_complete_line()
+char *read_complete_line(void)
 {
-	char	*line;
-	char	*continuation;
-	char	*temp;
-	
-	line = readline("minishell$> ");
-	if (!line)
-		return (NULL);
-	while (has_unclosed_quotes(line))
-	{
-		continuation = readline("> ");
-		if (!continuation)
-		{
-			printf("syntax error: unexpected end of file\n");
-			free(line);
-			return (NULL);
-		}
-		temp = line;
-		line = ft_strjoin_with_newline(temp, continuation);
-		free(temp);
-		free(continuation);
-		if (!line)
-			return (NULL);
-	}
-	return (line);
+    char    *line;
+    char    *continuation;
+    char    *temp;
+
+    // PATH 1: NON-INTERACTIVE (Pipe/Script) - Use GNL for silence
+    if (!isatty(STDIN_FILENO))
+    {
+        line = get_next_line(STDIN_FILENO);
+        if (line)
+        {
+            // Trim the newline that GNL leaves at the end
+            int len = ft_strlen(line);
+            if (len > 0 && line[len - 1] == '\n')
+                line[len - 1] = '\0';
+        }
+        return (line);
+    }
+
+    // PATH 2: INTERACTIVE (Human) - Use Readline
+    line = readline("\001\033[1;35m\002minishell$>\001\033[0m\002 ");
+    if (!line)
+        return (NULL);
+
+    // Handle Multiline Quotes (Only for Interactive Mode)
+    while (has_unclosed_quotes(line))
+    {
+        continuation = readline(">");
+        if (!continuation)
+        {
+            ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
+            free(line);
+            return (NULL);
+        }
+        temp = line;
+        line = ft_strjoin_with_newline(temp, continuation);
+        free(temp);
+        free(continuation);
+        if (!line)
+            return (NULL);
+    }
+    return (line);
 }
 
 int is_interactive(t_minishell *data)

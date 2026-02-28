@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 02:38:30 by andcardo          #+#    #+#             */
-/*   Updated: 2026/02/25 15:46:23 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/02/28 15:32:53 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ static void	print_env_duplicate(t_env **env_duplicate)
 	i = 0;
 	while (env_duplicate[i])
 	{
-		if (env_duplicate[i]->is_exported)
-		{
-			printf("declare -x %s", env_duplicate[i]->key);
-			if (env_duplicate[i]->value)
-				printf("=\"%s\"", env_duplicate[i]->value);
-			printf("\n");
-		}
+		printf("declare -x %s", env_duplicate[i]->key);
+		if (env_duplicate[i]->value)
+			printf("=\"%s\"", env_duplicate[i]->value);
+		printf("\n");
 		i++;
 	}
 }
@@ -79,7 +76,7 @@ static void	order_env_duplicate(t_env **env_duplicate)
 	}
 }
 
-static void	handle_duplication_process(t_env *env_list)
+static void	env_duplication_and_printing(t_env *env_list)
 {
 	t_env	**env_duplicate;
 
@@ -97,7 +94,7 @@ int	ft_export(t_minishell *shell, char **args)
 	status = 0;
 	if (!args[1])
 	{
-		handle_duplication_process(shell->env_list);
+		env_duplication_and_printing(shell->env_list);
 		return (0);
 	}
 	i = 1;

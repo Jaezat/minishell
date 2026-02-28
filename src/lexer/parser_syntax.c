@@ -13,34 +13,6 @@ int	print_error_syntax(char *str)
 	return (1);
 }
 
-/* 
-OG function
-int	has_invalid_pipes(t_token *list_tokens)
-{
-	t_token	*current;
-	char	*err_pipe;
-
-	current = list_tokens;
-	err_pipe = "|";
-	while (current != NULL)
-	{
-		if (current == list_tokens)
-		{
-			if (current->type == T_PIPE)
-				return (print_error_syntax(err_pipe));
-		}
-		else if (current->next != NULL)
-		{
-			if (current->type == T_PIPE && current->next->type == T_PIPE)
-				return (print_error_syntax(err_pipe));
-		}
-		else if (current->next == NULL && current->type == T_PIPE)
-			return (print_error_syntax(err_pipe));
-		current = current->next;
-	}
-	return (0);
-} */
-
 int has_invalid_pipes(t_token *list_tokens)
 {
     t_token *current = list_tokens;

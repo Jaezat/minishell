@@ -16,7 +16,7 @@ int	ft_env(t_env *env)
 {
 	while (env)
 	{
-		if (env->value && env->is_exported)
+		if (env->value)
 		{
 			ft_putstr_fd(env->key, 1);
 			ft_putchar_fd('=', 1);
