@@ -14,7 +14,7 @@
 
 void	execute_commands(t_minishell *shell, t_cmd *cmd)
 {
-	if (handle_heredocs(cmd) == 1)
+	if (handle_heredocs(cmd, shell) == 1)
 	{
 		shell->exit_status = 130;
 		return ;

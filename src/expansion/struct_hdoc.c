@@ -2,17 +2,12 @@
 
 void	process_hdoc_line(char *line, int fd, int expand, t_minishell *data)
 {
-	char	*expanded;
-
 	if (expand)
 	{
-		expanded = check_after_dollar_sign(line, data);
-		free(line);
-		line = expanded;
+		line = check_after_dollar_sign(line, data);
 	}
 	write(fd, line, ft_strlen(line));
 	write(fd, "\n", 1);
-	free(line);
 }
 
 char	*manage_hdoc(char *raw_delim, t_minishell *data)

@@ -73,22 +73,22 @@ int	handle_redir(t_struct *st, t_minishell *data)
 		return (ft_putstr_fd
 			("minishell: syntax error near unexpected token `newline'\n", 2)
 			, 0);
-	if (st->current_tkn->type == T_REDIR_HDOC)
-	{
-		file = manage_hdoc(st->current_tkn->next->value, data);
-		if (!file)
-			return (0);
-		add_redir_node(st->current_cmd, T_REDIR_HDOC, file);
-		free(file);
-	}
-	else
-	{
-		file = check_after_dollar_sign(st->current_tkn->next->value, data);
-		if (!file)
-			return (0);
-		add_redir_node(st->current_cmd, st->current_tkn->type, file);
-		free(file);
-	}
+	// if (st->current_tkn->type == T_REDIR_HDOC)
+	// {
+	// 	file = manage_hdoc(st->current_tkn->next->value, data);
+	// 	if (!file)
+	// 		return (0);
+	// 	add_redir_node(st->current_cmd, T_REDIR_HDOC, file);
+	// 	free(file);
+	// }
+	// else
+	// {
+	file = check_after_dollar_sign(st->current_tkn->next->value, data);
+	if (!file)
+		return (0);
+	add_redir_node(st->current_cmd, st->current_tkn->type, file);
+	free(file);
+	// }
 	st->current_tkn = st->current_tkn->next;
 	return (1);
 }

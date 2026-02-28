@@ -25,7 +25,7 @@ static char	**get_env_array(t_env *env_list)
 	i = 0;
 	while (env_list)
 	{
-		if (env_list->value && env_list->is_exported)
+		if (env_list->value)
 		{
 			tmp = ft_strjoin(env_list->key, "=");
 			env_array[i] = ft_strjoin(tmp, env_list->value);

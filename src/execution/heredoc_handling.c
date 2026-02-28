@@ -24,10 +24,16 @@ static char	*generate_unique_filename(void)
 	return (name);
 }
 
-static int	write_heredoc_to_file(int fd, char *limiter)
+static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell)
 {
 	char	*line;
+	int		expand;
+	char	*delimiter;
 
+	expand = (ft_strchr(raw_delimiter, '\'') == NULL
+			&& ft_strchr(raw_delimiter, '\"') == NULL);
+	//does this remove_quotes function free(raw_delimiter)?
+	delimiter = remove_quotes(raw_delimiter);
 	while (1)
 	{
 		line = readline("> ");
@@ -36,23 +42,24 @@ static int	write_heredoc_to_file(int fd, char *limiter)
 			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n", 2);
 			break;
 		}
-		if (g_signal_status == SIGINT) // Ctrl-C
+		if (g_signal_status == SIGINT)
 		{
 			free(line);
-			return (1); // Error code
+			return (1);
 		}
-		if (ft_strcmp(line, limiter) == 0)
+		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
 			break;
 		}
-		ft_putendl_fd(line, fd); // Write to file
+		//ft_putendl_fd(line, fd);
+		process_hdoc_line(line, fd, expand, shell);
 		free(line);
 	}
-	return (0); // Success
+	return (0);
 }
 
-static int	process_heredoc(t_redir *redir)
+static int	process_heredoc(t_redir *redir, t_minishell *shell)
 {
 	int		fd;
 	char	*filename;
@@ -66,22 +73,21 @@ static int	process_heredoc(t_redir *redir)
 		free(filename);
 		return (1);
 	}
-	status = write_heredoc_to_file(fd, redir->file);
+	status = write_heredoc_to_file(fd, redir->file, shell);
 	close(fd);
-	if (status == 1) // Signal interruption
+	if (status == 1)
 	{
-		unlink(filename); // Delete the file immediately
+		unlink(filename);
 		free(filename);
 		return (1);
 	}
-	// Success: Transform the node
 	free(redir->file);
 	redir->file = filename;
 	redir->type = T_REDIR_IN;
 	return (0);
 }
 
-int	handle_heredocs(t_cmd *cmd)
+int	handle_heredocs(t_cmd *cmd, t_minishell *shell)
 {
 	t_redir *redir;
 
@@ -92,7 +98,7 @@ int	handle_heredocs(t_cmd *cmd)
 		{
 			if (redir->type == T_REDIR_HDOC)
 			{
-				if (process_heredoc(redir) == 1)
+				if (process_heredoc(redir, shell) == 1)
 					return (1);
 			}
 			redir = redir->next;
