@@ -20,6 +20,7 @@ typedef struct s_minishell
 	int unclosed_quotes;
 	t_token *list_tokens;
 	t_quote *quotes;
+	t_cmd *cmds;
 }	t_minishell;
 
 

@@ -115,76 +115,6 @@ int is_interactive(t_minishell *data)
 }
 
 
-/*
-int start_operational_loop(t_minishell *shell)
-{
-	t_token *current;
-
-	current = shell->list_tokens;
-	while(current)
-	{
-		if(current->type == T_WORD)
-			{
-				if ((ft_strcmp(current->value, "cd") == 0))
-				{
-					char *arg;
-					if (!(current->next))
-						arg = NULL;
-					else
-						arg = current->next->value;
-					ft_cd(data, arg);
-				}
-				if ((ft_strcmp(current->value, "env") == 0))
-					print_env_list(data->env_list);
-				if ((ft_strcmp(current->value, "pwd") == 0))
-					ft_pwd();
-				if ((ft_strcmp(current->value, "exit") == 0))
-				{
-					char *args[2];
-					if (!(current->next))
-						args[0] = NULL;
-					else
-					{
-						args[0] = current->next->value;
-						args[1] = NULL;
-					}
-					if (current->next && current->next->next)
-						args[1] = current->next->next->value;
-					ft_exit(data, args);
-				}
-				if ((ft_strcmp(current->value, "echo") == 0))
-				{
-					if (current->next)
-						current = current->next;
-					
-					ft_echo(data, current);
-				}
-				if ((ft_strcmp(current->value, "export") == 0))
-				{
-					if (current->next)
-						current = current->next;
-					
-					ft_export(data, current);
-				}
-			}
-		else if(current->type == T_PIPE)
-			printf("PIPE: %s\n", current->value);
-		else if(current->type == T_REDIR_IN)
-			printf("REDIR_IN: %s\n", current->value);
-		else if(current->type == T_REDIR_OUT)
-			printf("REDIR_OUT: %s\n", current->value);
-		else if(current->type == T_REDIR_HDOC)
-			printf("REDIR_HDOC: %s\n", current->value);
-		else if(current->type == T_REDIR_APPEND)
-			printf("REDIR_APPEND: %s\n", current->value);
-		else
-			printf("EOF: %s\n", current->value);
-		current = current->next;
-	}
-}
-*/
-
-
 int start_operational_loop(t_minishell *data)
 {
     t_cmd   *cmds;
@@ -213,20 +143,16 @@ int start_operational_loop(t_minishell *data)
 			free_token_list(data->list_tokens); 
     		data->list_tokens = NULL;
             if (cmds == NULL)
-            {
-                /* free_token_list(data->list_tokens);
-				data->list_tokens = NULL; */
                 continue;
-            }
+			data->cmds = cmds;
 			print_commands(cmds);
 			execute_commands(data, cmds);
 			free_cmd_list(cmds);
 			cmds = NULL;
+			data->cmds = NULL;
     	}
 		if (cmds)
         	free_cmd_list(cmds);
-/* 		free_token_list(data->list_tokens);
-		data->list_tokens = NULL; */
 	}
     return (0);
 }

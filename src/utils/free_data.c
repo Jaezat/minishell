@@ -1,18 +1,19 @@
 #include "minishell.h"
 
-/* void	free_all_data(t_minishell *data)
-{
-	if (!data)
-		return ;
-	if (data->line)
-		free(data->line);
-	free(data);
-} */
-
 void    free_all_data(t_minishell *data)
 {
     if (!data)
         return ;
+	if (data->cmds)
+	{
+		free_cmd_list(data->cmds);
+		data->cmds = NULL;
+	}
+	if (data->list_tokens)
+	{
+		free_token_list(data->list_tokens);
+		data->list_tokens = NULL;
+	}
     if (data->line)
     {
         free(data->line);
@@ -20,7 +21,6 @@ void    free_all_data(t_minishell *data)
     }
     if (data->env_list)
         free_env_list(data->env_list); 
-    
     free(data);
 }
 
