@@ -102,10 +102,10 @@ int is_interactive(t_minishell *data)
 	{
 		if (g_signal_status == SIGINT)
 		{
-			g_signal_status = 0; // Reset it
-			return (0); // Return "Success" so the loop continues
+			g_signal_status = 0;
+			return (0); 
 		}
-		return (1); // Real NULL (Ctrl-D) -> Return 1 to exit
+		return (1); 
 	}
 
 	if (*data->line)
@@ -189,31 +189,44 @@ int start_operational_loop(t_minishell *data)
 {
     t_cmd   *cmds;
 
+	cmds = NULL;
     while (1)
     {
         if (is_interactive(data) == 1) 
+		{
+			/* free_token_list(data->list_tokens);
+    		data->list_tokens = NULL;
+			if (cmds)
+				free_cmd_list(cmds); */
             break;
+		}
         if (tokenize_input(data) == 0)
         {
             if (check_syntax(data->list_tokens) != 0)
             {
                 free_token_list(data->list_tokens);
+				data->list_tokens = NULL;
                 continue;
             }
 			// print_tokens(data);
             cmds = create_struct(data);
+			free_token_list(data->list_tokens); 
+    		data->list_tokens = NULL;
             if (cmds == NULL)
             {
-                free_token_list(data->list_tokens);
-				data->list_tokens = NULL;
+                /* free_token_list(data->list_tokens);
+				data->list_tokens = NULL; */
                 continue;
             }
-			// print_commands(cmds);
+			print_commands(cmds);
 			execute_commands(data, cmds);
 			free_cmd_list(cmds);
-			free_token_list(data->list_tokens);
-			data->list_tokens = NULL;
+			cmds = NULL;
     	}
+		if (cmds)
+        	free_cmd_list(cmds);
+/* 		free_token_list(data->list_tokens);
+		data->list_tokens = NULL; */
 	}
     return (0);
 }

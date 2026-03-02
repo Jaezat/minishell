@@ -109,7 +109,7 @@ char	**args_expansion(char **args, t_minishell *data)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (args[i])
+	/* while (args[i])
 	{
 		new_str = check_after_dollar_sign(args[i], data);
 		clean_str = remove_quotes(new_str);
@@ -118,9 +118,28 @@ char	**args_expansion(char **args, t_minishell *data)
 		if (clean_str)
 			args[j++] = clean_str;
 		i++;
+	} */
+	while (args[i])
+    {
+        new_str = check_after_dollar_sign(args[i], data);
+        clean_str = remove_quotes(new_str);
+        free(new_str);
+
+        if (i != j) // If i and j are the same, we already freed it above
+        {
+            free(args[j]); 
+        }
+        free(args[i]);
+        if (clean_str)
+            args[j++] = clean_str;
+        i++;
+    }
+	while (j < i)
+	{
+    	if (args[j])
+    	    free(args[j]);
+    	args[j++] = NULL;
 	}
-	while (j <= i)
-		args[j++] = NULL;
 	if (args[0] && args[0][0] == '\0' && j == 1)
 	{
 		free(args[0]);

@@ -2,6 +2,7 @@
 #define UTILS_H
 
 void free_all_data(t_minishell *data);
+void	free_env_list(t_env *env);
 void free_env_list(t_env *head);
 void free_token_list(t_token *head);
 void free_cmd_list(t_cmd *head);

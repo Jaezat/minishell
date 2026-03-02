@@ -1,13 +1,29 @@
 #include "minishell.h"
 
-void	free_all_data(t_minishell *data)
+/* void	free_all_data(t_minishell *data)
 {
 	if (!data)
 		return ;
 	if (data->line)
 		free(data->line);
 	free(data);
+} */
+
+void    free_all_data(t_minishell *data)
+{
+    if (!data)
+        return ;
+    if (data->line)
+    {
+        free(data->line);
+        data->line = NULL;
+    }
+    if (data->env_list)
+        free_env_list(data->env_list); 
+    
+    free(data);
 }
+
 
 void	free_cmd_list(t_cmd *head)
 {
@@ -66,3 +82,4 @@ void	free_env_list(t_env *head)
 		current = next;
 	}
 }
+
