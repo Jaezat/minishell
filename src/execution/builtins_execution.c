@@ -40,7 +40,7 @@ int execute_builtin(t_minishell *shell, t_cmd *cmd)
 	if (ft_strcmp(name, "env") == 0)
 		return (ft_env(shell->env_list));
 	if (ft_strcmp(name, "exit") == 0)
-		return (ft_exit(shell, cmd));
+		return (ft_exit(shell, cmd->args));
 	return (1);
 }
 
