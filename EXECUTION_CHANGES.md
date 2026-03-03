@@ -1,4 +1,4 @@
-# Execution Changes — Leak Fixes
+# Execution Changes : Leak Fixes
 
 ## Context
 When a child process (after `fork`) calls `exit()` without freeing memory,
