@@ -33,7 +33,7 @@ void check_fd_error(int fd, char *filename)
     if (fd == -1)
     {
         perror(filename);
-        exit(1);   // ← exits without any cleanup
+        exit(1);   // ← modif
     }
 }
 
@@ -60,7 +60,7 @@ void handle_redirections(t_redir *redir)
 {
     ...
     fd = open(redir->file, flags, 0644);
-    check_fd_error(fd, redir->file);   // ← if this exits, no cleanup
+    check_fd_error(fd, redir->file);   // ← modif
     dup2(fd, target_fd);
     close(fd);
     ...
@@ -86,7 +86,7 @@ int handle_redirections(t_redir *redir)
 void run_execution(t_minishell *shell, t_cmd *cmd)
 {
     if (is_builtin(cmd->args[0]))
-        exit(execute_builtin(shell, cmd));   // no cleanup
+        exit(execute_builtin(shell, cmd));   // modif
 
     path = get_cmd_path(shell, cmd->args[0]);
     env  = get_env_array(shell->env_list);
@@ -94,11 +94,11 @@ void run_execution(t_minishell *shell, t_cmd *cmd)
     {
         print_path_error(cmd->args[0]);
         free_2d_array(env);
-        exit(127);   // no cleanup of shell
+        exit(127);   // modif
     }
     execve(path, cmd->args, env);
     perror("execve");
-    exit(1);   // no cleanup at all
+    exit(1);   // modif
 }
 
 // AFTER
@@ -140,7 +140,7 @@ static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
     signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
     handle_child_pipes(cmd, fd, fd_in);
-    handle_redirections(cmd->redirs);   // if this failed, child exited dirty
+    handle_redirections(cmd->redirs);   // modif
     run_execution(shell, cmd);
 }
 
