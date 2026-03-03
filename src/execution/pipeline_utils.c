@@ -40,7 +40,7 @@ static char	**get_env_array(t_env *env_list)
 	return (env_array);
 }
 
-void	handle_redirections(t_redir *redir)
+int	handle_redirections(t_redir *redir)
 {
 	int	fd;
 	int	flags;
@@ -62,11 +62,13 @@ void	handle_redirections(t_redir *redir)
 				flags = O_WRONLY | O_CREAT | O_APPEND;
 		}
 		fd = open(redir->file, flags, 0644);
-		check_fd_error(fd, redir->file);
+		if (check_fd_error(fd, redir->file) == -1)
+			return (-1);
 		dup2(fd, target_fd);
 		close(fd);
 		redir = redir->next;
 	}
+	return (0);
 }
 
 void	handle_child_pipes(t_cmd *cmd, int *fd, int fd_in)
@@ -86,20 +88,29 @@ void	handle_child_pipes(t_cmd *cmd, int *fd, int fd_in)
 
 void	run_execution(t_minishell *shell, t_cmd *cmd)
 {
-	char *path;
-	char **env;
+	char	*path;
+	char	**env;
+	int		exit_code;
 
 	if (is_builtin(cmd->args[0]))
-		exit(execute_builtin(shell, cmd));
+	{
+		exit_code = execute_builtin(shell, cmd);
+		free_all_data(shell);
+		exit(exit_code);
+	}
 	path = get_cmd_path(shell, cmd->args[0]);
 	env = get_env_array(shell->env_list);
 	if (!path)
 	{
 		print_path_error(cmd->args[0]);
 		free_2d_array(env);
+		free_all_data(shell);
 		exit(127);
 	}
 	execve(path, cmd->args, env);
 	perror("execve");
+	free(path);
+	free_2d_array(env);
+	free_all_data(shell);
 	exit(1);
 }
