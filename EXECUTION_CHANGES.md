@@ -33,7 +33,7 @@ void check_fd_error(int fd, char *filename)
     if (fd == -1)
     {
         perror(filename);
-        exit(1);   // ← exits without any cleanup
+        exit(1);   // ← modif
     }
 }
 
@@ -60,7 +60,7 @@ void handle_redirections(t_redir *redir)
 {
     ...
     fd = open(redir->file, flags, 0644);
-    check_fd_error(fd, redir->file);   // ← if this exits, no cleanup
+    check_fd_error(fd, redir->file);   // ← modif
     dup2(fd, target_fd);
     close(fd);
     ...
