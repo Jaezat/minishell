@@ -92,6 +92,11 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 	char	**env;
 	int		exit_code;
 
+	if (!cmd->args[0])
+	{
+		free_all_data(shell);
+		exit(0);
+	}
 	if (is_builtin(cmd->args[0]))
 	{
 		exit_code = execute_builtin(shell, cmd);

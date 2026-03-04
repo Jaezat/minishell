@@ -123,13 +123,7 @@ int start_operational_loop(t_minishell *data)
     while (1)
     {
         if (is_interactive(data) == 1) 
-		{
-			/* free_token_list(data->list_tokens);
-    		data->list_tokens = NULL;
-			if (cmds)
-				free_cmd_list(cmds); */
             break;
-		}
         if (tokenize_input(data) == 0)
         {
             if (check_syntax(data->list_tokens) != 0)
@@ -145,7 +139,7 @@ int start_operational_loop(t_minishell *data)
             if (cmds == NULL)
                 continue;
 			data->cmds = cmds;
-			print_commands(cmds);
+			// print_commands(cmds);
 			execute_commands(data, cmds);
 			free_cmd_list(cmds);
 			cmds = NULL;
