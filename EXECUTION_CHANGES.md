@@ -1,4 +1,4 @@
-# Execution Changes — Leak Fixes
+# Execution Changes: Leak Fixes
 
 ## Context
 When a child process (after `fork`) calls `exit()` without freeing memory,
@@ -86,7 +86,7 @@ int handle_redirections(t_redir *redir)
 void run_execution(t_minishell *shell, t_cmd *cmd)
 {
     if (is_builtin(cmd->args[0]))
-        exit(execute_builtin(shell, cmd));   // no cleanup
+        exit(execute_builtin(shell, cmd));   // modif here
 
     path = get_cmd_path(shell, cmd->args[0]);
     env  = get_env_array(shell->env_list);
@@ -94,11 +94,11 @@ void run_execution(t_minishell *shell, t_cmd *cmd)
     {
         print_path_error(cmd->args[0]);
         free_2d_array(env);
-        exit(127);   // no cleanup of shell
+        exit(127);   // modif here
     }
     execve(path, cmd->args, env);
     perror("execve");
-    exit(1);   // no cleanup at all
+    exit(1);   // modif here 
 }
 
 // AFTER
@@ -140,7 +140,7 @@ static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
     signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
     handle_child_pipes(cmd, fd, fd_in);
-    handle_redirections(cmd->redirs);   // if this failed, child exited dirty
+    handle_redirections(cmd->redirs);   //modif here
     run_execution(shell, cmd);
 }
 
@@ -165,8 +165,8 @@ static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
 
 | Situation | Exit path | Cleaned up? |
 |-----------|-----------|-------------|
-| Redirection file not found | `child_process` → `exit(1)` | ✅ After fix |
-| Builtin inside pipe | `run_execution` → `exit(code)` | ✅ After fix |
-| Command not found | `run_execution` → `exit(127)` | ✅ After fix |
-| `execve` fails | `run_execution` → `exit(1)` | ✅ After fix |
-| `execve` succeeds | process replaced by new program | ✅ No leak possible |
+| Redirection file not found | `child_process` → `exit(1)` |  After fix ok |
+| Builtin inside pipe | `run_execution` → `exit(code)` |  After fix ok |
+| Command not found | `run_execution` → `exit(127)` |  After fix ok |
+| `execve` fails | `run_execution` → `exit(1)` |  After fix ok |
+| `execve` succeeds | process replaced by new program |  No leak possible |
