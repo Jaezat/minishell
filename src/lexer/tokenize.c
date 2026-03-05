@@ -50,31 +50,6 @@ static t_token	*word_to_token(t_minishell *data, int *i)
 	return (token);
 }
 
-/* int	tokenize_input(t_minishell *data)
-{
-	int		i;
-	t_token	*token;
-	t_token	*head;
-	t_token	*tail;
-
-	i = 0;
-	head = NULL;
-	tail = NULL;
-	while (data->line[i])
-	{
-		skip_space(data->line, &i);
-		if (!data->line[i])
-			break ;
-		token = check_operator(data->line, &i);
-		if (!token)
-			token = word_to_token(data, &i);
-		if (!token || check_validation_token(&data->line, head, token))
-			return (free_token_list(head), 1);
-		add_token(&head, &tail, token);
-	}
-	return (data->list_tokens = head, 0);
-} */
-
 int	tokenize_input(t_minishell *data)
 {
 	int		i;

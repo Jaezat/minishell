@@ -1,18 +1,5 @@
 #include "minishell.h"
 
-int	print_error_syntax(char *str)
-{
-	char	*err_msg;
-
-	err_msg = "minishell: syntax error near unexpected token ";
-	ft_putstr_fd(err_msg, 2);
-	ft_putstr_fd("'", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("'", 2);
-	ft_putstr_fd("\n", 2);
-	return (1);
-}
-
 int has_invalid_pipes(t_token *list_tokens)
 {
     t_token *current = list_tokens;

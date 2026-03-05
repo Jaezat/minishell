@@ -145,6 +145,8 @@ int start_operational_loop(t_minishell *data)
 			cmds = NULL;
 			data->cmds = NULL;
     	}
+		else
+			data->exit_status = 2;
 		if (cmds)
         	free_cmd_list(cmds);
 	}
