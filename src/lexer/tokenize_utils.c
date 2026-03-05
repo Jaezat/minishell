@@ -28,33 +28,6 @@ int	is_index_space_or_operator(char c)
 	return (0);
 }
 
-/* char	*extract_word(char *str, int *i, t_minishell *data)
-{
-	int		start;
-	int		in_d;
-	int		in_s;
-	char	*word;
-
-	start = *i;
-	in_d = 0;
-	in_s = 0;
-	data->unclosed_quotes = 0;
-	while (str[*i])
-	{
-		if (str[*i] == '"' && !in_s)
-			in_d = !in_d;
-		else if (str[*i] == '\'' && !in_d)
-			in_s = !in_s;
-		else if (!in_d && !in_s && is_index_space_or_operator(str[*i]))
-			break ;
-		(*i)++;
-	}
-	word = malloc(sizeof(char) * (*i - start + 1));
-	if (!word)
-		return (NULL);
-	ft_memcpy(word, &str[start], *i - start);
-	return (word[*i - start] = '\0', word);
-} */
 
 char	*extract_word(char *str, int *i, t_minishell *data)
 {
@@ -65,6 +38,7 @@ char	*extract_word(char *str, int *i, t_minishell *data)
 	start = *i;
 	quote = 0;
 	(void)data;
+	word = NULL;
 	while (str[*i])
 	{
 		if ((str[*i] == '"' || str[*i] == '\'') && !quote)
@@ -78,6 +52,11 @@ char	*extract_word(char *str, int *i, t_minishell *data)
 			break ;
 		else
 			(*i)++;
+	}
+	if(quote != 0)
+	{
+		print_error_unclosed_quote(quote);
+		return (NULL);
 	}
 	word = ft_substr(str, start, *i - start);
 	return (word);

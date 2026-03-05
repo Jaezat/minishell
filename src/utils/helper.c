@@ -1,5 +1,28 @@
 #include "minishell.h"
 
+int    print_error_unclosed_quote(char quote)
+{
+    ft_putstr_fd("minishell: syntax error: missing matching ", 2);
+    ft_putstr_fd("'", 2);
+    ft_putchar_fd(quote, 2);
+    ft_putstr_fd("'", 2);
+    ft_putchar_fd('\n', 2);
+    return (1);
+}
+
+int	print_error_syntax(char *str)
+{
+	char	*err_msg;
+
+	err_msg = "minishell: syntax error near unexpected token ";
+	ft_putstr_fd(err_msg, 2);
+	ft_putstr_fd("'", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("'", 2);
+	ft_putstr_fd("\n", 2);
+	return (1);
+}
+
 void print_env_list(t_env *head)
 {
     t_env *current;
@@ -26,41 +49,6 @@ void print_tokens(t_minishell *data)
 		if(current->type == T_WORD)
 			{
 				printf("WORD: %s\n", current->value);
-				// if ((ft_strcmp(current->value, "cd") == 0))
-				// {
-				// 	char *arg;
-				// 	if (!(current->next))
-				// 		arg = NULL;
-				// 	else
-				// 		arg = current->next->value;
-				// 	ft_cd(data, arg);
-				// }
-				// if ((ft_strcmp(current->value, "env") == 0))
-				// 	print_env_list(data->env_list);
-				// if ((ft_strcmp(current->value, "pwd") == 0))
-				// 	ft_pwd();
-				// if ((ft_strcmp(current->value, "exit") == 0))
-				// {
-				// 	char *args[2];
-				// 	if (!(current->next))
-				// 		args[0] = NULL;
-				// 	else
-				// 		args[0] = current->next->value;
-				// 	if (current->next && current->next->next)
-				// 		args[1] = current->next->next->value;
-				// 	ft_exit(data, args);
-				// }
-				// if ((ft_strcmp(current->value, "echo") == 0))
-				// {
-				// 	if (current->next)
-				// 		current = current->next;
-				// 	
-				// 	ft_echo(data, current);
-				// }
-				// if ((ft_strcmp(current->value, "export") == 0))
-				// 	ft_export(data, current);
-				// if ((ft_strcmp(current->value, "unset") == 0))
-				// 	ft_unset(data, current);
 			}
 		else if(current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
@@ -77,8 +65,6 @@ void print_tokens(t_minishell *data)
 		current = current->next;
 	}
 }
-
-
 
 void print_commands(t_cmd *head)
 {
