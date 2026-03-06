@@ -5,7 +5,6 @@ size_t	list_len(t_env *list);
 char	*get_env_value(t_env *head, char *env_var);
 t_env	*get_env_node(t_env *head, char *env_var);
 void	update_env_var(t_env *head, char *env_var, char *new_value);
-void	handle_signals(void);
 char	*get_cmd_path(t_minishell *shell, char *cmd);
 void	print_path_error(char *cmd);
 void	execute_pipeline(t_minishell *shell, t_cmd *cmd_list);
