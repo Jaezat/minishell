@@ -5,7 +5,11 @@ static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	handle_child_pipes(cmd, fd, fd_in);
-	handle_redirections(cmd->redirs);
+	if (handle_redirections(cmd->redirs) == -1)
+	{
+		free_all_data(shell);
+		exit(1);
+	}
 	run_execution(shell, cmd);
 }
 

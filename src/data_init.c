@@ -36,13 +36,6 @@ t_env *create_env_from_string(char *env_str)
     return (node);
 }
 
-/* 
-would be something like:
-node->key   = "PATH"
-node->value = "/usr/bin:/bin"
-node->next  = NULL
- */
-
 void add_env_node(t_env **head, t_env *new_node)
 {
     t_env *current;

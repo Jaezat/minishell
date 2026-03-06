@@ -1,12 +1,41 @@
 #include "minishell.h"
 
-void	free_all_data(t_minishell *data)
+void    free_all_data(t_minishell *data)
 {
-	if (!data)
-		return ;
-	if (data->line)
-		free(data->line);
-	free(data);
+    if (!data)
+		return;
+	if (data->cmds)
+	{
+		free_cmd_list(data->cmds);
+		data->cmds = NULL;
+	}
+	if (data->list_tokens)
+	{
+		free_token_list(data->list_tokens);
+		data->list_tokens = NULL;
+	}
+    if (data->line)
+    {
+        free(data->line);
+        data->line = NULL;
+    }
+    if (data->env_list)
+        free_env_list(data->env_list); 
+    free(data);
+}
+
+
+void	free_redir_list(t_redir *head)
+{
+	t_redir	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		free(head->file);
+		free(head);
+		head = tmp;
+	}
 }
 
 void	free_cmd_list(t_cmd *head)
@@ -24,6 +53,7 @@ void	free_cmd_list(t_cmd *head)
 				free(head->args[i++]);
 			free(head->args);
 		}
+		free_redir_list(head->redirs);
 		free(head);
 		head = tmp;
 	}
@@ -66,3 +96,4 @@ void	free_env_list(t_env *head)
 		current = next;
 	}
 }
+

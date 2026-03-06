@@ -45,7 +45,6 @@ char *extract_word(char *str, int *i, t_minishell *data);
 void add_token(t_token **head, t_token **tail, t_token *token);
 t_token	*check_operator(char *str, int *i);
 int	tokenize_input(t_minishell *data);
-int print_error_syntax(char *str);
 int has_invalid_pipes(t_token *list_tokens);
 int check_redirec(t_token *token);
 int has_invalid_redirect(t_token *list_tokens);
