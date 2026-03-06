@@ -103,9 +103,9 @@ int is_interactive(t_minishell *data)
 		if (g_signal_status == SIGINT)
 		{
 			g_signal_status = 0;
-			return (0); 
+			return (0);
 		}
-		return (1); 
+		return (1);
 	}
 
 	if (*data->line)
@@ -123,7 +123,11 @@ int start_operational_loop(t_minishell *data)
     while (1)
     {
         if (is_interactive(data) == 1) 
-            break;
+		{
+			ft_putstr_fd("exit\n", 2);
+			free_all_data(data);
+			exit(0);
+		}
         if (tokenize_input(data) == 0)
         {
             if (check_syntax(data->list_tokens) != 0)

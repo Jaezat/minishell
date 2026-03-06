@@ -13,6 +13,7 @@ int main(int argc, char **argv, char **envp)
         ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
         return (1);
     }
+	handle_signals();
     data = init_all_data(envp);
     if (!data)
     {
