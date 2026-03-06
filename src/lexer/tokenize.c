@@ -65,10 +65,10 @@ int	tokenize_input(t_minishell *data)
 		skip_space(data->line, &i);
 		if (!data->line[i])
 			break ;
-		token = check_operator(data->line, &i); 
+		token = check_operator(data->line, &i);
 		if (!token)
 		{
-			token = word_to_token(data, &i); 
+			token = word_to_token(data, &i);
 		}
 		if (!token || check_validation_token(&data->line, head, token))
 			return (free_token_list(head), 1);

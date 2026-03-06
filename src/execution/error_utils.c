@@ -11,6 +11,7 @@ int	check_fd_error(int fd, char *filename)
 {
 	if (fd == -1)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		perror(filename);
 		return (-1);
 	}
