@@ -18,5 +18,6 @@ int		check_fd_error(int fd, char *filename);
 int		is_lone_builtin(t_cmd *cmd);
 void	execute_lone_builtin(t_minishell *shell, t_cmd *cmd);
 int		handle_heredocs(t_cmd *cmd, t_minishell *shell);
+void	increase_shell_level(t_env *env);
 
 #endif
