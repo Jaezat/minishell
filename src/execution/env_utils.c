@@ -57,3 +57,11 @@ void	update_env_var(t_env *head, char *env_var, char *new_value)
 		current = current->next;
 	}
 }
+
+void	increase_shell_level(t_env *env)
+{
+	int	current_sh_lvl;
+
+	current_sh_lvl = ft_atoi(get_env_value(env, "SHLVL"));
+	update_env_var(env, "SHLVL", ft_itoa(current_sh_lvl + 1));
+}
