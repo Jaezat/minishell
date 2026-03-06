@@ -27,13 +27,28 @@ static void parent_process(t_cmd *cmd, int *fd, int *fd_in)
 static void wait_for_all_children(t_minishell *shell)
 {
 	int status;
+	int	sig_newline_printed;
 
+	sig_newline_printed = 0;
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))
 			shell->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
 			shell->exit_status = 128 + WTERMSIG(status);
+		// If killed by Ctrl-C (Signal 2) or Ctrl-\ (Signal 3)
+		if (WTERMSIG(status) == SIGINT && !sig_newline_printed)
+		{
+			write(1, "\n", 1);
+			sig_newline_printed = 1;
+		}
+		else if (WTERMSIG(status) == SIGQUIT && !sig_newline_printed)
+		{
+			write(1, "Quit (core dumped)\n", 19);
+			sig_newline_printed = 1;
+		}
+		}
 	}
 }
 
@@ -44,13 +59,14 @@ void	execute_pipeline(t_minishell *shell, t_cmd *cmd)
 	int		fd_in;
 
 	fd_in = -1;
+	signal(SIGINT, SIG_IGN);
 	while (cmd)
 	{
 		if (cmd->next)
 			if (pipe(fd) == -1)
 			{
 				perror("pipe");
-				return; //shouldn't this be an exit?
+				return;
 			}
 		pid = fork();
 		if (pid == -1)
@@ -61,4 +77,5 @@ void	execute_pipeline(t_minishell *shell, t_cmd *cmd)
 		cmd = cmd->next;
 	}
 	wait_for_all_children(shell);
+	handle_signals();
 }
