@@ -95,22 +95,35 @@ static int	handle_pending_heredoc(char *delimiter, int fd)
 	return (0);
 }
 
+void	handle_heredoc_signals(int signal)
+{
+	g_signal_status = signal;
+	write(1, "\n", 1);
+	close(STDIN_FILENO);
+}
+
 static int	handle_regular_heredoc(char *del, int expand, int fd, t_minishell *shell)
 {
 	char	*line;
+	int		signal_backup;
 
+	signal(SIGINT, handle_heredoc_signals);
+	signal_backup = dup(STDIN_FILENO);
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal_status == SIGINT)
+		{
+			dup2(signal_backup, STDIN_FILENO);
+			close(signal_backup);
+			handle_signals();
+			free(line);
+			return (1);
+		}
 		if (!line)
 		{
 			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n", 2);
 			break;
-		}
-		if (g_signal_status == SIGINT)
-		{
-			free(line);
-			return (1);
 		}
 		if (ft_strcmp(line, del) == 0)
 		{
@@ -142,6 +155,7 @@ static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell
 
 	status = 0;
 	delimiter = remove_quotes(raw_delimiter);
+	expand = delimiter_needs_expansion(raw_delimiter);
 	if (is_pending_heredoc(delimiter))
 	{
 		if (handle_pending_heredoc(delimiter, fd))
@@ -152,7 +166,6 @@ static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell
 		free(delimiter);
 		delimiter = real_delimiter;
 	}
-	expand = delimiter_needs_expansion(raw_delimiter);
 	status = handle_regular_heredoc(delimiter, expand, fd, shell);
 	free(delimiter);
 	return (status);
