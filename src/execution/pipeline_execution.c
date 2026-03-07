@@ -8,6 +8,8 @@ static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
 	if (handle_redirections(cmd->redirs) == -1)
 	{
 		free_all_data(shell);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
 		exit(1);
 	}
 	run_execution(shell, cmd);

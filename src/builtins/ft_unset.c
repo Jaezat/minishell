@@ -39,6 +39,8 @@ static void	remove_env_var(t_minishell *shell, char *arg)
 	node = get_env_node(shell->env_list, key);
 	if (node)
 		remove_node_from_list(shell, node);
+	free(key);
+	free(value);
 }
 
 int	ft_unset(t_minishell *shell, char **args)

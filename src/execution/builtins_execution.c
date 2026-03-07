@@ -61,6 +61,11 @@ void	execute_lone_builtin(t_minishell *shell, t_cmd *cmd)
 	int original_stdin;
 	int original_stdout;
 
+	if (!cmd->redirs)
+	{
+		shell->exit_status = execute_builtin(shell, cmd);
+		return ;
+	}
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	handle_redirections(cmd->redirs);
