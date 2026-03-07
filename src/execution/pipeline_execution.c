@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline_execution.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/07 13:37:41 by andcardo          #+#    #+#             */
+/*   Updated: 2026/03/07 13:38:21 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
+static void	child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -15,7 +27,7 @@ static void child_process(t_minishell *shell, t_cmd *cmd, int *fd, int fd_in)
 	run_execution(shell, cmd);
 }
 
-static void parent_process(t_cmd *cmd, int *fd, int *fd_in)
+static void	parent_process(t_cmd *cmd, int *fd, int *fd_in)
 {
 	if (*fd_in != -1)
 		close(*fd_in);
@@ -26,9 +38,9 @@ static void parent_process(t_cmd *cmd, int *fd, int *fd_in)
 	}
 }
 
-static void wait_for_all_children(t_minishell *shell)
+static void	wait_for_all_children(t_minishell *shell)
 {
-	int status;
+	int	status;
 	int	sig_newline_printed;
 
 	sig_newline_printed = 0;
@@ -39,7 +51,6 @@ static void wait_for_all_children(t_minishell *shell)
 		else if (WIFSIGNALED(status))
 		{
 			shell->exit_status = 128 + WTERMSIG(status);
-		// If killed by Ctrl-C (Signal 2) or Ctrl-\ (Signal 3)
 		if (WTERMSIG(status) == SIGINT && !sig_newline_printed)
 		{
 			write(1, "\n", 1);

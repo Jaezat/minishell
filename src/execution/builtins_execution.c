@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_execution.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/07 13:25:11 by andcardo          #+#    #+#             */
+/*   Updated: 2026/03/07 13:27:53 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int is_builtin(char *cmd)
+int	is_builtin(char *cmd)
 {
 	if (!cmd)
 		return (0);
-
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
@@ -19,14 +30,14 @@ int is_builtin(char *cmd)
 		return (1);
 	if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
-
 	return (0);
 }
 
-int execute_builtin(t_minishell *shell, t_cmd *cmd)
+int	execute_builtin(t_minishell *shell, t_cmd *cmd)
 {
-	char *name = cmd->args[0];
+	char	*name;
 
+	name = cmd->args[0];
 	if (ft_strcmp(name, "echo") == 0)
 		return (ft_echo(cmd->args));
 	if (ft_strcmp(name, "cd") == 0)
@@ -48,18 +59,21 @@ int	is_lone_builtin(t_cmd *cmd)
 {
 	if (cmd->next)
 		return (0);
-
-	if (ft_strcmp(cmd->args[0], "cd") == 0) return (1);
-	if (ft_strcmp(cmd->args[0], "exit") == 0) return (1);
-	if (ft_strcmp(cmd->args[0], "export") == 0) return (1);
-	if (ft_strcmp(cmd->args[0], "unset") == 0) return (1);
+	if (ft_strcmp(cmd->args[0], "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd->args[0], "exit") == 0)
+		return (1);
+	if (ft_strcmp(cmd->args[0], "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd->args[0], "unset") == 0)
+		return (1);
 	return (0);
 }
 
 void	execute_lone_builtin(t_minishell *shell, t_cmd *cmd)
 {
-	int original_stdin;
-	int original_stdout;
+	int	original_stdin;
+	int	original_stdout;
 
 	if (!cmd->redirs)
 	{
@@ -75,4 +89,3 @@ void	execute_lone_builtin(t_minishell *shell, t_cmd *cmd)
 	close(original_stdin);
 	close(original_stdout);
 }
-

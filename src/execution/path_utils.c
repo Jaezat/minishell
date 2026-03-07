@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/07 13:36:01 by andcardo          #+#    #+#             */
+/*   Updated: 2026/03/07 13:36:44 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	is_command_a_full_path(char *cmd)
 {
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
 static char	*build_full_path(char *folder, char *cmd)
@@ -18,7 +30,7 @@ static char	*build_full_path(char *folder, char *cmd)
 	return (full_path);
 }
 
-char *get_cmd_path(t_minishell *shell, char *cmd)
+char	*get_cmd_path(t_minishell *shell, char *cmd)
 {
 	char	*env_path;
 	char	**folders;
@@ -26,7 +38,7 @@ char *get_cmd_path(t_minishell *shell, char *cmd)
 	char	*full_path;
 
 	if (is_command_a_full_path(cmd))
-		return ft_strdup(cmd);
+		return (ft_strdup(cmd));
 	env_path = get_env_value(shell->env_list, "PATH");
 	if (!env_path)
 		return (NULL);
