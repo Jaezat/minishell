@@ -6,13 +6,13 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 03:28:26 by andcardo          #+#    #+#             */
-/*   Updated: 2026/02/28 20:56:38 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/07 13:29:43 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell)
+static int	write_heredoc_to_file(int fd, char *raw_del, t_minishell *shell)
 {
 	int		expand;
 	int		status;
@@ -20,8 +20,8 @@ static int	write_heredoc_to_file(int fd, char *raw_delimiter, t_minishell *shell
 	char	*real_delimiter;
 
 	status = 0;
-	delimiter = remove_quotes(raw_delimiter);
-	expand = delimiter_needs_expansion(raw_delimiter);
+	delimiter = remove_quotes(raw_del);
+	expand = delimiter_needs_expansion(raw_del);
 	if (is_pending_heredoc(delimiter))
 	{
 		if (handle_pending_heredoc(delimiter, fd))
@@ -67,7 +67,7 @@ static int	process_heredoc(t_redir *redir, t_minishell *shell)
 
 int	handle_heredocs(t_cmd *cmd, t_minishell *shell)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
 	while (cmd)
 	{

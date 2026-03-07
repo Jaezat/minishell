@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/07 13:28:39 by andcardo          #+#    #+#             */
+/*   Updated: 2026/03/07 13:34:10 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	handle_pending_heredoc(char *delimiter, int fd)
@@ -19,15 +31,13 @@ int	handle_pending_heredoc(char *delimiter, int fd)
 		if (ft_strcmp(lines[i], real_delimiter) == 0)
 		{
 			free_2d_array(lines);
-			free(real_delimiter);
-			return (1);
+			return (free(real_delimiter), 1);
 		}
 		i++;
 	}
 	write(fd, "\n", 1);
 	free_2d_array(lines);
-	free(real_delimiter);
-	return (0);
+	return (free(real_delimiter), 0);
 }
 
 void	handle_heredoc_sigint(int signal)
@@ -59,20 +69,19 @@ int	handle_regular_heredoc(char *del, int expand, int fd, t_minishell *shell)
 			return (handle_heredoc_signals(&stdin_backup, &line), 1);
 		if (!line)
 		{
-			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n", 2);
-			break;
+			heredoc_endoffile_error();
+			break ;
 		}
 		if (ft_strcmp(line, del) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		process_hdoc_line(line, fd, expand, shell);
 		free(line);
 	}
 	close(stdin_backup);
-	handle_signals();
-	return (0);
+	return (handle_signals(), 0);
 }
 
 char	*get_real_delimiter(char *delimiter)
@@ -84,4 +93,3 @@ char	*get_real_delimiter(char *delimiter)
 	real_delimiter = ft_substr(delimiter, 0, (nl_delimiter - delimiter));
 	return (real_delimiter);
 }
-

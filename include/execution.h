@@ -29,5 +29,6 @@ int		delimiter_needs_expansion(char *raw_delimiter);
 int		is_pending_heredoc(char *delimiter);
 int		is_closed_heredoc(char *nl_delimiter, char *real_delimiter);
 int		get_bytes_to_write(char *nl_delimiter, char *real_delimiter);
+void heredoc_endoffile_error(void);
 
 #endif
