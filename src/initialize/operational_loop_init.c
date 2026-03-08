@@ -1,0 +1,94 @@
+#include "minishell.h"
+
+int	parse_and_execute(t_minishell *data, t_cmd **cmds)
+{
+	if (check_syntax(data->list_tokens) != 0)
+	{
+		data->exit_status = 2;
+		free_token_list(data->list_tokens);
+		data->list_tokens = NULL;
+		return (1);
+	}
+	*cmds = create_struct(data);
+	free_token_list(data->list_tokens);
+	data->list_tokens = NULL;
+	if (!*cmds)
+		return (1);
+	data->cmds = *cmds;
+	// print_commands(cmds);
+	execute_commands(data, *cmds);
+	free_cmd_list(*cmds);
+	*cmds = NULL;
+	data->cmds = NULL;
+	return (0);
+}
+
+int	start_operational_loop(t_minishell *data)
+{
+	t_cmd	*cmds;
+
+	handle_signals();
+	cmds = NULL;
+	while (1)
+	{
+		if (is_interactive(data) == 1)
+		{
+			ft_putstr_fd("exit\n", 2);
+			free_all_data(data);
+			exit(0);
+		}
+		if (tokenize_input(data) == 0)
+			parse_and_execute(data, &cmds);
+		else
+			data->exit_status = 2;
+		if (cmds)
+			free_cmd_list(cmds);
+	}
+	return (0);
+}
+
+/* 
+int start_operational_loop(t_minishell *data)
+{
+    t_cmd   *cmds;
+
+	handle_signals();
+	cmds = NULL;
+    while (1)
+    {
+        if (is_interactive(data) == 1) 
+		{
+			ft_putstr_fd("exit\n", 2);
+			free_all_data(data);
+			exit(0);
+		}
+        if (tokenize_input(data) == 0)
+        {
+            if (check_syntax(data->list_tokens) != 0)
+            {
+				data->exit_status = 2;
+                free_token_list(data->list_tokens);
+				data->list_tokens = NULL;
+                continue;
+            }
+			// print_tokens(data);
+            cmds = create_struct(data);
+			free_token_list(data->list_tokens); 
+    		data->list_tokens = NULL;
+            if (cmds == NULL)
+                continue;
+			data->cmds = cmds;
+			// print_commands(cmds);
+			execute_commands(data, cmds);
+			free_cmd_list(cmds);
+			cmds = NULL;
+			data->cmds = NULL;
+    	}
+		else
+			data->exit_status = 2;
+		if (cmds)
+        	free_cmd_list(cmds);
+	}
+    return (0);
+}
+*/
