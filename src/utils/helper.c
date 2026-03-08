@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-int    print_error_unclosed_quote(char quote)
+int	print_error_unclosed_quote(char quote)
 {
-    ft_putstr_fd("minishell: syntax error: missing matching ", 2);
-    ft_putstr_fd("'", 2);
-    ft_putchar_fd(quote, 2);
-    ft_putstr_fd("'", 2);
-    ft_putchar_fd('\n', 2);
-    return (1);
+	ft_putstr_fd("minishell: syntax error: missing matching ", 2);
+	ft_putstr_fd("'", 2);
+	ft_putchar_fd(quote, 2);
+	ft_putstr_fd("'", 2);
+	ft_putchar_fd('\n', 2);
+	return (1);
 }
 
 int	print_error_syntax(char *str)
@@ -23,42 +23,40 @@ int	print_error_syntax(char *str)
 	return (1);
 }
 
-void print_env_list(t_env *head)
+void	print_env_list(t_env *head)
 {
-    t_env *current;
-    int i;
-    
-    current = head;
-    i = 0;
-    while (current)
-    {
-        printf("[%d] %s=%s\n", i, current->key, current->value);
-        current = current->next;
-        i++;
-    }
-    printf("Total: %d variables\n", i);
+	t_env	*current;
+	int		i;
+
+	current = head;
+	i = 0;
+	while (current)
+	{
+		printf("[%d] %s=%s\n", i, current->key, current->value);
+		current = current->next;
+		i++;
+	}
+	printf("Total: %d variables\n", i);
 }
 
-void print_tokens(t_minishell *data)
+void	print_tokens(t_minishell *data)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = data->list_tokens;
-	while(current)
+	while (current)
 	{
-		if(current->type == T_WORD)
-			{
-				printf("WORD: %s\n", current->value);
-			}
-		else if(current->type == T_PIPE)
+		if (current->type == T_WORD)
+			printf("WORD: %s\n", current->value);
+		else if (current->type == T_PIPE)
 			printf("PIPE: %s\n", current->value);
-		else if(current->type == T_REDIR_IN)
+		else if (current->type == T_REDIR_IN)
 			printf("REDIR_IN: %s\n", current->value);
-		else if(current->type == T_REDIR_OUT)
+		else if (current->type == T_REDIR_OUT)
 			printf("REDIR_OUT: %s\n", current->value);
-		else if(current->type == T_REDIR_HDOC)
+		else if (current->type == T_REDIR_HDOC)
 			printf("REDIR_HDOC: %s\n", current->value);
-		else if(current->type == T_REDIR_APPEND)
+		else if (current->type == T_REDIR_APPEND)
 			printf("REDIR_APPEND: %s\n", current->value);
 		else
 			printf("EOF: %s\n", current->value);
@@ -66,7 +64,7 @@ void print_tokens(t_minishell *data)
 	}
 }
 
-void print_commands(t_cmd *head)
+/* void    print_commands(t_cmd *head)
 {
     t_cmd   *curr;
     t_redir *r;
@@ -84,11 +82,11 @@ void print_commands(t_cmd *head)
     curr = head;
     cmd_idx = 0;
     printf("\n=== COMMAND STRUCTURE ===\n");
-    
+
     while (curr)
     {
         printf("COMMAND [%d]:\n", cmd_idx++);
-        
+
         // 1. Imprimir Argumentos
         printf("  Args: ");
         if (curr->args)
@@ -124,14 +122,14 @@ void print_commands(t_cmd *head)
             }
         }
         printf("\n");
-        
+
         printf("  Size Args: %d\n", curr->size_args);
         printf("  Next: %s\n", curr->next ? "YES (has pipe)" : "NO (last command)");
         printf("--------------------------\n");
-        
+
         curr = curr->next;
     }
-    
+
     printf("Total commands: %d\n", cmd_idx);
     printf("==========================\n\n");
-}
+} */
