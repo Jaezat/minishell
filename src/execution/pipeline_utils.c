@@ -6,7 +6,7 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:37:50 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/07 13:40:40 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/08 14:40:51 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	list_len(t_env *list)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (list)
@@ -60,19 +60,7 @@ int	handle_redirections(t_redir *redir)
 
 	while (redir)
 	{
-		if (redir->type == T_REDIR_IN)
-		{
-			flags = O_RDONLY;
-			target_fd = STDIN_FILENO;
-		}
-		else
-		{
-			target_fd = STDOUT_FILENO;
-			if (redir->type == T_REDIR_OUT)
-				flags = O_WRONLY | O_CREAT | O_TRUNC;
-			else
-				flags = O_WRONLY | O_CREAT | O_APPEND;
-		}
+		set_flags_and_target_fd(redir, &flags, &target_fd);
 		fd = open(redir->file, flags, 0644);
 		if (check_fd_error(fd, redir->file) == -1)
 			return (-1);
@@ -102,7 +90,6 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 {
 	char	*path;
 	char	**env;
-	int		exit_code;
 
 	if (!cmd->args[0])
 	{
@@ -110,14 +97,7 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 		exit(0);
 	}
 	if (is_builtin(cmd->args[0]))
-	{
-		exit_code = execute_builtin(shell, cmd);
-		free_all_data(shell);
-		close(STDIN_FILENO);
-      	close(STDOUT_FILENO);
-      	close(STDERR_FILENO);
-		exit(exit_code);
-	}
+		execute_builtin_and_exit(shell, cmd);
 	path = get_cmd_path(shell, cmd->args[0]);
 	env = get_env_array(shell->env_list);
 	if (!path)

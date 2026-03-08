@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/08 14:37:32 by andcardo          #+#    #+#             */
+/*   Updated: 2026/03/08 14:39:03 by andcardo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
@@ -22,13 +34,15 @@ void	increase_shell_level(t_env *env);
 int		handle_pending_heredoc(char *delimiter, int fd);
 void	handle_heredoc_sigint(int signal);
 void	handle_heredoc_signals(int *stdin_backup, char **line);
-int		handle_regular_heredoc(char *del, int expand, int fd, t_minishell *shell);
+int		handle_regular_heredoc(char *del, int exp, int fd, t_minishell *shell);
 char	*get_real_delimiter(char *delimiter);
 char	*generate_unique_filename(t_minishell *shell);
 int		delimiter_needs_expansion(char *raw_delimiter);
 int		is_pending_heredoc(char *delimiter);
 int		is_closed_heredoc(char *nl_delimiter, char *real_delimiter);
 int		get_bytes_to_write(char *nl_delimiter, char *real_delimiter);
-void heredoc_endoffile_error(void);
+void	heredoc_endoffile_error(void);
+void	set_flags_and_target_fd(t_redir *redir, int *flags, int *target_fd);
+void	execute_builtin_and_exit(t_minishell *shell, t_cmd *cmd);
 
 #endif

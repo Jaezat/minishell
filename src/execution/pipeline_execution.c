@@ -51,18 +51,24 @@ static void	wait_for_all_children(t_minishell *shell)
 		else if (WIFSIGNALED(status))
 		{
 			shell->exit_status = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == SIGINT && !sig_newline_printed)
-		{
-			write(1, "\n", 1);
-			sig_newline_printed = 1;
-		}
-		else if (WTERMSIG(status) == SIGQUIT && !sig_newline_printed)
-		{
-			write(1, "Quit (core dumped)\n", 19);
-			sig_newline_printed = 1;
-		}
+			if (WTERMSIG(status) == SIGINT && !sig_newline_printed)
+			{
+				write(1, "\n", 1);
+				sig_newline_printed = 1;
+			}
+			else if (WTERMSIG(status) == SIGQUIT && !sig_newline_printed)
+			{
+				write(1, "Quit (core dumped)\n", 19);
+				sig_newline_printed = 1;
+			}
 		}
 	}
+}
+
+void	set_fd_in_and_signals(int *fd_in)
+{
+	*fd_in = -1;
+	signal(SIGINT, SIG_IGN);
 }
 
 void	execute_pipeline(t_minishell *shell, t_cmd *cmd)
@@ -71,16 +77,17 @@ void	execute_pipeline(t_minishell *shell, t_cmd *cmd)
 	pid_t	pid;
 	int		fd_in;
 
-	fd_in = -1;
-	signal(SIGINT, SIG_IGN);
+	set_fd_in_and_signals(&fd_in);
 	while (cmd)
 	{
 		if (cmd->next)
+		{
 			if (pipe(fd) == -1)
 			{
 				perror("pipe");
-				return;
+				return ;
 			}
+		}
 		pid = fork();
 		if (pid == -1)
 			perror("fork");

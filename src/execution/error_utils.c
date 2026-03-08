@@ -30,8 +30,7 @@ int	check_fd_error(int fd, char *filename)
 	return (0);
 }
 
-
-void heredoc_endoffile_error(void)
+void	heredoc_endoffile_error(void)
 {
 	ft_putstr_fd("minishell: warning: ", 2);
 	ft_putstr_fd("here-document delimited by end-of-file\n", 2);

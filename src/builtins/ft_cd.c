@@ -82,8 +82,7 @@ int	ft_cd(t_minishell *shell, char **args)
 	if (args[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 2);
 	if (!set_target_path(&target_path, args, shell->env_list))
-		return(1);
-
+		return (1);
 	if (getcwd(old_cwd, PATH_MAX) == NULL)
 		protect_from_null_cwd(old_cwd, shell->env_list);
 	if (chdir(target_path) == -1)
