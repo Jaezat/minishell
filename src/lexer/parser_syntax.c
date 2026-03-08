@@ -14,22 +14,23 @@ int	check_redirec(t_token *token)
 
 int	check_syntax(t_token *list_tokens)
 {
-	t_token *current = list_tokens;
+	t_token	*current;
 	int		status;
 
-	while(current != NULL)
+	current = list_tokens;
+	while (current != NULL)
 	{
 		if (current->type == T_ERROR)
-    	    return (print_error_syntax(current->value));
+			return (print_error_syntax(current->value));
 		if (current->type == T_PIPE)
-        {
-			if(current == list_tokens)
+		{
+			if (current == list_tokens)
 				return (print_error_syntax("|"));
-            if (current->next == NULL)
-                return (print_error_syntax("newline"));
-            if (current->next->type != T_WORD) 
-                return (print_error_syntax(current->next->value));
-        }
+			if (current->next == NULL)
+				return (print_error_syntax("newline"));
+			if (current->next->type != T_WORD)
+				return (print_error_syntax(current->next->value));
+		}
 		status = check_redirec(current);
 		if (status != 0)
 			return (status);

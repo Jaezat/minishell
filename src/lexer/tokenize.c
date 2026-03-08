@@ -1,5 +1,29 @@
 #include "minishell.h"
 
+t_token	*check_operator(char *str, int *i)
+{
+	char	s[2];
+
+	if (str[*i] == '>' && str[*i + 1] == '>')
+		return (*i += 2, create_token(T_REDIR_APPEND, ">>"));
+	if (str[*i] == '<' && str[*i + 1] == '<')
+		return (*i += 2, create_token(T_REDIR_HDOC, "<<"));
+	if (str[*i] == '>')
+		return ((*i)++, create_token(T_REDIR_OUT, ">"));
+	if (str[*i] == '<')
+		return ((*i)++, create_token(T_REDIR_IN, "<"));
+	if (str[*i] == '|')
+		return ((*i)++, create_token(T_PIPE, "|"));
+	if (ft_strchr(";&()}{", str[*i]))
+	{
+		s[0] = str[*i];
+		s[1] = '\0';
+		(*i)++;
+		return (create_token(T_ERROR, s));
+	}
+	return (NULL);
+}
+
 t_token	*create_token(t_token_type type, char *value)
 {
 	t_token	*token;
@@ -72,7 +96,7 @@ int	tokenize_input(t_minishell *data)
 		}
 		if (!token || check_validation_token(&data->line, head, token))
 			return (free_token_list(head), 1);
-		add_token(&head, &tail, token); 
+		add_token(&head, &tail, token);
 	}
 	return (data->list_tokens = head, 0);
 }

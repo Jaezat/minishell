@@ -16,7 +16,9 @@ SUPP_FILE       = readline.supp
 
 # Source files
 CFILES = main.c \
-         operational_loop_init.c \
+         initialize/operational_loop_init.c \
+		 initialize/operational_loop_utils.c \
+		 initialize/data_init.c \
          signals/signals.c \
 		 execution/builtins_execution.c \
 		 execution/env_utils.c \
@@ -44,10 +46,11 @@ CFILES = main.c \
          parser/struct_init_two.c \
          parser/struct_handlers.c \
          expansion/struct_expansion.c \
+		 expansion/struct_expansion_two.c \
          expansion/struct_expansion_utils.c \
          expansion/struct_hdoc.c \
-         utils/data_init.c \
          utils/free_data.c \
+		 utils/free_data_2.c \
          utils/helper.c \
          utils/ft_split_upgrated.c
 

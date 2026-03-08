@@ -90,7 +90,7 @@ void	execute_pipeline(t_minishell *shell, t_cmd *cmd)
 		}
 		pid = fork();
 		if (pid == -1)
-			perror("fork");
+			perror("minishell: fork");
 		else if (pid == 0)
 			child_process(shell, cmd, fd, fd_in);
 		parent_process(cmd, fd, &fd_in);

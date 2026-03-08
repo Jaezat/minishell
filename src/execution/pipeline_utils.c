@@ -108,7 +108,7 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 		exit(127);
 	}
 	execve(path, cmd->args, env);
-	perror("execve");
+	perror("minishell: execve");
 	free(path);
 	free_2d_array(env);
 	free_all_data(shell);

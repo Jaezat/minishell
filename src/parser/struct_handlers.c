@@ -78,7 +78,6 @@ int	handle_redir(t_struct *st, t_minishell *data)
 		return (0);
 	add_redir_node(st->current_cmd, st->current_tkn->type, file);
 	free(file);
-	// }
 	st->current_tkn = st->current_tkn->next;
 	return (1);
 }

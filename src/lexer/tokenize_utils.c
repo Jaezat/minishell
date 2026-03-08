@@ -28,57 +28,38 @@ int	is_index_space_or_operator(char c)
 	return (0);
 }
 
+static int	handle_quote_char(char *str, int *i, char *quote)
+{
+	if ((str[*i] == '"' || str[*i] == '\'') && !*quote)
+		*quote = str[(*i)++];
+	else if (*quote && str[*i] == *quote)
+	{
+		*quote = 0;
+		(*i)++;
+	}
+	else
+		return (0);
+	return (1);
+}
 
 char	*extract_word(char *str, int *i, t_minishell *data)
 {
 	int		start;
-	char	*word;
 	char	quote;
 
 	start = *i;
 	quote = 0;
 	(void)data;
-	word = NULL;
 	while (str[*i])
 	{
-		if ((str[*i] == '"' || str[*i] == '\'') && !quote)
-			quote = str[(*i)++];
-		else if (quote && str[*i] == quote)
+		if (!handle_quote_char(str, i, &quote))
 		{
-			quote = 0;
+			if (!quote && is_index_space_or_operator(str[*i]))
+				break ;
 			(*i)++;
 		}
-		else if (!quote && is_index_space_or_operator(str[*i]))
-			break ;
-		else
-			(*i)++;
 	}
-	if(quote != 0)
-	{
-		print_error_unclosed_quote(quote);
-		return (NULL);
-	}
-	word = ft_substr(str, start, *i - start);
-	return (word);
-}
-
-t_token	*check_operator(char *str, int *i)
-{
-	if (str[*i] == '>' && str[*i + 1] == '>')
-		return (*i += 2, create_token(T_REDIR_APPEND, ">>"));
-	if (str[*i] == '<' && str[*i + 1] == '<')
-		return (*i += 2, create_token(T_REDIR_HDOC, "<<"));
-	if (str[*i] == '>')
-		return ((*i)++, create_token(T_REDIR_OUT, ">"));
-	if (str[*i] == '<')
-		return ((*i)++, create_token(T_REDIR_IN, "<"));
-	if (str[*i] == '|')
-		return ((*i)++, create_token(T_PIPE, "|"));
-	if (ft_strchr(";&()}{", str[*i]))
-	{
-		char s[2] = {str[*i], '\0'};
-		(*i)++;
-		return (create_token(T_ERROR, s));
-	}
-	return (NULL);
+	if (quote != 0)
+		return (print_error_unclosed_quote(quote), NULL);
+	return (ft_substr(str, start, *i - start));
 }

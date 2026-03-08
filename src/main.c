@@ -1,26 +1,23 @@
 #include "minishell.h"
 
-#include <stdio.h>
-#include <unistd.h>
-
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-    t_minishell  *data;
-    
-    (void)argv;
-    if (argc != 1)
-    {
-        ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-        return (1);
-    }
+	t_minishell	*data;
+
+	(void)argv;
+	if (argc != 1)
+	{
+		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
+		return (1);
+	}
 	handle_signals();
-    data = init_all_data(envp);
-    if (!data)
-    {
-        return (1);
-    }
+	data = init_all_data(envp);
+	if (!data)
+	{
+		return (1);
+	}
 	// print_env_list(data->env_list);
-    start_operational_loop(data);
-    free_all_data(data);
-    return (0);
+	start_operational_loop(data);
+	free_all_data(data);
+	return (0);
 }
