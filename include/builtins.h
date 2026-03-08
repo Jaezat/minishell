@@ -7,7 +7,7 @@ void	extract_key_and_value_from_arg(char *arg, char **key, char **value);
 void	upsert_env_var(t_minishell *shell, char *arg);
 int		ft_echo(char **args);
 int		ft_cd(t_minishell *shell, char **args);
-int		ft_pwd(void);
+int		ft_pwd(t_env *env);
 int		ft_export(t_minishell *shell, char **args);
 int		ft_unset(t_minishell *shell, char **args);
 int		ft_env(t_env *env);
