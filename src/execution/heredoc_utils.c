@@ -6,7 +6,7 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:28:39 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/07 13:34:10 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/08 14:39:35 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	handle_heredoc_signals(int *stdin_backup, char **line)
 	free(*line);
 }
 
-int	handle_regular_heredoc(char *del, int expand, int fd, t_minishell *shell)
+int	handle_regular_heredoc(char *del, int exp, int fd, t_minishell *shell)
 {
 	char	*line;
 	int		stdin_backup;
@@ -77,7 +77,7 @@ int	handle_regular_heredoc(char *del, int expand, int fd, t_minishell *shell)
 			free(line);
 			break ;
 		}
-		process_hdoc_line(line, fd, expand, shell);
+		process_hdoc_line(line, fd, exp, shell);
 		free(line);
 	}
 	close(stdin_backup);

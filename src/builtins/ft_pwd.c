@@ -22,14 +22,12 @@ int	ft_pwd(t_env *env)
 		printf("%s\n", cwd);
 		return (0);
 	}
-
 	env_pwd = get_env_value(env, "PWD");
 	if (env_pwd)
 	{
 		printf("%s\n", env_pwd);
 		return (0);
 	}
-
 	perror("minishell: pwd");
 	return (1);
 }
