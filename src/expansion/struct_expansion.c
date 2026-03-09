@@ -35,10 +35,8 @@ static char	**process_arg(char **result, int *count,
 	{
 		clean = remove_quotes(words[i]);
 		free(words[i]);
-		if (clean && clean[0] != '\0')
+		if (clean)
 			result = append_one(result, count, clean);
-		else
-			free(clean);
 		i++;
 	}
 	free(words);

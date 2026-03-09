@@ -68,6 +68,8 @@ int	handle_word(t_struct *st)
 int	handle_redir(t_struct *st, t_minishell *data)
 {
 	char	*file;
+	char	**words;
+	char	*clean;
 
 	if (!st->current_tkn->next)
 		return (ft_putstr_fd
@@ -76,8 +78,16 @@ int	handle_redir(t_struct *st, t_minishell *data)
 	file = check_after_dollar_sign(st->current_tkn->next->value, data);
 	if (!file)
 		return (0);
-	add_redir_node(st->current_cmd, st->current_tkn->type, file);
+	words = ft_split_upgrade(file, ' ');
 	free(file);
+	if (handle_ambiguous_redir(words, st->current_tkn->next->value, data))
+		return (0);
+	clean = remove_quotes(words[0]);
+	free_2d_array(words);
+	if (!clean)
+		return (0);
+	add_redir_node(st->current_cmd, st->current_tkn->type, clean);
+	free(clean);
 	st->current_tkn = st->current_tkn->next;
 	return (1);
 }

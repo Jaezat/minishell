@@ -88,3 +88,17 @@ char	*remove_quotes(char *str)
 	str_clean[j] = '\0';
 	return (str_clean);
 }
+
+int	handle_ambiguous_redir(char **words, char *token, t_minishell *data)
+{
+	if (!words || !words[0] || words[1])
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token, 2);
+		ft_putstr_fd(": ambiguous redirect\n", 2);
+		free_2d_array(words);
+		data->exit_status = 1;
+		return (1);
+	}
+	return (0);
+}
