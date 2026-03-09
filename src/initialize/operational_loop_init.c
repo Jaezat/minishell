@@ -15,7 +15,7 @@ int	parse_and_execute(t_minishell *data, t_cmd **cmds)
 	if (!*cmds)
 		return (1);
 	data->cmds = *cmds;
-	// print_commands(cmds);
+	// print_commands(*cmds);
 	execute_commands(data, *cmds);
 	free_cmd_list(*cmds);
 	*cmds = NULL;

@@ -5,13 +5,13 @@ typedef struct s_minishell	t_minishell;
 
 typedef enum s_token_type
 {
-	T_WORD,			// ls, echo, file.txt
-	T_PIPE,			// |
-	T_REDIR_IN,		// <
-	T_REDIR_OUT,		// >
-	T_REDIR_APPEND,	// >>
-	T_REDIR_HDOC,		// <<
-	T_EOF,			// nomo input to read
+	T_WORD,			
+	T_REDIR_IN,		
+	T_REDIR_OUT,		
+	T_REDIR_APPEND,	
+	T_REDIR_HDOC,	
+	T_PIPE,	
+	T_EOF,			
 	T_ERROR
 }	t_token_type;
 
