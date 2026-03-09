@@ -87,7 +87,6 @@ void    print_commands(t_cmd *head)
     {
         printf("COMMAND [%d]:\n", cmd_idx++);
 
-        // 1. Imprimir Argumentos
         printf("  Args: ");
         if (curr->args)
         {
@@ -104,7 +103,6 @@ void    print_commands(t_cmd *head)
             printf("(NULL)");
         printf("\n");
 
-        // 2. Imprimir Redirecciones
         printf("  Redirs: ");
         r = curr->redirs;
         if (!r)
