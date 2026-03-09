@@ -28,8 +28,11 @@ int	check_syntax(t_token *list_tokens)
 				return (print_error_syntax("|"));
 			if (current->next == NULL)
 				return (print_error_syntax("newline"));
-			if (current->next->type != T_WORD)
+			if (current->next->type < T_WORD || current->next->type > T_REDIR_HDOC)
+			{
+				printf("Def here\n");
 				return (print_error_syntax(current->next->value));
+			}
 		}
 		status = check_redirec(current);
 		if (status != 0)
