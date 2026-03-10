@@ -1,5 +1,31 @@
 #include "minishell.h"
 
+int	count_size_args(t_token *tkn)
+{
+	int		count;
+	char	**str;
+	t_token	*current;
+
+	count = 0;
+	current = tkn;
+	while (current && current->type != T_PIPE)
+	{
+		if (current->type == T_WORD)
+		{
+			str = ft_split_upgrade(current->value, ' ');
+			count += ft_size_2d_array(str);
+			free_2d_array(str);
+		}
+		else if (current->type >= T_REDIR_IN && current->type <= T_REDIR_HDOC)
+		{
+			if (current->next)
+				current = current->next;
+		}
+		current = current->next;
+	}
+	return (count);
+}
+
 static int	process_loop(t_struct *st, t_minishell *data)
 {
 	while (st->current_tkn)
