@@ -19,6 +19,7 @@ typedef struct s_minishell
 	int		exit_status;
 	int		unclosed_quotes;
 	int		hdoc_counter;
+	int		is_pipeline;
 	t_env	*env_list;
 	t_token	*list_tokens;
 	t_quote	*quotes;

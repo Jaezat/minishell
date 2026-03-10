@@ -31,6 +31,7 @@ int	start_operational_loop(t_minishell *data)
 	cmds = NULL;
 	while (1)
 	{
+		data->is_pipeline = 0;
 		if (is_interactive(data) == 1)
 		{
 			ft_putstr_fd("exit\n", 2);

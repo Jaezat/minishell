@@ -85,7 +85,10 @@ int	handle_redir(t_struct *st, t_minishell *data)
 int	process_token(t_struct *st, t_minishell *data)
 {
 	if (st->current_tkn->type == T_PIPE)
+	{
+		data->is_pipeline = 1;
 		return (handle_pipe(st, data));
+	}
 	else if (st->current_tkn->type == T_WORD)
 		return (handle_word(st));
 	else if (st->current_tkn->type >= T_REDIR_IN
