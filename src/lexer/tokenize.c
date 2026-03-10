@@ -68,7 +68,10 @@ static t_token	*word_to_token(t_minishell *data, int *i)
 
 	word = extract_word(data->line, i, data);
 	if (!word)
+	{
+		data->exit_status = 2;
 		return (NULL);
+	}
 	token = create_token(T_WORD, word);
 	free(word);
 	return (token);
@@ -86,6 +89,12 @@ int	tokenize_input(t_minishell *data)
 	tail = NULL;
 	while (data->line[i])
 	{
+		if(ft_strcmp(data->line, "\"\"") == 0)
+		{
+			ft_putstr_fd("minishell: Command '' not found.\n", 2);
+			data->exit_status = 127;
+			return (free_token_list(head), 1);
+		}
 		skip_space(data->line, &i);
 		if (!data->line[i])
 			break ;
