@@ -41,8 +41,10 @@ int		delimiter_needs_expansion(char *raw_delimiter);
 int		is_pending_heredoc(char *delimiter);
 int		is_closed_heredoc(char *nl_delimiter, char *real_delimiter);
 int		get_bytes_to_write(char *nl_delimiter, char *real_delimiter);
-void	heredoc_endoffile_error(void);
+void	heredoc_endoffile_error(char *del);
 void	set_flags_and_target_fd(t_redir *redir, int *flags, int *target_fd);
 void	execute_builtin_and_exit(t_minishell *shell, t_cmd *cmd);
+void	print_signal_once(int status, int *printed);
+int		decode_status(int status);
 
 #endif

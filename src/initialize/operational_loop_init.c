@@ -31,18 +31,22 @@ int	start_operational_loop(t_minishell *data)
 	cmds = NULL;
 	while (1)
 	{
+		data->is_pipeline = 0;
 		if (is_interactive(data) == 1)
 		{
 			ft_putstr_fd("exit\n", 2);
 			free_all_data(data);
 			exit(0);
 		}
+		if (g_signal_status == SIGINT)
+			data->exit_status = 130;
 		if (tokenize_input(data) == 0)
 			parse_and_execute(data, &cmds);
 		else
 			data->exit_status = 2;
 		if (cmds)
 			free_cmd_list(cmds);
+		g_signal_status = 0;
 	}
 	return (0);
 }
