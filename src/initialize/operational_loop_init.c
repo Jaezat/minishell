@@ -27,7 +27,6 @@ int	start_operational_loop(t_minishell *data)
 {
 	t_cmd	*cmds;
 
-	handle_signals();
 	cmds = NULL;
 	while (1)
 	{
