@@ -53,8 +53,12 @@ static t_token	*word_to_token(t_minishell *data, int *i)
 	return (token);
 }
 
+<<<<<<< Updated upstream
 static int	fill_token_list(t_minishell *data,
 	t_token **head, t_token **tail)
+=======
+static int	fill_token_list(t_minishell *data, t_token **head, t_token **tail)
+>>>>>>> Stashed changes
 {
 	int		i;
 	t_token	*token;
