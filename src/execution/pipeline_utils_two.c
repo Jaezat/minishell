@@ -36,9 +36,6 @@ void	execute_builtin_and_exit(t_minishell *shell, t_cmd *cmd)
 	exit_code = execute_builtin(shell, cmd);
 	shell->exit_status = exit_code;
 	free_all_data(shell);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
 	exit(exit_code);
 }
 
