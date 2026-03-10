@@ -28,6 +28,7 @@ CFILES = main.c \
 		 execution/heredoc_utils.c \
 		 execution/heredoc_utils_two.c \
 		 execution/path_utils.c \
+		 execution/path_utils_two.c \
          execution/pipeline_execution.c \
          execution/pipeline_utils.c \
          execution/pipeline_utils_two.c \

@@ -40,10 +40,13 @@ static void	print_env_duplicate(t_env **env_duplicate)
 	i = 0;
 	while (env_duplicate[i])
 	{
-		printf("declare -x %s", env_duplicate[i]->key);
-		if (env_duplicate[i]->value)
-			printf("=\"%s\"", env_duplicate[i]->value);
-		printf("\n");
+		if (env_duplicate[i]->is_exported)
+		{
+			printf("declare -x %s", env_duplicate[i]->key);
+			if (env_duplicate[i]->value)
+				printf("=\"%s\"", env_duplicate[i]->value);
+			printf("\n");
+		}
 		i++;
 	}
 }
