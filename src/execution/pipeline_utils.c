@@ -105,7 +105,7 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 		print_path_error(cmd->args[0]);
 		clean_and_exit(path, env, shell, 127);
 	}
-	if (!is_valid_absolute_path(cmd->args[0]))
+	if (is_full_path(cmd->args[0]) && !is_valid_absolute_path(cmd->args[0]))
 	{
 		print_absolute_path_error(cmd->args[0]);
 		clean_and_exit(path, env, shell, 127);
