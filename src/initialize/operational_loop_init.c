@@ -42,8 +42,8 @@ int	start_operational_loop(t_minishell *data)
 		g_signal_status = 0;
 		if (tokenize_input(data) == 0)
 			parse_and_execute(data, &cmds);
-		else
-			data->exit_status = 2;
+		/* else
+			data->exit_status = 2; */
 		if (cmds)
 			free_cmd_list(cmds);
 	}
