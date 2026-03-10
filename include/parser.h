@@ -32,13 +32,8 @@ t_cmd			*create_struct(t_minishell *data);
 void			add_redir_node(t_cmd *cmd, t_token_type type,
 					char *expanded_file);
 char			*remove_quotes(char *str);
-<<<<<<< Updated upstream
 int					handle_ambiguous_redir(char **words, char *token,
 				t_minishell *data);
-=======
-int				handle_ambiguous_redir(char **words, char *token,
-					t_minishell *data);
->>>>>>> Stashed changes
 int				count_size_args(t_token *tkn);
 int				handle_pipe(t_struct *st, t_minishell *data);
 int				handle_word(t_struct *st);
