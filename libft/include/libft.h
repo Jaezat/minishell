@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 10:21:01 by mariacos          #+#    #+#             */
-/*   Updated: 2026/03/10 20:15:16 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/10 22:10:59 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-<<<<<<< Updated upstream
 void	free_2d_array(char **array);
 void	ft_print_2d_array(char **array);
-=======
-void    ft_print_2d_array(char **array);
-void   free_2d_array(char **array);
-int	    ft_size_2d_array(char **matrix);
-char    *get_next_line(int fd);
-int     ft_putnbr(int nb);
-int     ftprint_string(va_list *args);
-int     ftprint_unsigned_base(unsigned long n, char *base, unsigned int base_len);
-int     ftprint_unsigned(va_list *args, char format);
-int     ft_putchar(char c);
-int     check_format(const char format, va_list *args);
-int     ft_printf(const char *str, ...);
-long long	ft_atoll(const char *str);
-
->>>>>>> Stashed changes
 
 #endif
