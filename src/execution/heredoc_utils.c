@@ -69,7 +69,7 @@ int	handle_regular_heredoc(char *del, int exp, int fd, t_minishell *shell)
 			return (handle_heredoc_signals(&stdin_backup, &line), 1);
 		if (!line)
 		{
-			heredoc_endoffile_error();
+			heredoc_endoffile_error(del);
 			break ;
 		}
 		if (ft_strcmp(line, del) == 0)
