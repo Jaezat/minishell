@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 02:55:30 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/02 19:08:42 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/10 16:59:08 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_exit(t_minishell *data, char **args)
 	if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (1);
+		return (2);
 	}
 	final_code = ft_atoll(args[1]);
 	free_all_data(data);

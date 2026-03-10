@@ -6,13 +6,13 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:36:01 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/07 13:36:44 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/10 16:48:05 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_command_a_full_path(char *cmd)
+int	is_full_path(char *cmd)
 {
 	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
 		return (1);
@@ -30,6 +30,15 @@ static char	*build_full_path(char *folder, char *cmd)
 	return (full_path);
 }
 
+int	is_valid_absolute_path(char *cmd)
+{
+	if (!is_full_path(cmd))
+		return (0);
+	if (access(cmd, F_OK) == 0)
+		return (1);
+	return (0);
+}
+
 char	*get_cmd_path(t_minishell *shell, char *cmd)
 {
 	char	*env_path;
@@ -37,7 +46,7 @@ char	*get_cmd_path(t_minishell *shell, char *cmd)
 	char	**head;
 	char	*full_path;
 
-	if (is_command_a_full_path(cmd))
+	if (is_full_path(cmd))
 		return (ft_strdup(cmd));
 	env_path = get_env_value(shell->env_list, "PATH");
 	if (!env_path)
@@ -57,21 +66,4 @@ char	*get_cmd_path(t_minishell *shell, char *cmd)
 	}
 	free_2d_array(head);
 	return (NULL);
-}
-
-int	is_invalid_path(char *path)
-{
-	if (!path)
-		return (1);
-	if (access(path, F_OK) != 0)
-		return (1);
-
-	return (0);
-}
-
-void	free_path_env_shell(char *path, char **env, t_minishell *shell)
-{
-	free(path);
-	free_2d_array(env);
-	free_all_data(shell);
 }

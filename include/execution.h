@@ -6,7 +6,7 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 14:37:32 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/08 14:39:03 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/10 16:56:54 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ void	update_env_var(t_env *head, char *env_var, char *new_value);
 char	*get_cmd_path(t_minishell *shell, char *cmd);
 int		is_invalid_path(char *path);
 void	free_path_env_shell(char *path, char **env, t_minishell *shell);
+void	clean_and_exit(char *path, char **env, t_minishell *shell, int status);
+int		get_error_nb(int error);
+int		is_full_path(char *cmd);
+int		is_valid_absolute_path(char *cmd);
 void	print_path_error(char *cmd);
+void	print_absolute_path_error(char *cmd);
 void	execute_pipeline(t_minishell *shell, t_cmd *cmd_list);
 void	execute_commands(t_minishell *shell, t_cmd *cmd_list);
 void	handle_child_pipes(t_cmd *cmd, int *fd, int fd_in);

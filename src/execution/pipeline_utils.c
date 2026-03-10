@@ -6,7 +6,7 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:37:50 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/08 14:40:51 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/10 16:57:34 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,14 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 	if (!path)
 	{
 		print_path_error(cmd->args[0]);
-		free_path_env_shell(path, env, shell);
-		exit(127);
+		clean_and_exit(path, env, shell, 127);
+	}
+	if (!is_valid_absolute_path(cmd->args[0]))
+	{
+		print_absolute_path_error(cmd->args[0]);
+		clean_and_exit(path, env, shell, 127);
 	}
 	execve(path, cmd->args, env);
 	perror("minishell: execve");
-	free_path_env_shell(path, env, shell);
-	exit(126);
+	clean_and_exit(path, env, shell, get_error_nb(errno));
 }

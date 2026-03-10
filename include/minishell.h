@@ -7,6 +7,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/include/libft.h"
