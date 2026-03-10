@@ -1,5 +1,29 @@
 #include "minishell.h"
 
+t_token	*check_operator(char *str, int *i)
+{
+	char	s[2];
+
+	if (str[*i] == '>' && str[*i + 1] == '>')
+		return (*i += 2, create_token(T_REDIR_APPEND, ">>"));
+	if (str[*i] == '<' && str[*i + 1] == '<')
+		return (*i += 2, create_token(T_REDIR_HDOC, "<<"));
+	if (str[*i] == '>')
+		return ((*i)++, create_token(T_REDIR_OUT, ">"));
+	if (str[*i] == '<')
+		return ((*i)++, create_token(T_REDIR_IN, "<"));
+	if (str[*i] == '|')
+		return ((*i)++, create_token(T_PIPE, "|"));
+	if (ft_strchr(";&()}{", str[*i]))
+	{
+		s[0] = str[*i];
+		s[1] = '\0';
+		(*i)++;
+		return (create_token(T_ERROR, s));
+	}
+	return (NULL);
+}
+
 int	check_redirec(t_token *token)
 {
 	if (token->type != T_REDIR_IN && token->type != T_REDIR_OUT
@@ -28,11 +52,9 @@ int	check_syntax(t_token *list_tokens)
 				return (print_error_syntax("|"));
 			if (current->next == NULL)
 				return (print_error_syntax("newline"));
-			if (current->next->type < T_WORD || current->next->type > T_REDIR_HDOC)
-			{
-				printf("Def here\n");
+			if (current->next->type < T_WORD || current->next->type
+				> T_REDIR_HDOC)
 				return (print_error_syntax(current->next->value));
-			}
 		}
 		status = check_redirec(current);
 		if (status != 0)

@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:47:25 by mariacos          #+#    #+#             */
-/*   Updated: 2026/02/28 20:13:51 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/10 19:58:15 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,6 @@ char	*strjoin_n_free_gnl(char *s1, char *s2)
 	free(s1);
 	return (concat_str);
 }
-
-/* char	*ft_strchr(char *str, char c)
-{
-	while (*str)
-	{
-		if (*str == c)
-			return (str);
-		str++;
-	}
-	if (*str == '\0' && c == '\0')
-		return (str);
-	return (NULL);
-} */
-/* 
-char	*ft_strdup(char *s1)
-{
-	char	*cpy_str;
-	size_t	i;
-
-	if (!s1)
-		return (NULL);
-	cpy_str = (char *)malloc(sizeof(*s1) * (strlen_gnl(s1) + 1));
-	if (!cpy_str)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		cpy_str[i] = s1[i];
-		i++;
-	}
-	cpy_str[i] = '\0';
-	return (cpy_str);
-} */
 
 void	clean_buffer(char *buffer)
 {
