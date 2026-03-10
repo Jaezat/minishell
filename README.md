@@ -72,7 +72,7 @@ sudo apt-get install libreadline-dev
 
 This will compile the project and produce the `minishell` executable.
 
-Other make targets:
+Make targets:
 
 | Target | Description |
 |--------|-------------|
@@ -158,4 +158,5 @@ AI was used during this project as a learning resource to better understand bash
 ---
 
 *mariacos | andcardo | 42 Lisboa*
+
 
