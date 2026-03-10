@@ -10,9 +10,9 @@
 
 The shell supports:
 
-- An interactive prompt that displays while waiting for a new command
-- Command history (navigate with arrow keys)
-- Execution of commands using the `PATH` environment variable, or with relative/absolute paths
+- An interactive prompt that displays while waiting for a new command.
+- Command history (navigate with arrow keys).
+- Execution of commands using the `PATH` environment variable, or with relative/absolute paths.
 - Single quotes `'` : prevent all interpretation of the enclosed characters.
 - Double quotes `"` : prevent interpretation except for `$` (variable expansion).
 - **Redirections:**
@@ -158,3 +158,4 @@ AI was used during this project as a learning resource to better understand bash
 ---
 
 *mariacos | andcardo | 42 Lisboa*
+
