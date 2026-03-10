@@ -1,31 +1,5 @@
 #include "minishell.h"
 
-int	count_size_args(t_token *tkn)
-{
-	int		count;
-	char	**str;
-	t_token	*current;
-
-	count = 0;
-	current = tkn;
-	while (current && current->type != T_PIPE)
-	{
-		if (current->type == T_WORD)
-		{
-			str = ft_split_upgrade(current->value, ' ');
-			count += ft_size_2d_array(str);
-			free_2d_array(str);
-		}
-		else if (current->type >= T_REDIR_IN && current->type <= T_REDIR_HDOC)
-		{
-			if (current->next)
-				current = current->next;
-		}
-		current = current->next;
-	}
-	return (count);
-}
-
 int	handle_pipe(t_struct *st, t_minishell *data)
 {
 	st->current_cmd->args[st->arg_index] = NULL;
@@ -65,6 +39,13 @@ int	handle_word(t_struct *st)
 	return (1);
 }
 
+static char *clean_delimiter(char **words, t_token_type type)
+{
+	if (type == T_REDIR_HDOC)
+		return(ft_strdup(words[0]));
+	return (remove_quotes(words[0]));
+}
+
 int	handle_redir(t_struct *st, t_minishell *data)
 {
 	char	*file;
@@ -82,7 +63,7 @@ int	handle_redir(t_struct *st, t_minishell *data)
 	free(file);
 	if (handle_ambiguous_redir(words, st->current_tkn->next->value, data))
 		return (0);
-	clean = remove_quotes(words[0]);
+	clean = clean_delimiter(words, st->current_tkn->type);
 	free_2d_array(words);
 	if (!clean)
 		return (0);

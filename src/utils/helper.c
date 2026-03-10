@@ -64,7 +64,7 @@ void	print_tokens(t_minishell *data)
 	}
 }
 
-void    print_commands(t_cmd *head)
+ void    print_commands(t_cmd *head)
 {
     t_cmd   *curr;
     t_redir *r;
@@ -130,4 +130,4 @@ void    print_commands(t_cmd *head)
 
     printf("Total commands: %d\n", cmd_idx);
     printf("==========================\n\n");
-}
+} 
