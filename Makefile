@@ -118,7 +118,6 @@ valgrind: $(NAME)
 valgrind_full: $(NAME)
 	valgrind --leak-check=full \
              --show-leak-kinds=all \
-             --track-origins=yes \
              --verbose \
              --suppressions=$(SUPP_FILE) \
              ./$(NAME)

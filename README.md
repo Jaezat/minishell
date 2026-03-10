@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by mariacos, andcardo.*
+*This project has been created as part of the 42 curriculum by mariacos and andcardo.*
 
 ---
 
@@ -131,7 +131,25 @@ $ exit 0
 
 ## Resources
 
-- **Redirections:**
+### Documentation
+- [Bash Manual](https://www.gnu.org/software/bash/manual/bash.html)
+- [POSIX Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+- [Bash Metacharacters](https://www.angelfire.com/mi/genastorhotz/reality/computers/linux/bashmetachars.html)
+
+### Guides & Books
+- [Crafting Interpreters Representing Code](https://craftinginterpreters.com/representing-code.html)
+- [Writing Your Own Shell (Purdue)](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
+- [Minishell: Building a Mini Bash (Medium)](https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218)
+
+### 42 Resources
+- [42docs – Minishell](https://harm-smits.github.io/42docs/projects/minishell)
+- [Mastering 42 – Minishell](https://haglobah.github.io/Mastering-42/holy_graph/minishell.html)
+- [Minishell Resource List (GitHub)](https://github.com/ulsgks/minishell/blob/main/docs/resources.md)
+
+### Videos
+- [Computerphile: Parsing](https://www.youtube.com/watch?v=r6vNthpQtSI)
+- [Shell Implementation Walkthrough](https://www.youtube.com/watch?v=T0BO415l3N0)
+
 
 ### AI usage
 
