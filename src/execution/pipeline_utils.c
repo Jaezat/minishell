@@ -103,14 +103,11 @@ void	run_execution(t_minishell *shell, t_cmd *cmd)
 	if (!path)
 	{
 		print_path_error(cmd->args[0]);
-		free_2d_array(env);
-		free_all_data(shell);
+		free_path_env_shell(path, env, shell);
 		exit(127);
 	}
 	execve(path, cmd->args, env);
 	perror("minishell: execve");
-	free(path);
-	free_2d_array(env);
-	free_all_data(shell);
-	exit(1);
+	free_path_env_shell(path, env, shell);
+	exit(126);
 }

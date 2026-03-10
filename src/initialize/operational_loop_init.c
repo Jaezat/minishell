@@ -15,7 +15,7 @@ int	parse_and_execute(t_minishell *data, t_cmd **cmds)
 	if (!*cmds)
 		return (1);
 	data->cmds = *cmds;
-	print_commands(*cmds);
+	// print_commands(*cmds);
 	execute_commands(data, *cmds);
 	free_cmd_list(*cmds);
 	*cmds = NULL;
@@ -27,7 +27,6 @@ int	start_operational_loop(t_minishell *data)
 {
 	t_cmd	*cmds;
 
-	handle_signals();
 	cmds = NULL;
 	while (1)
 	{
@@ -40,13 +39,13 @@ int	start_operational_loop(t_minishell *data)
 		}
 		if (g_signal_status == SIGINT)
 			data->exit_status = 130;
+		g_signal_status = 0;
 		if (tokenize_input(data) == 0)
 			parse_and_execute(data, &cmds);
 		else
 			data->exit_status = 2;
 		if (cmds)
 			free_cmd_list(cmds);
-		g_signal_status = 0;
 	}
 	return (0);
 }

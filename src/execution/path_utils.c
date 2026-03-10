@@ -58,3 +58,20 @@ char	*get_cmd_path(t_minishell *shell, char *cmd)
 	free_2d_array(head);
 	return (NULL);
 }
+
+int	is_invalid_path(char *path)
+{
+	if (!path)
+		return (1);
+	if (access(path, F_OK) != 0)
+		return (1);
+
+	return (0);
+}
+
+void	free_path_env_shell(char *path, char **env, t_minishell *shell)
+{
+	free(path);
+	free_2d_array(env);
+	free_all_data(shell);
+}
