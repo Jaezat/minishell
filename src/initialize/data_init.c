@@ -84,6 +84,7 @@ t_minishell	*init_all_data(char **envp)
 	ft_memset(data, 0, sizeof(t_minishell));
 	data->interactive = isatty(STDIN_FILENO);
 	data->env_list = envp_to_list(envp);
+	increase_shell_level(data->env_list);
 	if (!data->env_list)
 	{
 		free(data);
