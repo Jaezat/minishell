@@ -38,64 +38,59 @@ static void	parent_process(t_cmd *cmd, int *fd, int *fd_in)
 	}
 }
 
-static void	wait_for_all_children(t_minishell *shell)
+static void	wait_for_all_children(t_minishell *shell, pid_t last_pid)
 {
-	int	status;
-	int	sig_newline_printed;
+	pid_t	pid;
+	int		status;
+	int		printed;
 
-	sig_newline_printed = 0;
-	while (waitpid(-1, &status, 0) > 0)
+	printed = 0;
+	pid = waitpid(-1, &status, 0);
+	while (pid > 0)
 	{
-		if (WIFEXITED(status))
-			shell->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-		{
-			shell->exit_status = 128 + WTERMSIG(status);
-			if (WTERMSIG(status) == SIGINT && !sig_newline_printed)
-			{
-				write(1, "\n", 1);
-				sig_newline_printed = 1;
-			}
-			else if (WTERMSIG(status) == SIGQUIT && !sig_newline_printed)
-			{
-				write(1, "Quit (core dumped)\n", 19);
-				sig_newline_printed = 1;
-			}
-		}
+		print_signal_once(status, &printed);
+		if (pid == last_pid)
+			shell->exit_status = decode_status(status);
+		pid = waitpid(-1, &status, 0);
 	}
 }
 
-void	set_fd_in_and_signals(int *fd_in)
+static pid_t	fork_child(t_minishell *shell, t_cmd *cmd, int fd[2], int fd_in)
 {
-	*fd_in = -1;
-	signal(SIGINT, SIG_IGN);
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("minishell: fork");
+		return (-1);
+	}
+	else if (pid == 0)
+		child_process(shell, cmd, fd, fd_in);
+	return (pid);
 }
 
 void	execute_pipeline(t_minishell *shell, t_cmd *cmd)
 {
 	int		fd[2];
-	pid_t	pid;
 	int		fd_in;
+	pid_t	pid;
+	pid_t	last_pid;
 
-	set_fd_in_and_signals(&fd_in);
+	signal(SIGINT, SIG_IGN);
+	last_pid = -1;
+	fd_in = -1;
 	while (cmd)
 	{
-		if (cmd->next)
-		{
-			if (pipe(fd) == -1)
-			{
-				perror("pipe");
-				return ;
-			}
-		}
-		pid = fork();
+		if (cmd->next && pipe(fd) == -1)
+			return (perror("pipe"));
+		pid = fork_child(shell, cmd, fd, fd_in);
 		if (pid == -1)
-			perror("minishell: fork");
-		else if (pid == 0)
-			child_process(shell, cmd, fd, fd_in);
+			break ;
+		last_pid = pid;
 		parent_process(cmd, fd, &fd_in);
 		cmd = cmd->next;
 	}
-	wait_for_all_children(shell);
+	wait_for_all_children(shell, last_pid);
 	handle_signals();
 }
