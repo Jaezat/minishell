@@ -30,9 +30,9 @@ t_cmd			*create_node(void);
 t_struct		*init_struct(t_minishell *data);
 t_cmd			*create_struct(t_minishell *data);
 void			add_redir_node(t_cmd *cmd, t_token_type type,
-				char *expanded_file);
+					char *expanded_file);
 char			*remove_quotes(char *str);
-int				handle_ambiguous_redir(char **words, char *token,
+int					handle_ambiguous_redir(char **words, char *token,
 				t_minishell *data);
 int				count_size_args(t_token *tkn);
 int				handle_pipe(t_struct *st, t_minishell *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariacos <mariacos@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 10:21:01 by mariacos          #+#    #+#             */
-/*   Updated: 2026/01/30 19:13:36 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/10 20:15:16 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_atoi(const char *nptr);
+int		ft_size_2d_array(char **matrix);
+int		ft_putnbr(int nb);
+int		ftprint_string(va_list *args);
+int		ftprint_unsigned_base(unsigned long n,
+			char *base, unsigned int base_len);
+int		ftprint_unsigned(va_list *args, char format);
+int		ft_putchar(char c);
+int		ft_printf(const char *str, ...);
+int		check_format(const char format, va_list *args);
+long long	ft_atoll(const char *str);
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
@@ -45,6 +55,7 @@ char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
+char	*get_next_line(int fd);
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
@@ -61,24 +72,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-// int     main();
-
-long long	ft_atoll(const char *str);
-
-//extra
-char	*get_next_line(int fd);
-void    free_2d_array(char **array);
-void ft_print_2d_array(char **array);
-int	ft_size_2d_array(char **matrix);
-
-//extra : ft_printf
-int	ft_putnbr(int nb);
-int	ftprint_string(va_list *args);
-int	ftprint_unsigned_base(unsigned long n, char *base, unsigned int base_len);
-int	ftprint_unsigned(va_list *args, char format);
-int	ft_putchar(char c);
-int	check_format(const char format, va_list *args);
-int	ft_printf(const char *str, ...);
-
+void	free_2d_array(char **array);
+void	ft_print_2d_array(char **array);
 
 #endif
