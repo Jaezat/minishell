@@ -113,7 +113,6 @@ valgrind: $(NAME)
              --show-leak-kinds=all \
              --suppressions=$(SUPP_FILE) \
              --track-fds=yes \
-             --trace-children=yes \
              ./$(NAME)
 
 valgrind_full: $(NAME)
