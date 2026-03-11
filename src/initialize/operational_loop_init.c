@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 09:24:23 by mariacos          #+#    #+#             */
-/*   Updated: 2026/03/11 16:29:00 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/11 18:22:48 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	parse_and_execute(t_minishell *data, t_cmd **cmds)
 	if (!*cmds)
 		return (1);
 	data->cmds = *cmds;
-	print_commands(*cmds);
 	execute_commands(data, *cmds);
 	free_cmd_list(*cmds);
 	*cmds = NULL;
