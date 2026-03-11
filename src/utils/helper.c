@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/11 09:25:36 by mariacos          #+#    #+#             */
+/*   Updated: 2026/03/11 09:30:10 by mariacos         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	print_error_unclosed_quote(char quote)
@@ -63,71 +75,3 @@ void	print_tokens(t_minishell *data)
 		current = current->next;
 	}
 }
-
- void    print_commands(t_cmd *head)
-{
-    t_cmd   *curr;
-    t_redir *r;
-    int     i;
-    int     cmd_idx;
-
-    if (!head)
-    {
-        printf("\n=== COMMAND STRUCTURE ===\n");
-        printf("(NULL - no commands)\n");
-        printf("==========================\n\n");
-        return;
-    }
-
-    curr = head;
-    cmd_idx = 0;
-    printf("\n=== COMMAND STRUCTURE ===\n");
-
-    while (curr)
-    {
-        printf("COMMAND [%d]:\n", cmd_idx++);
-
-        printf("  Args: ");
-        if (curr->args)
-        {
-            i = 0;
-            while (curr->args[i])
-            {
-                printf("[%s] ", curr->args[i]);
-                i++;
-            }
-            if (i == 0)
-                printf("(empty array)");
-        }
-        else
-            printf("(NULL)");
-        printf("\n");
-
-        printf("  Redirs: ");
-        r = curr->redirs;
-        if (!r)
-        {
-            printf("(none)");
-        }
-        else
-        {
-            while (r)
-            {
-                printf("{Type: %d, File: %s}", r->type, r->file);
-                r = r->next;
-                if (r)
-                    printf(" -> ");
-            }
-        }
-        printf("\n");
-
-        printf("  Size Args: %d\n", curr->size_args);
-        printf("  Next: %s\n", curr->next ? "YES (has pipe)" : "NO (last command)");
-        printf("--------------------------\n");
-
-        curr = curr->next;
-    }
-
-    printf("Total commands: %d\n", cmd_idx);
-    printf("==========================\n\n");
-} 

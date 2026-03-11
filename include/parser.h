@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/11 09:23:48 by mariacos          #+#    #+#             */
+/*   Updated: 2026/03/11 09:23:49 by mariacos         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -32,8 +44,8 @@ t_cmd			*create_struct(t_minishell *data);
 void			add_redir_node(t_cmd *cmd, t_token_type type,
 					char *expanded_file);
 char			*remove_quotes(char *str);
-int					handle_ambiguous_redir(char **words, char *token,
-				t_minishell *data);
+int				handle_ambiguous_redir(char **words, char *token,
+					t_minishell *data);
 int				count_size_args(t_token *tkn);
 int				handle_pipe(t_struct *st, t_minishell *data);
 int				handle_word(t_struct *st);
