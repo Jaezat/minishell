@@ -6,7 +6,7 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 14:37:11 by andcardo          #+#    #+#             */
-/*   Updated: 2026/03/08 14:37:17 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/11 11:46:43 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int		ft_export(t_minishell *shell, char **args);
 int		ft_unset(t_minishell *shell, char **args);
 int		ft_env(t_env *env);
 int		ft_exit(t_minishell *shell, char **args);
+char	*expand_tilde(char *path, t_env *env, int *is_alloc);
 
 #endif
