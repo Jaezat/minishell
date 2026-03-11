@@ -44,14 +44,14 @@ CFILES = main.c \
          lexer/tokenize_utils.c \
          lexer/parser_syntax.c \
          parser/struct_init.c \
-         parser/struct_init_two.c \
+         parser/create_struct.c \
          parser/struct_handlers.c \
          expansion/struct_expansion.c \
 		 expansion/struct_expansion_two.c \
          expansion/struct_expansion_utils.c \
          expansion/struct_hdoc.c \
          utils/free_data.c \
-		 utils/free_data_2.c \
+		 utils/free_data_two.c \
          utils/helper.c \
          utils/ft_split_upgrated.c
 

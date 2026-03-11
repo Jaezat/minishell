@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_handlers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/11 09:25:08 by mariacos          #+#    #+#             */
+/*   Updated: 2026/03/11 09:29:18 by mariacos         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	handle_pipe(t_struct *st, t_minishell *data)
@@ -39,10 +51,10 @@ int	handle_word(t_struct *st)
 	return (1);
 }
 
-static char *clean_delimiter(char **words, t_token_type type)
+static char	*clean_delimiter(char **words, t_token_type type)
 {
 	if (type == T_REDIR_HDOC)
-		return(ft_strdup(words[0]));
+		return (ft_strdup(words[0]));
 	return (remove_quotes(words[0]));
 }
 

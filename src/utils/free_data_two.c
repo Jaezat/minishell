@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_hdoc.c                                      :+:      :+:    :+:   */
+/*   free_data_two.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/11 09:24:14 by mariacos          #+#    #+#             */
-/*   Updated: 2026/03/11 09:24:15 by mariacos         ###   ########.fr       */
+/*   Created: 2026/03/11 09:25:23 by mariacos          #+#    #+#             */
+/*   Updated: 2026/03/11 09:29:55 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_hdoc_line(char *line, int fd, int expand, t_minishell *data)
+void	free_token_list(t_token *head)
 {
-	char	*line_copy;
-	char	*expanded;
+	t_token	*temp;
 
-	line_copy = ft_strdup(line);
-	if (expand)
+	while (head != NULL)
 	{
-		expanded = check_after_dollar_sign(line_copy, data);
-		free(line_copy);
-		line_copy = expanded;
+		temp = head->next;
+		free(head->value);
+		free(head);
+		head = temp;
 	}
-	write(fd, line_copy, ft_strlen(line_copy));
-	write(fd, "\n", 1);
-	free(line_copy);
+}
+
+void	free_env_list(t_env *head)
+{
+	t_env	*current;
+	t_env	*next;
+
+	current = head;
+	while (current)
+	{
+		next = current->next;
+		free(current->key);
+		free(current->value);
+		free(current);
+		current = next;
+	}
 }
