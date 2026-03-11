@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 09:24:02 by mariacos          #+#    #+#             */
-/*   Updated: 2026/03/11 10:44:39 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/11 17:31:09 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ char	*handle_dollar(char *str, t_expand *exp, t_minishell *data)
 	else if (ft_isdigit(str[exp->i + 1]))
 	{
 		exp->i += 2;
+		return (exp->res);
+	}
+	else if (!exp->double_quote && ((str
+				[exp->i + 1] == '"') || (str[exp->i + 1] == '\'')))
+	{
+		exp->i++;
 		return (exp->res);
 	}
 	return (NULL);
