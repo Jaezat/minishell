@@ -84,6 +84,8 @@ int	ft_cd(t_minishell *shell, char **args)
 	char	old_cwd[PATH_MAX];
 
 	is_alloc = 0;
+	if (args[1] && is_builtin_flag(args[1]))
+		return (print_bt_flag_error("cd", args[1]), 2);
 	if (args[0] && args[1] && args[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2),
 			2);

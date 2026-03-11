@@ -12,8 +12,17 @@
 
 #include "minishell.h"
 
-int	ft_env(t_env *env)
+int	ft_env(t_env *env, char **args)
 {
+	if (args[0] && args[1] && is_builtin_flag(args[1]))
+		return (print_bt_flag_error("env", args[1]), 125);
+	if (args[1])
+	{
+		ft_putstr_fd("env: ‘", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putstr_fd("’: No such file or directory\n", 2);
+		return (127);
+	}
 	while (env)
 	{
 		if (env->value)

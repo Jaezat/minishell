@@ -12,11 +12,13 @@
 
 #include "minishell.h"
 
-int	ft_pwd(t_env *env)
+int	ft_pwd(t_env *env, char **args)
 {
 	char	cwd[PATH_MAX];
 	char	*env_pwd;
 
+	if (args[1] && is_builtin_flag(args[1]))
+		return (print_bt_flag_error("pwd", args[1]), 2);
 	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
 		printf("%s\n", cwd);
