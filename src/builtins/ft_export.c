@@ -94,12 +94,11 @@ int	ft_export(t_minishell *shell, char **args)
 	int		i;
 	int		status;
 
+	if (args[0] && args[1] && is_builtin_flag(args[1]))
+		return (print_bt_flag_error("env", args[1]), 2);
 	status = 0;
 	if (!args[1])
-	{
-		env_duplication_and_printing(shell->env_list);
-		return (0);
-	}
+		return (env_duplication_and_printing(shell->env_list), 0);
 	i = 1;
 	while (args[i])
 	{

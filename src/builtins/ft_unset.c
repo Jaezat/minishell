@@ -48,6 +48,8 @@ int	ft_unset(t_minishell *shell, char **args)
 	int	i;
 	int	status;
 
+	if (args[1] && is_builtin_flag(args[1]))
+		return (print_bt_flag_error("unset", args[1]), 2);
 	status = 0;
 	i = 1;
 	while (args[i])

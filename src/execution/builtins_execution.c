@@ -43,13 +43,13 @@ int	execute_builtin(t_minishell *shell, t_cmd *cmd)
 	if (ft_strcmp(name, "cd") == 0)
 		return (ft_cd(shell, cmd->args));
 	if (ft_strcmp(name, "pwd") == 0)
-		return (ft_pwd(shell->env_list));
+		return (ft_pwd(shell->env_list, cmd->args));
 	if (ft_strcmp(name, "export") == 0)
 		return (ft_export(shell, cmd->args));
 	if (ft_strcmp(name, "unset") == 0)
 		return (ft_unset(shell, cmd->args));
 	if (ft_strcmp(name, "env") == 0)
-		return (ft_env(shell->env_list));
+		return (ft_env(shell->env_list, cmd->args));
 	if (ft_strcmp(name, "exit") == 0)
 		return (ft_exit(shell, cmd->args));
 	return (1);
