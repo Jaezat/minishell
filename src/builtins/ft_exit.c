@@ -30,11 +30,13 @@ static int	ft_is_numeric(char *str)
 	return (1);
 }
 
-static void	print_exit_error(char *error)
+static void	print_exit_error(char *error, t_minishell *data)
 {
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
+	if (!data->is_pipeline)
+		exit(2);
 }
 
 static int	is_bigger_than_limit(char *num, int is_negative)
@@ -95,7 +97,7 @@ int	ft_exit(t_minishell *data, char **args)
 	}
 	if (!ft_is_numeric(args[1]) || is_more_than_long(args[1]))
 	{
-		print_exit_error(args[1]);
+		print_exit_error(args[1], data);
 		return (2);
 	}
 	if (args[2])
