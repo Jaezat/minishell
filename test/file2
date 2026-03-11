@@ -1,0 +1,24 @@
+file
+file1
+file2
+file1
+include
+libft
+Makefile
+minishell
+obj
+readline.supp
+README.md
+src
+test
+total 148
+-rw-r--r--  1 mariacos 2025_lisbon      0 Mar 11 12:15 file1
+drwxr-xr-x  2 mariacos 2025_lisbon    158 Mar 11 11:53 include
+drwxr-xr-x  4 mariacos 2025_lisbon     32 Mar 10 17:19 libft
+-rw-r--r--  1 mariacos 2025_lisbon   3558 Mar 11 12:00 Makefile
+-rwxr-xr-x  1 mariacos 2025_lisbon 131600 Mar 11 12:01 minishell
+drwxr-xr-x 10 mariacos 2025_lisbon    143 Mar 11 12:01 obj
+-rw-r--r--  1 mariacos 2025_lisbon    254 Mar 11 09:14 readline.supp
+-rw-r--r--  1 mariacos 2025_lisbon   4827 Mar 11 09:14 README.md
+drwxr-xr-x 10 mariacos 2025_lisbon    143 Mar 11 09:34 src
+drwxr-xr-x  2 mariacos 2025_lisbon     44 Mar 11 12:16 test

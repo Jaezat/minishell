@@ -6,7 +6,7 @@
 /*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 09:24:11 by mariacos          #+#    #+#             */
-/*   Updated: 2026/03/11 10:54:32 by mariacos         ###   ########.fr       */
+/*   Updated: 2026/03/11 16:35:43 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	**args_expansion(char **args, t_minishell *data)
 	i = 0;
 	while (args[i])
 	{
+		printf("args: %s\n", args[i]);
 		result = process_arg(result, &count, args[i], data);
 		i++;
 	}
