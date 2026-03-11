@@ -6,7 +6,7 @@
 /*   By: andcardo <andcardo@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 02:24:09 by andcardo          #+#    #+#             */
-/*   Updated: 2026/02/20 02:37:34 by andcardo         ###   ########.fr       */
+/*   Updated: 2026/03/11 10:01:53 by andcardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_cd(t_minishell *shell, char **args)
 	char	*target_path;
 	char	old_cwd[PATH_MAX];
 
-	if (args[2])
+	if (args[0] && args[1] && args[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 2);
 	if (!set_target_path(&target_path, args, shell->env_list))
 		return (1);
