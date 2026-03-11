@@ -48,9 +48,10 @@ static void	protect_from_null_cwd(char *old_cwd, t_env *env)
 		old_cwd[0] = '\0';
 }
 
-static int	set_target_path(char **target_path, char **args, t_env *env)
+static int	set_target_path(char **target_path, char **args,
+	t_env *env, int *is_alloc)
 {
-	if (!args[1])
+	if (!args[1] || (args[1][0] == '~' && !args[1][1]))
 	{
 		*target_path = get_env_value(env, "HOME");
 		if (!*target_path)
@@ -69,6 +70,8 @@ static int	set_target_path(char **target_path, char **args, t_env *env)
 		}
 		ft_printf("%s\n", *target_path);
 	}
+	else if (args[1][0] == '~')
+		*target_path = expand_tilde(args[1], env, is_alloc);
 	else
 		*target_path = args[1];
 	return (1);
@@ -76,17 +79,27 @@ static int	set_target_path(char **target_path, char **args, t_env *env)
 
 int	ft_cd(t_minishell *shell, char **args)
 {
+	int		is_alloc;
 	char	*target_path;
 	char	old_cwd[PATH_MAX];
 
+	is_alloc = 0;
 	if (args[0] && args[1] && args[2])
-		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 2);
-	if (!set_target_path(&target_path, args, shell->env_list))
+		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2),
+			2);
+	if (!set_target_path(&target_path, args, shell->env_list, &is_alloc))
 		return (1);
 	if (getcwd(old_cwd, PATH_MAX) == NULL)
 		protect_from_null_cwd(old_cwd, shell->env_list);
 	if (chdir(target_path) == -1)
-		return (print_cd_error(target_path), 1);
+	{
+		print_cd_error(target_path);
+		if (is_alloc)
+			free(target_path);
+		return (1);
+	}
 	update_working_dirs(shell, old_cwd);
+	if (is_alloc)
+		free(target_path);
 	return (0);
 }

@@ -33,6 +33,7 @@ CFILES = main.c \
          execution/pipeline_utils.c \
          execution/pipeline_utils_two.c \
          builtins/ft_cd.c \
+         builtins/ft_cd_utils.c \
          builtins/ft_echo.c \
          builtins/ft_env.c \
          builtins/ft_exit.c \
